@@ -20,8 +20,8 @@
   .meter{color:var(--muted);font-size:.9rem}
   .bullets{margin:.6rem 0 1rem 1.1rem}
   .bullets li{margin:.35rem 0}
-  .read-btn,.nav-btn,.home-btn,.grade-btn{background:linear-gradient(90deg,var(--brand),#86e3ff);color:#08121f;border:0;font-weight:700;padding:.5rem .85rem;border-radius:.45rem;cursor:pointer}
-  .read-btn{background:#233046;color:var(--ink);border:1px solid var(--line)}
+  .read-btn,.nav-btn,.home-btn,.grade-btn,.keywords-btn{background:linear-gradient(90deg,var(--brand),#86e3ff);color:#08121f;border:0;font-weight:700;padding:.5rem .85rem;border-radius:.45rem;cursor:pointer; margin-right: 0.5rem;}
+  .read-btn, .keywords-btn{background:#233046;color:var(--ink);border:1px solid var(--line)}
   .full{margin:.75rem 0 .5rem 0;line-height:1.75;color:#d9e1ee}
 
   .deep-list{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin:1rem 0;list-style:none;padding:0}
@@ -395,7 +395,7 @@
                 "title": "Louis Jordan (1908-1975)",
                 "image": "https://i.imgur.com/N1ugU9q.jpeg",
                 "altText": "A charismatic photo of Louis Jordan playing the saxophone.",
-                "fullText": "One of the most influential rhythm and blues performers of the 1940s, Louis Jordan founded the Tympani Five in 1938. His band adapted the lively tempos of swing music to a smaller group, a style called jump blues. With their heavy boogie rhythms, strong backbeat, and preference for humor, songs such as “Saturday Night Fish Fry” and “Ain’t Nobody Here But Us Chickens” rocketed up the charts, appealing to black and white audiences alike. His high-energy performances and charismatic stage presence would be adapted by rock and roll artists of the 1950s.",
+                "fullText": "One of the most influential rhythm and blues performers of the 1940s, Louis Jordan founded the Tympani Five in 1938. His band adapted the lively tempos of swing music to a smaller group, a style called jump blues. With their heavy boogie rhythms, a strong backbeat, and preference for humor, songs such as “Saturday Night Fish Fry” and “Ain’t Nobody Here But Us Chickens” rocketed up the charts, appealing to black and white audiences alike. His high-energy performances and charismatic stage presence would be adapted by rock and roll artists of the 1950s.",
                 "bullets": [
                     "Founded the Tympani Five, a popular 'jump blues' band.",
                     "His records consistently occupied the race records charts throughout the 1940s.",
@@ -1022,21 +1022,21 @@ function startApp() {
       let fullContentHTML = '';
       if (d.image) {
           fullContentHTML = `
-              <div style="text-align: left;">
-                  <div style="display: flex; flex-wrap: nowrap; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
-                      <div style="flex: 0 0 250px; min-width: 200px;">
-                          <img alt="${d.altText || d.title}" src="${d.image}" style="width: 100%; height: auto; border-radius: .4rem;">
-                      </div>
-                      <div style="flex: 1 1 auto;">
-                          ${rightColumnTextHTML}
-                          ${bulletsHTML}
-                          ${mediaHTML}
-                      </div>
-                  </div>
-                  <div>
-                      ${fullTextHTML}
-                  </div>
-              </div>`;
+                <div style="text-align: left;">
+                    <div style="display: flex; flex-wrap: nowrap; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
+                        <div style="flex: 0 0 250px; min-width: 200px;">
+                            <img alt="${d.altText || d.title}" src="${d.image}" style="width: 100%; height: auto; border-radius: .4rem;">
+                        </div>
+                        <div style="flex: 1 1 auto;">
+                            ${rightColumnTextHTML}
+                            ${bulletsHTML}
+                            ${mediaHTML}
+                        </div>
+                    </div>
+                    <div>
+                        ${fullTextHTML}
+                    </div>
+                </div>`;
       } else {
           fullContentHTML = `<div style="text-align: left;">${rightColumnTextHTML}${bulletsHTML}${mediaHTML}${fullTextHTML}</div>`;
       }
@@ -1146,6 +1146,9 @@ function startApp() {
       const wordcloud = wordCloudHTML(s.wordcloud);
       const headerImage = s.headerImage ? `<img src="${s.headerImage}" alt="${s.title}" style="width: 100%; border-radius: .4rem; margin-bottom: 1rem;" />` : '';
       
+      const keywords = s.bullets.filter(b => b.includes('<b>'));
+      const keywordsHTML = keywords.map(k => `<li>${k}</li>`).join('');
+
       let footerHTML = '';
       if (isPresenter) {
           const prevBtn = idx > 0 ? `<button class="nav-btn" onclick="go(${idx-1})">◀ Previous</button>` : '<span></span>';
@@ -1164,8 +1167,12 @@ function startApp() {
           </header>
           ${headerImage}
           <ul class="bullets">${bullets}</ul>
-          ${s.full ? `<button class="read-btn" onclick="toggleFull(${idx})">Read Full Text</button>` : ''}
+          <div class="button-container" style="margin-top: 1rem;">
+            ${s.full ? `<button class="read-btn" onclick="toggleFull(${idx})">Read Full Text</button>` : ''}
+            ${keywords.length > 0 ? `<button class="keywords-btn" onclick="toggleKeywords(${idx})">Keywords</button>` : ''}
+          </div>
           <article id="full-${idx}" class="full" hidden>${s.full}</article>
+          <article id="keywords-${idx}" class="full" hidden><h4>Key Terms & Definitions</h4><ul>${keywordsHTML}</ul></article>
           ${deep}
           ${poll}
           ${buildaband}
@@ -1271,12 +1278,23 @@ function startApp() {
     const el=document.getElementById('full-'+i); 
     if(el) {
         el.hidden=!el.hidden;
-        const button = el.previousElementSibling;
-        if(button && button.classList.contains('read-btn')) {
+        const button = el.previousElementSibling.querySelector('.read-btn');
+        if(button) {
             button.textContent = el.hidden ? 'Read Full Text' : 'Hide Full Text';
         }
     }
   }
+  
+  function toggleKeywords(i) {
+    const el = document.getElementById(`keywords-${i}`);
+    if (el) {
+        el.hidden = !el.hidden;
+        const button = document.querySelector(`#slide-${i} .keywords-btn`);
+        if (button) {
+            button.textContent = el.hidden ? 'Keywords' : 'Hide Keywords';
+        }
+    }
+}
   
   function setupDragAndDrop() {
     // This is a more advanced drag-and-drop for multiple, specific dropzones
@@ -1442,6 +1460,7 @@ function startApp() {
   // --- WINDOW-SCOPED FUNCTIONS FOR HTML ---
   window.go = go;
   window.toggleFull = toggleFull;
+  window.toggleKeywords = toggleKeywords;
   window.openProfile = openProfile;
   window.toggleProfile = toggleProfile;
   window.submitPollVote = submitPollVote;
