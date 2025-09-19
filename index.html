@@ -79,7 +79,7 @@
   .poll-option button{width:100%;text-align:left;padding:.5rem .8rem;background:0 0;border:0;color:var(--ink);cursor:pointer;position:relative;z-index:2}
   .poll-option button:disabled{cursor:not-allowed}
   .poll-option.voted-for button{font-weight:700}
-  .poll-option .correct-answer {background: rgba(6, 214, 160, .2) !important; border: 1px solid #06d6a0;}
+  .poll-option.correct-answer { background: rgba(6, 214, 160, .1) !important; border: 1px solid rgba(6, 214, 160, .7); }
   .poll-bar{position:absolute;top:0;left:0;height:100%;background:var(--brand);opacity:.2;transition:width .3s ease;z-index:1}
   .poll-percent{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);font-size:.9em;font-weight:700;color:var(--ink);z-index:2}
 
@@ -316,7 +316,6 @@
                 "title": "Thomas A. Dorsey (1899-1993)",
                 "image": "https://i.imgur.com/smPGy0i.jpeg",
                 "altText": "A black and white photo of Thomas A. Dorsey, the father of black gospel music, sitting at a piano.",
-                "fullText": "Thomas Andrew Dorsey, the “father of black gospel music,” began his career as a blues pianist in Chicago. While he had composed gospel music since the early 1920s, he did not turn exclusively to the genre until the early 1930s. In 1932 he became Director of Gospel Choirs at the Pilgrim Baptist Church in Chicago and composed the classic, “Precious Lord, Take My Hand.” Dorsey combined the energy of blues and jazz with the sacred lyrics and ecstatic singing style of black religious music. Though initially met with resistance for being 'the devil’s music,' Dorsey’s style became the predominant form of black religious music in America. He and Mahalia Jackson promoted his music on street corners, selling sheet music directly to the public. His songs became so popular they were simply called 'Dorseys'.",
                 "bullets": [
                     "Began as a blues pianist known as “Georgia Tom.”",
                     "Combined blues/jazz idioms with sacred lyrics.",
@@ -485,7 +484,7 @@
       "id": "9.06b",
       "title": "Interactive Activity: Build a Blues Verse",
       "headerImage": "https://i.imgur.com/4uodWhO.png",
-      "bullets": ["Drag the lines from the pool on the left to construct a classic AAB blues verse."],
+      "bullets": [],
       "full": "",
       "deep": [],
       "buildaband": {
@@ -1054,11 +1053,14 @@ function startApp() {
             </div>
         `).join('');
 
+        const revealBtn = isPresenter ? `<button class="read-btn" style="margin-top:1rem;" onclick="revealPollAnswer('${pollId}', ${check.answer})">Reveal Answer</button>` : '';
+
         return `
             <div class="poll interactive-section" data-poll-id="${pollId}">
                 <h3>Test Your Knowledge</h3>
                 <p>${check.q}</p>
                 <div class="choices">${choices}</div>
+                ${revealBtn}
             </div>
         `;
     }
@@ -1087,7 +1089,7 @@ function startApp() {
           `;
       }
       
-      // Fallback to original simple build a band
+      // Fallback for simple drag and drop
       const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
       const instrumentHTML = instruments.map(inst => `<div class="instrument" draggable="true" data-instrument="${inst}">${inst}</div>`).join('');
       return `
@@ -1133,7 +1135,7 @@ function startApp() {
       const poll = pollHTML(s.poll, s.id);
       const buildaband = buildABandHTML(s.buildaband, s.id);
       const wordcloud = wordCloudHTML(s.wordcloud);
-      const headerImage = s.headerImage ? `<img src="${s.headerImage}" alt="${s.title}" style="width: 100%; border-radius: .4rem; margin-bottom: 1rem;" />` : '';
+      const headerImage = s.headerImage ? `<img src="${s.headerImage}" alt="" style="width: 100%; border-radius: .4rem; margin-bottom: 1rem;" />` : '';
       const keywordsHTML = s.keywords ? `<ul class="keywords-list">${Object.entries(s.keywords).map(([term, def]) => `<li><b>${term}:</b> ${def}</li>`).join('')}</ul>` : '';
       
       let footerHTML = '';
@@ -1414,6 +1416,15 @@ function startApp() {
     speechSynthesis.speak(utterance);
   }
 
+  function revealPollAnswer(pollId, correctIndex) {
+    const pollEl = document.querySelector(`[data-poll-id="${pollId}"]`);
+    if (!pollEl) return;
+    const correctOption = pollEl.querySelectorAll('.poll-option')[correctIndex];
+    if(correctOption) {
+        correctOption.classList.add('correct-answer');
+    }
+  }
+
   // --- GLOBAL EVENT LISTENERS ---
   document.getElementById('modalClose').addEventListener('click', hideModal);
   document.getElementById('contrast-toggle-btn').addEventListener('click', toggleHighContrast);
@@ -1457,6 +1468,7 @@ function startApp() {
   window.submitQuestion = submitQuestion;
   window.upvoteQuestion = upvoteQuestion;
   window.readSlideAloud = readSlideAloud;
+  window.revealPollAnswer = revealPollAnswer;
   
 </script>
 </body>
