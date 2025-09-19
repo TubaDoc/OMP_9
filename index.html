@@ -1198,6 +1198,8 @@ function startApp() {
     host.innerHTML = ''; 
     
     let slidesToRender = [...SLIDES];
+    let totalSlides = slidesToRender.length + 1; // +1 for Quiz
+    
     if (isPresenter) {
         const attendanceSlide = {
             id: "9.99_attendance",
@@ -1206,10 +1208,9 @@ function startApp() {
             bullets: ["The following users have joined this session:"],
             full: "<ul id='attendance-list' style='list-style-type: disc; padding-left: 2rem;'><li>Loading...</li></ul>",
         };
-        slidesToRender.splice(11, 0, attendanceSlide);
+        slidesToRender.push(attendanceSlide); // Add to the end of content slides
+        totalSlides = slidesToRender.length + 1; // Recalculate total with attendance slide
     }
-    
-    const totalSlides = slidesToRender.length + 1; // +1 for Quiz
 
     slidesToRender.forEach((s,idx)=>{
       const bullets = s.bullets.map(b=>`<li>${b}</li>`).join('');
@@ -1288,7 +1289,9 @@ function startApp() {
         ${quizFooterHTML}
       </section>
     `);
-    setupDragAndDrop();
+    
+    // Call the new drag-and-drop setup function
+    initializeDragAndDrop();
   }
 
   let lastFocused = null;
@@ -1376,56 +1379,62 @@ function startApp() {
     }
   }
   
-    function setupDragAndDrop() {
-        document.querySelectorAll('.build-a-band-container').forEach(container => {
-            const draggables = container.querySelectorAll('.instrument');
-            const dropzones = container.querySelectorAll('.band-area');
-            const pool = container.querySelector('.instrument-pool');
+  function initializeDragAndDrop() {
+      document.addEventListener('dragstart', e => {
+          if (e.target.matches('.instrument')) {
+              e.dataTransfer.setData('text/plain', e.target.id);
+              e.target.classList.add('dragging');
+          }
+      });
 
-            draggables.forEach(draggable => {
-                draggable.addEventListener('dragstart', e => {
-                    e.dataTransfer.setData('text/plain', e.target.id);
-                    setTimeout(() => draggable.classList.add('dragging'), 0);
-                });
-                draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
-            });
-            
-            const allDropzones = [...dropzones, pool];
-            allDropzones.forEach(zone => {
-                if (!zone) return;
-                zone.addEventListener('dragover', e => {
-                    e.preventDefault();
-                    zone.classList.add('drag-over');
-                });
-                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-                zone.addEventListener('drop', e => {
-                    e.preventDefault();
-                    zone.classList.remove('drag-over');
-                    const draggableId = e.dataTransfer.getData('text/plain');
-                    const draggable = document.getElementById(draggableId);
-                    if (!draggable) return;
+      document.addEventListener('dragend', e => {
+          if (e.target.matches('.instrument')) {
+              e.target.classList.remove('dragging');
+          }
+      });
 
-                    const instrumentId = draggable.dataset.instrumentId;
+      document.addEventListener('dragover', e => {
+          const dropzone = e.target.closest('.band-area, .instrument-pool');
+          if (dropzone) {
+              e.preventDefault();
+              dropzone.classList.add('drag-over');
+          }
+      });
+      
+      document.addEventListener('dragleave', e => {
+           const dropzone = e.target.closest('.band-area, .instrument-pool');
+           if (dropzone) {
+              dropzone.classList.remove('drag-over');
+           }
+      });
 
-                    if (zone.classList.contains('instrument-pool')) {
-                        pool.appendChild(draggable);
-                        draggable.classList.remove('correct', 'incorrect');
-                        draggable.draggable = true;
-                        return;
-                    }
+      document.addEventListener('drop', e => {
+          const zone = e.target.closest('.band-area, .instrument-pool');
+          if (!zone) return;
+          
+          e.preventDefault();
+          zone.classList.remove('drag-over');
+          
+          const draggableId = e.dataTransfer.getData('text/plain');
+          const draggable = document.getElementById(draggableId);
+          if (!draggable) return;
 
-                    if (zone.dataset.accepts) {
-                        const acceptedTypes = JSON.parse(zone.dataset.accepts);
-                        if (acceptedTypes.includes(instrumentId) && !zone.querySelector('.instrument')) {
-                            zone.appendChild(draggable);
-                            draggable.classList.add('correct');
-                            draggable.draggable = false;
-                        }
-                    }
-                });
-            });
-        });
-    }
+          const instrumentId = draggable.dataset.instrumentId;
+
+          if (zone.classList.contains('instrument-pool')) {
+              zone.appendChild(draggable);
+              draggable.classList.remove('correct', 'incorrect');
+              draggable.draggable = true;
+          } else if (zone.dataset.accepts) {
+              const acceptedTypes = JSON.parse(zone.dataset.accepts);
+              if (acceptedTypes.includes(instrumentId) && !zone.querySelector('.instrument')) {
+                  zone.appendChild(draggable);
+                  draggable.classList.add('correct');
+                  draggable.draggable = false;
+              }
+          }
+      });
+  }
 
   
   function toggleQnaPanel() {
