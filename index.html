@@ -24,6 +24,8 @@
   .read-btn,.nav-btn,.home-btn,.grade-btn{background:linear-gradient(90deg,var(--brand),#86e3ff);color:#08121f;border:0;font-weight:700;padding:.5rem .85rem;border-radius:.45rem;cursor:pointer}
   .read-btn{background:#233046;color:var(--ink);border:1px solid var(--line)}
   .full{margin:.75rem 0 .5rem 0;line-height:1.75;color:#d9e1ee}
+  .keywords-list {list-style-type: none; padding-left: 0;}
+  .keywords-list li { margin-bottom: .5rem; }
 
   .deep-list{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin:1rem 0;list-style:none;padding:0}
   .deep-item{width:100%;display:flex;justify-content:center}
@@ -77,7 +79,7 @@
   .poll-option button{width:100%;text-align:left;padding:.5rem .8rem;background:0 0;border:0;color:var(--ink);cursor:pointer;position:relative;z-index:2}
   .poll-option button:disabled{cursor:not-allowed}
   .poll-option.voted-for button{font-weight:700}
-  .poll-option .correct-answer {background: rgba(6, 214, 160, .2) !important; border: 1px solid #06d6a0;}
+  .poll-option.correct-answer { background: rgba(6, 214, 160, .1) !important; border: 1px solid rgba(6, 214, 160, .7); }
   .poll-bar{position:absolute;top:0;left:0;height:100%;background:var(--brand);opacity:.2;transition:width .3s ease;z-index:1}
   .poll-percent{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);font-size:.9em;font-weight:700;color:var(--ink);z-index:2}
 
@@ -285,8 +287,8 @@
         "title": "9.01 Introduction",
         "bullets": [
             "In the 1940s and 1950s, while white audiences listened to traditional pop, black audiences enjoyed gospel, doo-wop, and rhythm and blues.",
-            "These genres, rooted in blues, ragtime, and jazz, were categorized by record companies as 'race records' and later as 'rhythm and blues'.",
-            "This music was created by and for black communities but began reaching white audiences due to technological advances in radio, which had no 'color lines'."
+            "These genres were categorized by record companies as 'race records' and later as 'rhythm and blues'.",
+            "This music began reaching white audiences due to technological advances in radio, which had no 'color lines'."
         ],
         "full": "While white audiences were listening to the sounds of Frank Sinatra, Patti Page, and Perry Como in the 1940s and 1950s, black listeners were consuming gospel music, doo-wop, and rhythm and blues. Although all of these genres are related to earlier styles of African American music, such as the blues, ragtime, and jazz, they all have specific features that make them unique. These sacred and secular genres were lumped together by record companies, first on race records and then on rhythm and blues, which was the new industry label for music that was created by and marketed to blacks. Technological advances in recording and broadcasting made it easier and easier to access music. As we will see, there were no color lines on the radio, which meant that white listeners began listening to rhythm and blues.",
         "deep": []
@@ -295,24 +297,29 @@
         "id": "9.02",
         "title": "9.02 Gospel Music",
          "bullets": [
-            "During the <b>Great Migration</b>, the movement of African Americans from the rural South to the urban North, churches became essential community centers.",
+            "During the <b>Great Migration</b>, churches became essential community centers for African Americans moving to the urban North.",
             "<b>Gospel Music</b>, the soundtrack for these churches, featured instrumental accompaniment and improvisation.",
             "It was influenced by the <b>Holiness-Pentecostal Movement</b>, which encouraged enthusiastic congregational participation.",
             "Gospel singing often features <b>melisma</b>, a technique where a singer performs many different pitches on a single syllable of text."
         ],
-        "full": "During the <b>Great Migration</b>, the movement of many African Americans from the rural South to the urban North between the First and Second World Wars, churches became an essential part of many people’s lives. The soundtrack for these new churches was <b>Gospel music</b>, a style of religious music almost always performed with instrumental accompaniment like piano, organ, and eventually guitars and drums. It borrowed from popular music forms and was influenced by religious movements such as the <b>Holiness-Pentecostal movement</b>, which encouraged enthusiastic congregational participation and expression. A common vocal feature is the <b>melisma</b>, where a single syllable of text is sung over many different pitches. The father of traditional gospel music is Thomas A. Dorsey, who blended blues and jazz idioms with sacred lyrics. His music was initially rejected by some churches for its secular sound but became so popular that new gospel songs were often called 'Dorseys.' He and singer Mahalia Jackson promoted his music on street corners, and his song 'Precious Lord, Take My Hand' became an anthem of the Civil Rights Movement.",
+        "full": "During the Great Migration, many African Americans moved from the rural South to the urban North. As people sought new community, churches became essential centers, and their soundtrack was gospel music. Gospel was almost always performed with instrumental accompaniment like piano or organ, and later guitars and drums. It borrowed from popular music forms and was influenced by religious movements like the Holiness-Pentecostal movement, which encouraged enthusiastic congregational participation and expression. A common vocal feature is the melisma, where a single syllable of text is sung over many different pitches. The father of traditional gospel is Thomas A. Dorsey, who blended blues and jazz idioms with sacred lyrics. His music was initially rejected by some churches for its secular sound but became so popular that new gospel songs were often called 'Dorseys.' He and singer Mahalia Jackson promoted his music on street corners, and his song 'Precious Lord, Take My Hand' became an anthem of the Civil Rights Movement.",
+        "keywords": {
+            "Great Migration": "The movement of many African Americans from the rural South to the urban North in search of better work and quality of life between the First and Second World Wars.",
+            "Gospel Music": "A style of religious music that was almost always performed with instrumental accompaniment and featured improvisation, call and response, and melismatic singing.",
+            "Holiness-Pentecostal Movement": "A religious movement that encouraged congregational participation and expression, heavily influencing the performance style of gospel music.",
+            "Melisma": "A single syllable of text that includes many different pitches, a common and expressive gesture in gospel singing."
+        },
         "deep": [
               {
                 "title": "Thomas A. Dorsey (1899-1993)",
                 "image": "https://i.imgur.com/smPGy0i.jpeg",
                 "altText": "A black and white photo of Thomas A. Dorsey, the father of black gospel music, sitting at a piano.",
-                "fullText": "Thomas Andrew Dorsey, the “father of black gospel music,” began his career as a blues pianist in Chicago. While he had composed gospel music since the early 1920s, he did not turn exclusively to the genre until the early 1930s. In 1932 he became Director of Gospel Choirs at the Pilgrim Baptist Church in Chicago and composed the classic, “Precious Lord, Take My Hand.” Dorsey combined the energy of blues and jazz with the sacred lyrics and ecstatic singing style of black religious music. Though initially met with resistance for being 'the devil’s music,' Dorsey’s style became the predominant form of black religious music in America. He and Mahalia Jackson promoted his music on street corners, selling sheet music directly to the public. His songs became so popular they were simply called 'Dorseys'.",
                 "bullets": [
                     "Began as a blues pianist known as “Georgia Tom.”",
                     "Combined blues/jazz idioms with sacred lyrics.",
                     "His style was initially rejected by churches for its secular sound.",
                     "Promoted his music with singer Mahalia Jackson, selling sheet music on street corners.",
-                    "Composed the classic 'Precious Lord, Take My Hand,' which became an anthem of the Civil Rights Movement."
+                    "His songs, called 'Dorseys', became the predominant form of black religious music."
                 ],
                 "media": [
                     {"label": "Read More: About Thomas Dorsey", "href": "https://www.pbs.org/thisfarbyfaith/people/thomas_dorsey.html"},
@@ -323,16 +330,21 @@
         ]
     },
     {
-      "id": "9.03",
-      "title": "9.03 Vocal Harmony Groups (Doo-Wop)",
-      "bullets": [
-        "<b>Doo-wop</b> groups, often called 'street corner groups,' were popular after WWII, usually featuring four male singers performing a cappella.",
-        "The name comes from their use of <b>vocables</b>—non-semantic syllables like 'doo-doo-wop'—that provided a rhythmic background.",
-        "Another common technique was <b>blow harmony</b>, where a singer would blow into the mic while singing 'ooh-wee, ooh-wee' to create a unique percussive sound.",
-        "Early groups like The Ink Spots and The Mills Brothers had crossover appeal, recording for major labels and performing in major venues."
-      ],
-      "full": "Vocal harmony groups were popular both before and after World War II, singing a mixture of pop, folk, and religious music. These groups usually had four singers who would alternate lead vocals and frequently imitate instrumental sounds. Early groups like the Ink Spots and the Mills Brothers crossed racial boundaries by recording for major labels. After World War II, these groups were often called 'street corner groups' as their style was common in urban African American neighborhoods. They came to be known as <b>doo-wop</b> groups because they frequently used <b>vocables</b> (non-semantic syllables added to songs that provided a sense of rhythmic drive and a standard musical phrase for the background singers) like 'doo-doo-wop' to create rhythmic drive. Another technique was <b>blow harmony</b> (a gesture common in doo-wop where the singer simultaneously blew into the microphone and sang 'ooh-wee, ooh-wee'). These two features are the most recognizable characteristics of doo-wop music.",
-      "deep": [
+        "id": "9.03",
+        "title": "9.03 Vocal Harmony Groups (Doo-Wop)",
+        "bullets": [
+            "<b>Doo-wop</b> groups, often called 'street corner groups,' were popular after WWII, typically featuring four male singers.",
+            "The name comes from their use of <b>vocables</b>—non-semantic syllables like 'doo-doo-wop'—that provided a rhythmic background.",
+            "A common technique was <b>blow harmony</b>, where a singer would blow into the mic while singing 'ooh-wee' to create a percussive sound.",
+            "Early groups like The Ink Spots had crossover appeal, recording for major labels and performing in major venues."
+        ],
+        "full": "Vocal harmony groups were popular both before and after World War II, singing a mixture of popular music, folk songs, and religious music. After WWII, these groups were often called 'street corner groups' as their style was common in urban African American neighborhoods. They came to be known as <b>Doo-wop</b> groups because they frequently used <b>vocables</b>, or non-semantic syllables like 'doo-doo-wop', to create rhythmic drive. Another technique was <b>blow harmony</b>, which was the result of a singer simultaneously blowing into the microphone and singing 'ooh-wee, ooh-wee.' These two features are the most recognizable characteristics of doo-wop music. The song 'Sh'boom' by The Chords is a classic example of the up-tempo doo-wop style.",
+        "keywords": {
+            "Doo-wop": "A style of vocal harmony music that emerged from 'street corner groups' in urban African American neighborhoods after WWII, incorporating harmonies from jazz and blues.",
+            "Vocables": "Non-semantic syllables (e.g., 'doo-doo-wop') added to songs that provided rhythmic drive and a standard phrase for background singers.",
+            "Blow harmony": "A common doo-wop gesture where a singer would simultaneously blow into the microphone and sing 'ooh-wee, ooh-wee.'"
+        },
+        "deep": [
             {
                 "title": "The Ink Spots",
                 "image": "https://i.imgur.com/FBDjnuG.jpeg",
@@ -344,51 +356,53 @@
                 "altText": "A photo of the five members of The Chords doo-wop group.",
                 "media": [{"label": "Listen: 'Sh'boom (Life Could Be A Dream)'", "href": "https://open.spotify.com/track/0mWb7GqTPkzCkNsZ1XLOgw?si=b5526cb41ffb4cf4"}]
             }
-      ],
-       "poll": {
+        ],
+        "poll": {
             "q": "The name 'doo-wop' comes from what musical feature?",
             "choices": ["The sound of the drums", "A popular dance move", "Syllables of text the groups sang", "The name of the most popular group"],
             "answer": 2
         }
     },
     {
-      "id": "9.04",
-      "title": "9.04 Early Rhythm and Blues",
-      "bullets": [
-          "In 1949, Billboard renamed its 'race records' chart to 'rhythm and blues,' a catchall term for various Black music genres.",
-          "As large swing orchestras declined after WWII, smaller combos playing <b>jump blues</b> became popular.",
-          "<b>Jump blues</b> featured a 12-bar blues form, boogie-woogie bass lines, strong backbeats, and <b>shuffle rhythms</b>.",
-          "Louis Jordan and his Tympany Five were pioneers of this style, scoring crossover hits that appealed to both black and white audiences."
-      ],
-      "full": "As we saw in an earlier lesson, record labels used the term 'race records' to describe music recorded by and marketed to African Americans. During the 1940s, this category was gradually replaced by 'rhythm and blues' until Billboard officially renamed the record charts in 1949. During and after World War II, the demand for large swing orchestras plummeted, and as a result, small combos increased in popularity. One of the first musicians to take advantage of this new opportunity was Louis Jordan. He and the Tympany Five played in a style called <b>jump blues</b> (a style of African American music that featured a 12-bar blues form, boogie woogie bass, strong back beats, shuffle rhythms, and group singing during the choruses), which includes a 12-bar blues form, boogie woogie bass, and <b>shuffle rhythms</b> (a rhythm common in early rhythm and blues that consisted of a triplet quarter note followed by a triplet eighth note). Jordan’s uptempo songs with their upbeat or novelty lyrics helped listeners feel an end to the Great Depression and a long war. His song 'Choo Choo Ch’Boogie' was a massive crossover hit, selling over two million copies.",
-      "deep": [
-          {
-              "title": "Louis Jordan (1908-1975)",
-              "image": "https://i.imgur.com/N1ugU9q.jpeg",
-              "altText": "A charismatic photo of Louis Jordan playing the saxophone.",
-              "fullText": "One of the most influential rhythm and blues performers of the 1940s, Louis Jordan founded the Tympani Five in 1938. His band adapted the lively tempos of swing music to a smaller group, a style called jump blues. With their heavy boogie rhythms, strong backbeat, and preference for humor, songs such as “Saturday Night Fish Fry” and “Ain’t Nobody Here But Us Chickens” rocketed up the charts, appealing to black and white audiences alike. His high-energy performances and charismatic stage presence would be adapted by rock and roll artists of the 1950s.",
-              "bullets": [
-                  "Founded the Tympani Five, a popular 'jump blues' band.",
-                  "His records consistently occupied the race records charts throughout the 1940s.",
-                  "His music had crossover appeal, reaching both pop and R&B charts.",
-                  "His style heavily influenced the first generation of rock and roll artists."
-              ],
-              "media": [
-                  {"label": "Listen: 'Is You Is, Or Is You Ain't Ma Baby?'", "href": "https://open.spotify.com/track/09rSNL11dDpPjZEAIQVPka?si=dca8e15a705d4a4e"},
-                  {"label": "Listen: 'Let the Good Times Roll'", "href": "https://open.spotify.com/track/50y6y3iwBlKKev2U4a6GK5?si=264b998eaf8e432c"},
-                  {"label": "Watch: 'Saturday Night Fish Fry'", "href": "https://youtu.be/FCkFrff__QE?si=7iRTMvpIu1EsHK6U"},
-                  {"label": "Watch: Bio Documentary", "href": "https://www.youtube.com/watch?v=iReE7xx1nxc&t=487s"}
-              ]
-          },
-          {
+        "id": "9.04",
+        "title": "9.04 Early Rhythm and Blues",
+        "bullets": [
+            "In 1949, Billboard renamed its 'race records' chart to 'rhythm and blues,' a catchall term for various Black music genres.",
+            "As large swing orchestras declined after WWII, smaller combos playing <b>jump blues</b> became popular.",
+            "<b>Jump blues</b> featured a 12-bar blues form, boogie-woogie bass lines, strong backbeats, and <b>shuffle rhythms</b>.",
+            "Louis Jordan and his Tympany Five were pioneers of this style, scoring crossover hits that appealed to both black and white audiences."
+        ],
+        "full": "The term 'race records' was officially replaced by 'rhythm and blues' on the Billboard charts in 1949. This was a catchall term for African American music. After WWII, large swing orchestras declined in popularity, and smaller combos rose. One of the first to capitalize on this was Louis Jordan, whose band The Tympany Five played in a style called <b>jump blues</b>. This style featured a 12-bar blues form, boogie woogie bass, strong backbeats, and <b>shuffle rhythms</b>. Jordan’s upbeat, humorous, and high-energy songs had crossover appeal to both black and white audiences and served as an important precursor to rock and roll.",
+        "keywords": {
+            "Jump blues": "A style of African American music that featured a 12-bar blues form, boogie woogie bass, strong back beats, shuffle rhythms, and group singing during the choruses.",
+            "Shuffle rhythms": "A rhythm common in early rhythm and blues that consisted of a triplet quarter note followed by a triplet eighth note."
+        },
+        "deep": [
+            {
+                "title": "Louis Jordan (1908-1975)",
+                "image": "https://i.imgur.com/N1ugU9q.jpeg",
+                "altText": "A charismatic photo of Louis Jordan playing the saxophone.",
+                "bullets": [
+                    "Founded the Tympani Five, a popular 'jump blues' band.",
+                    "His records consistently occupied the race records charts throughout the 1940s.",
+                    "His music had crossover appeal, reaching both pop and R&B charts.",
+                    "His style heavily influenced the first generation of rock and roll artists."
+                ],
+                "media": [
+                    {"label": "Listen: 'Is You Is, Or Is You Ain't Ma Baby?'", "href": "https://open.spotify.com/track/09rSNL11dDpPjZEAIQVPka?si=dca8e15a705d4a4e"},
+                    {"label": "Listen: 'Let the Good Times Roll'", "href": "https://open.spotify.com/track/50y6y3iwBlKKev2U4a6GK5?si=264b998eaf8e432c"},
+                    {"label": "Watch: 'Saturday Night Fish Fry'", "href": "https://youtu.be/FCkFrff__QE?si=7iRTMvpIu1EsHK6U"}
+                ]
+            },
+            {
               "title": "Then and Now: The Influence of Jump Blues",
               "fullText": "The high-energy, horn-driven sound of Louis Jordan's jump blues directly influenced not only early rock and roll but also the swing revival movement of the 1990s. Listen to the similarities in instrumentation, rhythmic drive, and showmanship.",
               "media": [
                   {"label": "Then: Louis Jordan - 'Choo Choo Ch'Boogie'", "href": "https://open.spotify.com/track/4vPJK1gKyygRS2mep7iyDq?si=813209c5ebb343ca"},
                   {"label": "Now: Brian Setzer Orchestra - 'Jump, Jive, an' Wail'", "href": "https://open.spotify.com/track/2atCRcyJp3f93a3A9a2iN5?si=89bb74b34b154e1a"}
               ]
-          }
-      ]
+            }
+        ]
     },
     {
         "id": "9.05",
@@ -396,16 +410,15 @@
         "bullets": [
             "Ray Charles was a pivotal artist who masterfully blended gospel music with secular R&B lyrics.",
             "Losing his sight at age seven, he learned to read and write music in Braille.",
-            "He controversially adapted gospel songs into R&B hits: 'I Got a Savior' became 'I Got a Woman,' and 'This Little Light of Mine' became 'This Little Girl of Mine.'",
-            "Charles was a musical innovator, being among the first to use the Fender Rhodes electric piano and forming the Raelets, a model for later girl groups."
+            "He controversially adapted gospel songs into R&B hits: 'I Got a Savior' became 'I Got a Woman.'",
+            "Charles was an innovator, being among the first to use the Fender Rhodes electric piano and forming the Raelets, a model for later girl groups."
         ],
-        "full": "One of the first artists to move freely between gospel music and rhythm and blues and achieve commercial success was Ray Charles. Wrapping the sounds and rhythms of black gospel music around traditional secular lyrics made him one of the most influential musicians of the twentieth century. In 1952, Charles signed with Atlantic and began recording songs that freely blended gospel with rhythm and blues. Although some listeners were shocked at Charles’s combination of sacred and secular genres into this new style of gospel blues, he saw no reason to separate them. His combinations often took the form of adapting the melodies and lyrics of gospel songs into electrifying rhythm and blues numbers.",
+        "full": "One of the first artists to move freely between gospel music and rhythm and blues and achieve commercial success was Ray Charles. Wrapping the sounds and rhythms of black gospel music around traditional secular lyrics made him one of the most influential musicians of the twentieth century. In 1952, Charles signed with Atlantic and began recording songs that freely blended gospel with rhythm and blues. Although some listeners were shocked at Charles’s combination of sacred and secular genres into this new style of 'gospel blues,' he saw no reason to separate them. His combinations often took the form of adapting the melodies and lyrics of gospel songs into electrifying rhythm and blues numbers.",
         "deep": [
             {
                 "title": "Ray Charles (1930-2004)",
                 "image": "https://i.imgur.com/Wvbi6AU.jpeg",
                 "altText": "A classic photo of Ray Charles at the piano, wearing his signature sunglasses.",
-                "fullText": "Ray Charles Robinson lost his sight due to glaucoma at age 6. He learned to play a number of instruments at the St. Augustine School for the Deaf and Blind and began his career as a traveling musician at 15. In 1952 he signed with Atlantic Records and scored his first hit with “I Got A Woman” in late 1954. Combining the soulful vocal style and call-and-response of gospel music with the sexual overtones and energy of R&B, the song ushered in the new style of soul music. His musical diversity has influenced countless performers and earned him inductions into multiple halls of fame.",
                 "bullets": [
                     "Blinded by glaucoma at age 6.",
                     "Signed with Atlantic Records in 1952.",
@@ -414,9 +427,7 @@
                 ],
                 "media": [
                     {"label": "Listen: 'I Got a Woman'", "href": "https://open.spotify.com/track/2xar08Fq5xra2KKZs5Bw9j?si=6284a2faf7c04c66"},
-                    {"label": "Listen: 'What'd I Say'", "href": "https://open.spotify.com/track/5yQ9iMZXGcr5rlO4hoLsP4?si=81aa1f6106a24add"},
-                    {"label": "Watch: 'I Got a Woman' (Live)", "href": "https://youtu.be/lp246rpr2ck?si=yq1qb3idn1CUGLKR"},
-                    {"label": "Watch: 'Shake a Tail Feather' (from The Blues Brothers)", "href": "https://youtu.be/qdbrIrFxas0?si=UwUWr1u0JB27NATf"}
+                    {"label": "Listen: 'What'd I Say'", "href": "https://open.spotify.com/track/5yQ9iMZXGcr5rlO4hoLsP4?si=81aa1f6106a24add"}
                 ]
             },
             {
@@ -434,17 +445,19 @@
         "title": "9.06 Rhythm and Blues Crosses Over",
         "bullets": [
             "A <b>crossover</b> hit is a song that charts on at least two of the three main charts: pop, R&B, and country.",
-            "Chuck Berry, considered a father of rock and roll, created a crossover style by blending R&B with country and western vocal delivery.",
+            "Chuck Berry, a father of rock and roll, created a crossover style by blending R&B with a country and western vocal delivery.",
             "Berry's lyrics focused on teen culture (cars, school, romance), making them relatable to both black and white audiences.",
             "His guitar style and 'duck walk' stage move became iconic and influenced generations of musicians."
         ],
-        "full": "While artists such as Ray Charles were stitching gospel and rhythm and blues together, other artists were taking gestures from early rhythm and blues artists like Louis Jordan and adding electrified instruments and elements from country and western music. One of the most important artists in this style was Chuck Berry, whom many consider the father of rock and roll. A <b>crossover</b> refers to a song that holds a prominent place on at least two of the three types of charts: pop, rhythm and blues, and country. Berry's music frequently crossed over, as did the music of other pioneers like Fats Domino ('Blueberry Hill') and Little Richard ('Good Golly Miss Molly').",
+        "full": "While artists like Ray Charles were stitching gospel and R&B together, others like Chuck Berry were taking gestures from jump blues, adding electrified instruments, and borrowing from country and western. This led to a new style of R&B that would soon be called rock and roll. A <b>crossover</b> hit is a song that holds a prominent place on at least two of the three types of charts: pop, rhythm and blues, and country. Berry's music frequently crossed over, as his lyrics about teen life and vocal style influenced by country singers appealed to a wide audience. Other major crossover artists included Fats Domino and Little Richard.",
+        "keywords": {
+            "Crossover": "A song that holds a prominent place on at least two of the three types of charts: pop, rhythm and blues, and country."
+        },
         "deep": [
             {
                 "title": "Chuck Berry (1926-2017)",
                 "image": "https://i.imgur.com/cMgydDS.jpeg",
                 "altText": "A classic photo of Chuck Berry mid-performance, playing his electric guitar and doing his famous 'duck walk'.",
-                "fullText": "Chuck Berry is the single most important guitarist in early rock and roll. On a trip to Chicago in 1955, he met Leonard Chess of Chess Records, a relationship that launched Berry’s career. He recorded his first hit—a cover of a country song named “Ida Red,” which Berry changed to “Maybellene”—in 1955. He went on to record such hits as “Roll Over Beethoven,” “School Days,” and “Johnny B. Goode.” His charismatic stage presence and signature “duck walk” made him equally popular as a live performer. His vocal delivery was so influenced by country singers that many listeners were surprised to learn that he was black.",
                 "bullets": [
                     "The most important guitarist in early rock and roll.",
                     "His first hit, 'Maybellene' (1955), was a reworking of the country song 'Ida Red.'",
@@ -452,7 +465,6 @@
                     "His song 'Johnny B. Goode' was included on the golden record aboard the Voyager spacecraft."
                 ],
                 "media": [
-                    {"label": "Read More: Rock & Roll Hall of Fame Bio", "href": "https://rockhall.com/inductees/chuck-berry/"},
                     {"label": "Listen: 'Maybellene'", "href": "https://open.spotify.com/track/3SQhmctWreNM0X6Zkm2K5R?si=cad1544a67bf4f10"},
                     {"label": "Listen: 'Johnny B. Goode'", "href": "https://open.spotify.com/track/2QfiRTz5Yc8DdShCxG1tB2?si=6d4ad5d0c03d45e6"},
                     {"label": "Listen: 'Roll Over Beethoven'", "href": "https://open.spotify.com/track/6C7aTTCUWRK7dD379yUT3W?si=d2761b0cdcbd490d"}
@@ -461,29 +473,11 @@
         ]
     },
     {
-      "id": "9.06b",
-      "title": "Interactive Activity: Match the Artist to their Style",
-       "bullets": ["Drag each artist from the pool on the left into the box that best describes their primary musical style."],
-      "full": "",
-      "deep": [],
-      "buildaband": {
-          "correct": ["Ray Charles", "Chuck Berry", "The Chords"],
-          "distractors": ["Thomas A. Dorsey", "Louis Jordan", "Mahalia Jackson"],
-          "bandAreaTitle": "Match Artist to Their Style",
-          "poolTitle": "Artists",
-          "customDropzones": [
-              {"title": "Gospel / R&B Hybrid", "accepts": ["Ray Charles"]},
-              {"title": "Doo-Wop", "accepts": ["The Chords"]},
-              {"title": "Country-Influenced R&B", "accepts": ["Chuck Berry"]}
-          ]
-      }
-    },
-    {
         "id": "9.07",
         "title": "9.07 Conclusion",
         "bullets": [
             "Gospel, doo-wop, and rhythm and blues were distinct but related genres of African American music popular in the 1940s and 50s.",
-            "Initially marketed as 'race records' and then 'rhythm and blues,' this music began to cross over to white audiences via radio.",
+            "Initially marketed as 'race records,' this music began to cross over to white audiences via radio.",
             "This cultural crossover set the stage for the transformation of rhythm and blues into the new genre of rock and roll."
         ],
         "full": "Many different types of African American music were popular in the 1940s and 1950s, including gospel, doo-wop, and rhythm and blues. Although record labels kept this music confined first to the 'race' label and then to the 'rhythm and blues' label, white audiences eventually began hearing and consuming rhythm and blues. As we will see in the next lesson, rhythm and blues underwent a number of musical and racial changes as it was transformed into rock and roll.",
@@ -543,31 +537,6 @@
     },
     {
         "q": "New gospel songs during the 1940s and 1950s were often called 'Dorseys.'",
-        "choices": ["True", "False"],
-        "answer": 0
-    },
-    {
-        "q": "The name 'doo-wop' comes from syllables of text that groups sang.",
-        "choices": ["True", "False"],
-        "answer": 0
-    },
-    {
-        "q": "After World War II, small combos like jump blues bands increased in popularity.",
-        "choices": ["True", "False"],
-        "answer": 0
-    },
-    {
-        "q": "Louis Jordan's music had crossover appeal with white audiences.",
-        "choices": ["True", "False"],
-        "answer": 0
-    },
-    {
-        "q": "Race records included gospel music, vocal harmony groups, and rhythm and blues music.",
-        "choices": ["True", "False"],
-        "answer": 0
-    },
-    {
-        "q": "During a final chorus, it was common for doo-wop groups to sing intricate harmonies.",
         "choices": ["True", "False"],
         "answer": 0
     }
@@ -1003,19 +972,17 @@ function startApp() {
       }).join('');
       const mediaHTML = mediaContent ? `<h4>Media</h4><ul>${mediaContent}</ul>` : '';
 
-      const rightColumnTextHTML = d.rightColumnText ? `<p>${d.rightColumnText}</p>` : '';
       const fullTextHTML = d.fullText ? `<p>${d.fullText}</p>`: '';
       
       let fullContentHTML = '';
       if (d.image) {
           fullContentHTML = `
               <div style="text-align: left;">
-                  <div style="display: flex; flex-wrap: nowrap; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
-                      <div style="flex: 0 0 250px; min-width: 200px;">
+                  <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
+                      <div style="flex: 1 1 250px; min-width: 200px;">
                           <img alt="${d.altText || d.title}" src="${d.image}" style="width: 100%; height: auto; border-radius: .4rem;">
                       </div>
-                      <div style="flex: 1 1 auto;">
-                          ${rightColumnTextHTML}
+                      <div style="flex: 2 1 300px;">
                           ${bulletsHTML}
                           ${mediaHTML}
                       </div>
@@ -1025,7 +992,7 @@ function startApp() {
                   </div>
               </div>`;
       } else {
-          fullContentHTML = `<div style="text-align: left;">${rightColumnTextHTML}${bulletsHTML}${mediaHTML}${fullTextHTML}</div>`;
+          fullContentHTML = `<div style="text-align: left;">${bulletsHTML}${mediaHTML}${fullTextHTML}</div>`;
       }
 
       return `
@@ -1039,27 +1006,30 @@ function startApp() {
     return `<ul class="deep-list">${items}</ul>`;
   }
   
-  function pollHTML(check, slideId) {
-    if (!check) return '';
-    const pollId = `poll-${slideId}`;
-    const choices = check.choices.map((opt, ci) => `
-        <div class="poll-option">
-            <div class="poll-bar"></div>
-            <span class="poll-percent">0%</span>
-            <button onclick="submitPollVote('${pollId}', ${ci})">${opt}</button>
-        </div>
-    `).join('');
+    function pollHTML(check, slideId) {
+        if (!check) return '';
+        const pollId = `poll-${slideId}`;
+        const choices = check.choices.map((opt, ci) => `
+            <div class="poll-option">
+                <div class="poll-bar"></div>
+                <span class="poll-percent">0%</span>
+                <button onclick="submitPollVote('${pollId}', ${ci})">${opt}</button>
+            </div>
+        `).join('');
 
-    return `
-        <div class="poll interactive-section" data-poll-id="${pollId}">
-            <h3>Test Your Knowledge</h3>
-            <p>${check.q}</p>
-            <div class="choices">${choices}</div>
-        </div>
-    `;
-  }
-  
-  function buildABandHTML(data, slideId) {
+        const revealBtn = isPresenter ? `<button class="read-btn" style="margin-top:1rem;" onclick="revealPollAnswer('${pollId}', ${check.answer})">Reveal Answer</button>` : '';
+
+        return `
+            <div class="poll interactive-section" data-poll-id="${pollId}">
+                <h3>Test Your Knowledge</h3>
+                <p>${check.q}</p>
+                <div class="choices">${choices}</div>
+                ${revealBtn}
+            </div>
+        `;
+    }
+
+    function buildABandHTML(data, slideId) {
       if (!data) return '';
       const containerId = `dnd-container-${slideId}`;
   
@@ -1074,6 +1044,7 @@ function startApp() {
           return `
               <div id="${containerId}" class="interactive-section build-a-band-container">
                   <h3>${data.bandAreaTitle || 'Build a Band'}</h3>
+                   <p>Drag each artist from the pool on the left into the box that best describes their primary musical style.</p>
                   <div class="build-a-band">
                       <div class="instrument-pool"><h4>${data.poolTitle || 'Items'}</h4>${instrumentHTML}</div>
                       ${dropzoneHTML}
@@ -1095,8 +1066,7 @@ function startApp() {
               </div>
           </div>
       `;
-  }
-
+    }
 
   function wordCloudHTML(data) {
     if (!data) return '';
@@ -1108,7 +1078,7 @@ function startApp() {
                 <h3>${title}</h3>
                 <p>${prompt}</p>
                 <div class="content-input-container">
-                    <input type="text" id="word-cloud-input" class="content-input" placeholder="e.g., Smooth, Sentimental...">
+                    <input type="text" id="word-cloud-input" class="content-input" placeholder="e.g., Soulful, Rhythmic...">
                     <button class="add-content-btn" onclick="submitWord()">Submit</button>
                 </div>
             </div>
@@ -1130,6 +1100,7 @@ function startApp() {
       const buildaband = buildABandHTML(s.buildaband, s.id);
       const wordcloud = wordCloudHTML(s.wordcloud);
       const headerImage = s.headerImage ? `<img src="${s.headerImage}" alt="${s.title}" style="width: 100%; border-radius: .4rem; margin-bottom: 1rem;" />` : '';
+      const keywordsHTML = s.keywords ? `<ul class="keywords-list">${Object.entries(s.keywords).map(([term, def]) => `<li><b>${term}:</b> ${def}</li>`).join('')}</ul>` : '';
       
       let footerHTML = '';
       if (isPresenter) {
@@ -1151,8 +1122,10 @@ function startApp() {
           <ul class="bullets">${bullets}</ul>
            <div class="slide-actions">
                 ${s.full ? `<button class="read-btn" onclick="toggleFull(${idx})">Read Full Text</button>` : ''}
+                ${s.keywords ? `<button class="read-btn" onclick="toggleKeywords(${idx})">Keywords</button>` : ''}
            </div>
           <article id="full-${idx}" class="full" hidden>${s.full}</article>
+          <article id="keywords-${idx}" class="full" hidden>${keywordsHTML}</article>
           ${deep}
           ${poll}
           ${buildaband}
@@ -1258,84 +1231,89 @@ function startApp() {
     const el=document.getElementById('full-'+i); 
     if(el) {
         el.hidden=!el.hidden;
-        const button = el.previousElementSibling.querySelector('.read-btn');
+        const button = el.parentElement.querySelector('.slide-actions button:nth-child(1)');
         if(button) {
             button.textContent = el.hidden ? 'Read Full Text' : 'Hide Full Text';
         }
     }
   }
-  
-  function setupDragAndDrop() {
-    document.querySelectorAll('.build-a-band-container').forEach(container => {
-        const instruments = container.querySelectorAll('.instrument');
-        const simpleDropzone = container.querySelector('.band-area[data-correct]');
-        const customDropzones = container.querySelectorAll('.band-area[data-accepts]');
-        const pool = container.querySelector('.instrument-pool');
 
-        let draggedItem = null;
-
-        instruments.forEach(inst => {
-            inst.addEventListener('dragstart', e => {
-                draggedItem = e.target;
-                setTimeout(() => e.target.style.display = 'none', 0);
-            });
-            inst.addEventListener('dragend', () => {
-                setTimeout(() => {
-                    if (draggedItem) {
-                        draggedItem.style.display = 'block';
-                        draggedItem = null;
-                    }
-                }, 0);
-            });
-        });
-
-        const allDropzones = simpleDropzone ? [simpleDropzone, pool] : [...customDropzones, pool];
-
-        allDropzones.forEach(zone => {
-            if (!zone) return;
-            zone.addEventListener('dragover', e => {
-                e.preventDefault();
-                zone.classList.add('drag-over');
-            });
-            zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-            zone.addEventListener('drop', e => {
-                e.preventDefault();
-                zone.classList.remove('drag-over');
-                if (!draggedItem) return;
-
-                const instrumentName = draggedItem.dataset.instrument;
-
-                // Handle return to pool
-                if (zone.classList.contains('instrument-pool')) {
-                    zone.appendChild(draggedItem);
-                    draggedItem.classList.remove('correct', 'incorrect');
-                    draggedItem.draggable = true;
-                    return;
-                }
-
-                // Handle simple dropzone
-                if (zone.dataset.correct) {
-                    const correctInstruments = JSON.parse(zone.dataset.correct);
-                    zone.appendChild(draggedItem);
-                    if (correctInstruments.includes(instrumentName)) {
-                        draggedItem.classList.add('correct');
-                    } else {
-                        draggedItem.classList.add('incorrect');
-                    }
-                }
-                // Handle custom dropzones
-                else if (zone.dataset.accepts) {
-                    const acceptedTypes = JSON.parse(zone.dataset.accepts);
-                    if (acceptedTypes.includes(instrumentName)) {
-                        zone.appendChild(draggedItem);
-                        draggedItem.classList.add('correct');
-                        draggedItem.draggable = false; // Optional: lock correct answers
-                    }
-                }
-            });
-        });
-    });
+  function toggleKeywords(i){ 
+    const el=document.getElementById('keywords-'+i); 
+    if(el) {
+        el.hidden=!el.hidden;
+        const button = el.parentElement.querySelector('.slide-actions button:nth-child(2)');
+        if(button) {
+            button.textContent = el.hidden ? 'Keywords' : 'Hide Keywords';
+        }
+    }
   }
+  
+    function setupDragAndDrop() {
+        document.querySelectorAll('.build-a-band-container').forEach(container => {
+            const instruments = container.querySelectorAll('.instrument');
+            const simpleDropzone = container.querySelector('.band-area[data-correct]');
+            const customDropzones = container.querySelectorAll('.band-area[data-accepts]');
+            const pool = container.querySelector('.instrument-pool');
+            let draggedItem = null;
+
+            instruments.forEach(inst => {
+                inst.addEventListener('dragstart', e => {
+                    draggedItem = e.target;
+                    setTimeout(() => e.target.style.opacity = '0.5', 0);
+                });
+                inst.addEventListener('dragend', () => {
+                   setTimeout(() => {
+                        if (draggedItem) {
+                           draggedItem.style.opacity = '1';
+                           draggedItem = null;
+                        }
+                   }, 0);
+                });
+            });
+            
+            const allDropzones = simpleDropzone ? [simpleDropzone, pool] : [...customDropzones, pool];
+            allDropzones.forEach(zone => {
+                if (!zone) return;
+                zone.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+                zone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    if (!draggedItem) return;
+
+                    const instrumentName = draggedItem.dataset.instrument;
+
+                    if (zone.classList.contains('instrument-pool')) {
+                        zone.appendChild(draggedItem);
+                        draggedItem.classList.remove('correct', 'incorrect');
+                        draggedItem.draggable = true;
+                        return;
+                    }
+
+                    if (zone.dataset.correct) {
+                        const correctInstruments = JSON.parse(zone.dataset.correct);
+                        zone.appendChild(draggedItem);
+                        draggedItem.classList.remove('incorrect');
+                        draggedItem.classList.add(correctInstruments.includes(instrumentName) ? 'correct' : 'incorrect');
+                    }
+                    else if (zone.dataset.accepts) {
+                        const acceptedTypes = JSON.parse(zone.dataset.accepts);
+                        if (acceptedTypes.includes(instrumentName)) {
+                            zone.appendChild(draggedItem);
+                            draggedItem.classList.remove('incorrect');
+                            draggedItem.classList.add('correct');
+                            draggedItem.draggable = false;
+                        }
+                    }
+                });
+            });
+        });
+    }
+
   
   function toggleQnaPanel() {
     const nameOverlay = document.getElementById('name-entry-overlay');
@@ -1401,7 +1379,16 @@ function startApp() {
 
     speechSynthesis.speak(utterance);
   }
-  
+
+  function revealPollAnswer(pollId, correctIndex) {
+    const pollEl = document.querySelector(`[data-poll-id="${pollId}"]`);
+    if (!pollEl) return;
+    const correctOption = pollEl.querySelectorAll('.poll-option')[correctIndex];
+    if(correctOption) {
+        correctOption.classList.add('correct-answer');
+    }
+  }
+
   // --- GLOBAL EVENT LISTENERS ---
   document.getElementById('modalClose').addEventListener('click', hideModal);
   document.getElementById('contrast-toggle-btn').addEventListener('click', toggleHighContrast);
@@ -1434,6 +1421,7 @@ function startApp() {
   // --- WINDOW-SCOPED FUNCTIONS FOR HTML ---
   window.go = go;
   window.toggleFull = toggleFull;
+  window.toggleKeywords = toggleKeywords;
   window.openProfile = openProfile;
   window.toggleProfile = toggleProfile;
   window.submitPollVote = submitPollVote;
@@ -1444,6 +1432,7 @@ function startApp() {
   window.submitQuestion = submitQuestion;
   window.upvoteQuestion = upvoteQuestion;
   window.readSlideAloud = readSlideAloud;
+  window.revealPollAnswer = revealPollAnswer;
   
 </script>
 </body>
