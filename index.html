@@ -20,7 +20,7 @@
   .meter{color:var(--muted);font-size:.9rem}
   .bullets{margin:.6rem 0 1rem 1.1rem}
   .bullets li{margin:.35rem 0}
-  .slide-actions{display:flex; gap:.5rem; flex-wrap:wrap;}
+  .slide-actions{display:flex; gap:.5rem; flex-wrap:wrap; margin-top: 1rem;}
   .read-btn,.nav-btn,.home-btn,.grade-btn{background:linear-gradient(90deg,var(--brand),#86e3ff);color:#08121f;border:0;font-weight:700;padding:.5rem .85rem;border-radius:.45rem;cursor:pointer}
   .read-btn{background:#233046;color:var(--ink);border:1px solid var(--line)}
   .full{margin:.75rem 0 .5rem 0;line-height:1.75;color:#d9e1ee}
@@ -65,10 +65,10 @@
   .modal-head h3{margin:0;font-size:1.5rem}
   .modal-body{padding:1.2rem;line-height:1.85;font-size:18px;overflow-y:auto}
   .modal-body img{max-width:100%;height:auto;border-radius:.4rem;border:1px solid var(--line);margin:.6rem 0}
-  .modal-body.split-layout{display:flex;gap:1.5rem;align-items:flex-start}
-  .modal-body.split-layout > .modal-image-container{flex:0 0 300px;min-width:200px}
+  .modal-body.split-layout{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:flex-start}
+  .modal-body.split-layout > .modal-image-container{flex:1 1 250px;min-width:200px}
   .modal-body.split-layout img{margin:0;width:100%}
-  .modal-body.split-layout > .modal-text-container{flex:1 1 auto}
+  .modal-body.split-layout > .modal-text-container{flex:2 1 300px;}
   .modal-body h4{margin:1rem 0 .4rem;font-size:1rem;color:#ffe08a}
   .close{background:#2a3649;color:#e3eaf5;border:1px solid var(--line);padding:.4rem .8rem;border-radius:.45rem;cursor:pointer}
 
@@ -178,10 +178,12 @@
   </div>
 
   <header class="top" id="main-header">
-    <div class="app brand">
-      <h1>Lesson 9: Doo-Wop and Rhythm and Blues</h1>
-      <small>Use Next/Previous or ← → keys. Session ID: <b id="session-id-display"></b></small>
-    </div>
+    <div class="app brand" style="display:flex; align-items:center; justify-content:space-between;">
+      <div>
+        <h1>Lesson 9: Doo-Wop and Rhythm and Blues</h1>
+        <small>Use Next/Previous or ← → keys. Session ID: <b id="session-id-display"></b></small>
+      </div>
+       </div>
   </header>
   <main class="app" id="main-content">
     <div id="slides" class="slides" aria-live="polite"></div>
@@ -251,7 +253,7 @@
 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -278,14 +280,13 @@
         "id": "9.00",
         "title": "Lesson 9: Doo-Wop and Rhythm and Blues",
         "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "bullets": [],
-        "full": `<iframe title="vimeo-player" src="https://player.vimeo.com/video/762001491?h=fe0c5db381" width="100%" height="360" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen style="aspect-ratio: 16/9; width: 100%; height: auto;"></iframe>`,
+        "bullets": ["Watch this short video for an overview of this chapter's content."],
+        "full": `<div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem;'><iframe src='https://vimeo.com/762001491' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allow='fullscreen' allowfullscreen title='Chapter Synopsis Video'></iframe></div>`,
         "deep": []
     },
     {
         "id": "9.01",
         "title": "9.01 Introduction",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
         "bullets": [
             "In the 1940s and 1950s, while mainstream white audiences listened to traditional pop, black audiences enjoyed gospel, doo-wop, and rhythm and blues.",
             "These genres, rooted in blues and jazz, were categorized by record companies as 'race records' and later as 'rhythm and blues'.",
@@ -297,8 +298,7 @@
     {
         "id": "9.02",
         "title": "9.02 Gospel Music",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
-         "bullets": [
+        "bullets": [
             "During the <b>Great Migration</b>, churches became essential community centers for African Americans moving to the urban North.",
             "<b>Gospel Music</b>, the soundtrack for these churches, featured instrumental accompaniment and improvisation.",
             "It was influenced by the <b>Holiness-Pentecostal Movement</b>, which encouraged enthusiastic congregational participation.",
@@ -316,19 +316,21 @@
                 "title": "Thomas A. Dorsey (1899-1993)",
                 "image": "https://i.imgur.com/smPGy0i.jpeg",
                 "altText": "A black and white photo of Thomas A. Dorsey, the father of black gospel music, sitting at a piano.",
+                "fullText": "Thomas Andrew Dorsey, the “father of black gospel music,” began his career as a blues pianist in Chicago under the name 'Georgia Tom'. While he had composed gospel music since the early 1920s, he did not turn exclusively to the genre until the early 1930s. In 1932 he became Director of Gospel Choirs at the Pilgrim Baptist Church in Chicago and composed the classic, “Precious Lord, Take My Hand.” Dorsey combined the energy of blues and jazz with the sacred lyrics and ecstatic singing style of black religious music. Though initially met with resistance for being 'the devil’s music,' Dorsey’s style became the predominant form of black religious music in America. He and Mahalia Jackson promoted his music on street corners, selling sheet music directly to the public. His songs became so popular they were simply called 'Dorseys'.",
                 "bullets": [
-                    "Began his career as a blues pianist known as “Georgia Tom.”",
-                    "Combined the energy of blues/jazz with sacred lyrics.",
-                    "His style was initially rejected by churches for its secular sound, being called 'the devil's music'.",
-                    "Promoted his music with singer Mahalia Jackson by performing on street corners and selling sheet music directly to passersby.",
-                    "His compositions, like 'Precious Lord, Take My Hand,' became so popular they were simply called 'Dorseys'."
+                    "Began as a blues pianist known as “Georgia Tom.”",
+                    "Combined blues/jazz idioms with sacred lyrics.",
+                    "His style was initially rejected by churches for its secular sound.",
+                    "Promoted his music with singer Mahalia Jackson, selling sheet music on street corners.",
+                    "Composed the classic 'Precious Lord, Take My Hand,' which became an anthem of the Civil Rights Movement."
                 ],
                 "media": [
                     {"label": "Read More: About Thomas Dorsey", "href": "https://www.pbs.org/thisfarbyfaith/people/thomas_dorsey.html"},
                     {"label": "Listen: 'Precious Lord, Take My Hand'", "href": "https://open.spotify.com/track/2BPMz5V0g0uw9phgqjY7se?si=c7249f9f9d5a4c83"},
-                    {"label": "Watch: Aretha Franklin sings at Mahalia Jackson's funeral", "href": "https://youtu.be/aiFlfAs4Ifg?si=CPxFNV4WZfkMZCr-"}
+                    {"label": "Watch: Aretha Franklin sings at Mahalia Jackson's funeral", "href": "https://youtu.be/aiFlfAs4Ifg?si=CPxFNV4WZfkMZCr-"},
+                    {"label": "Watch: Example of Melisma", "href": "https://youtu.be/PRS2grauL4I?si=SMd3mR_qPnvN4dOu"}
                 ]
-              }
+            }
         ],
         "poll": {
             "q": "What was Thomas A. Dorsey's method for promoting his new gospel music?",
@@ -339,7 +341,6 @@
     {
         "id": "9.03",
         "title": "9.03 Vocal Harmony Groups (Doo-Wop)",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
         "bullets": [
             "<b>Doo-wop</b> groups, often called 'street corner groups,' were popular after WWII, typically featuring four male singers.",
             "The name comes from their use of <b>vocables</b>—non-semantic syllables like 'doo-doo-wop'—that provided a rhythmic background.",
@@ -357,25 +358,25 @@
                 "title": "The Ink Spots",
                 "image": "https://i.imgur.com/FBDjnuG.jpeg",
                 "altText": "A photo of the four members of The Ink Spots vocal group in matching suits.",
+                "fullText": "The Ink Spots were one of the most influential vocal groups of all time. Formed in the early 1930s, their unique sound, often called the 'Top and Bottom' style, was defined by Bill Kenny's floating high tenor lead vocals contrasted with Hoppy Jones's deep, spoken bass interludes, known as a 'talking chorus.' This formula, along with their signature muted guitar intro, made their music instantly identifiable and was copied by countless groups that followed. Their 1939 recording of 'If I Didn't Care' became a massive hit and solidified their place in music history, influencing the birth of doo-wop and the evolution of soul music.",
                  "bullets": [
                     "Pioneered a 'Top and Bottom' style with a high tenor lead and a spoken bass part.",
                     "Their 1939 hit 'If I Didn't Care' sold over 19 million copies and is one of the best-selling singles of all time.",
                     "Their musical formula and smooth harmonies were a major influence on the development of doo-wop, R&B, and early rock and roll.",
                     "Featured a signature guitar introduction in many of their songs, a simple arpeggio that made their music instantly recognizable."
-                ],
-                "fullText": "The Ink Spots were one of the most influential vocal groups of all time. Formed in the early 1930s, their unique sound, often called the 'Top and Bottom' style, was defined by Bill Kenny's floating high tenor lead vocals contrasted with Hoppy Jones's deep, spoken bass interludes, known as a 'talking chorus.' This formula, along with their signature muted guitar intro, made their music instantly identifiable and was copied by countless groups that followed. Their 1939 recording of 'If I Didn't Care' became a massive hit and solidified their place in music history, influencing the birth of doo-wop and the evolution of soul music."
+                ]
             },
             {
                 "title": "The Chords",
                 "image": "https://i.imgur.com/S0Chlya.jpeg",
                 "altText": "A photo of the five members of The Chords doo-wop group.",
+                "fullText": "The Chords were a doo-wop group from the Bronx best known for their groundbreaking 1954 hit 'Sh-Boom'. The song was revolutionary for its time, blending an upbeat swing with doo-wop harmonies and an exuberant saxophone solo. It is widely considered one of the very first rock and roll records. 'Sh-Boom' became a major R&B hit, but its crossover to the pop charts was largely achieved through a more 'sanitized' cover version by The Crew-Cuts. This pattern of white artists covering Black R&B songs would become a common, and often controversial, practice in the early days of rock and roll.",
                 "bullets": [
                     "An R&B and doo-wop group from The Bronx, New York.",
                     "Their 1954 hit 'Sh-Boom' is often cited as one of the first rock and roll songs.",
                     "The song featured a standard doo-wop progression, a catchy sax solo, and an infectious, upbeat energy that crossed over to white audiences.",
                     "While their version was a #3 R&B hit, a more polished cover version by the white Canadian group The Crew-Cuts went to #1 on the pop charts."
                 ],
-                "fullText": "The Chords were a doo-wop group from the Bronx best known for their groundbreaking 1954 hit 'Sh-Boom'. The song was revolutionary for its time, blending an upbeat swing with doo-wop harmonies and an exuberant saxophone solo. It is widely considered one of the very first rock and roll records. 'Sh-Boom' became a major R&B hit, but its crossover to the pop charts was largely achieved through a more 'sanitized' cover version by The Crew-Cuts. This pattern of white artists covering Black R&B songs would become a common, and often controversial, practice in the early days of rock and roll.",
                 "media": [{"label": "Listen: 'Sh-Boom (Life Could Be A Dream)'", "href": "https://open.spotify.com/track/0mWb7GqTPkzCkNsZ1XLOgw?si=b5526cb41ffb4cf4"}]
             }
         ],
@@ -388,7 +389,6 @@
     {
         "id": "9.04",
         "title": "9.04 Early Rhythm and Blues",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
         "bullets": [
             "In 1949, Billboard renamed its 'race records' chart to 'rhythm and blues,' a catchall term for various Black music genres.",
             "As large swing orchestras declined after WWII, smaller combos playing <b>jump blues</b> became popular.",
@@ -405,6 +405,7 @@
                 "title": "Louis Jordan (1908-1975)",
                 "image": "https://i.imgur.com/N1ugU9q.jpeg",
                 "altText": "A charismatic photo of Louis Jordan playing the saxophone.",
+                "fullText": "One of the most influential rhythm and blues performers of the 1940s, Louis Jordan founded the Tympani Five in 1938. His band adapted the lively tempos of swing music to a smaller group, a style called jump blues. With their heavy boogie rhythms, strong backbeat, and preference for humor, songs such as “Saturday Night Fish Fry” and “Ain’t Nobody Here But Us Chickens” rocketed up the charts, appealing to black and white audiences alike. His high-energy performances and charismatic stage presence would be adapted by rock and roll artists of the 1950s.",
                 "bullets": [
                     "Founded the Tympani Five, a popular 'jump blues' band.",
                     "His records consistently occupied the race records charts throughout the 1940s.",
@@ -414,16 +415,9 @@
                 "media": [
                     {"label": "Listen: 'Is You Is, Or Is You Ain't Ma Baby?'", "href": "https://open.spotify.com/track/09rSNL11dDpPjZEAIQVPka?si=dca8e15a705d4a4e"},
                     {"label": "Listen: 'Let the Good Times Roll'", "href": "https://open.spotify.com/track/50y6y3iwBlKKev2U4a6GK5?si=264b998eaf8e432c"},
-                    {"label": "Watch: 'Saturday Night Fish Fry'", "href": "https://youtu.be/FCkFrff__QE?si=7iRTMvpIu1EsHK6U"}
+                    {"label": "Watch: 'Saturday Night Fish Fry'", "href": "https://youtu.be/FCkFrff__QE?si=7iRTMvpIu1EsHK6U"},
+                    {"label": "Watch: Bio Documentary", "href": "https://www.youtube.com/watch?v=iReE7xx1nxc&t=487s"}
                 ]
-            },
-            {
-              "title": "Then and Now: The Influence of Jump Blues",
-              "fullText": "The high-energy, horn-driven sound of Louis Jordan's jump blues directly influenced not only early rock and roll but also the swing revival movement of the 1990s. Listen to the similarities in instrumentation, rhythmic drive, and showmanship.",
-              "media": [
-                  {"label": "Then: Louis Jordan - 'Choo Choo Ch'Boogie'", "href": "https://open.spotify.com/track/4vPJK1gKyygRS2mep7iyDq?si=813209c5ebb343ca"},
-                  {"label": "Now: Brian Setzer Orchestra - 'Jump, Jive, an' Wail'", "href": "https://open.spotify.com/track/2atCRcyJp3f93a3A9a2iN5?si=89bb74b34b154e1a"}
-              ]
             }
         ],
         "poll": {
@@ -435,7 +429,6 @@
     {
         "id": "9.05",
         "title": "9.05 From Gospel to Rhythm and Blues",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
         "bullets": [
             "Ray Charles was a pivotal artist who masterfully blended gospel music with secular R&B lyrics.",
             "Losing his sight at age seven, he learned to read and write music in Braille.",
@@ -457,23 +450,16 @@
                 ],
                 "media": [
                     {"label": "Listen: 'I Got a Woman'", "href": "https://open.spotify.com/track/2xar08Fq5xra2KKZs5Bw9j?si=6284a2faf7c04c66"},
-                    {"label": "Listen: 'What'd I Say'", "href": "https://open.spotify.com/track/5yQ9iMZXGcr5rlO4hoLsP4?si=81aa1f6106a24add"}
+                    {"label": "Listen: 'What'd I Say'", "href": "https://open.spotify.com/track/5yQ9iMZXGcr5rlO4hoLsP4?si=81aa1f6106a24add"},
+                    {"label": "Watch: 'Shake a Tail Feather'", "href": "https://youtu.be/qdbrIrFxas0?si=UwUWr1u0JB27NATf"},
+                    {"label": "Watch: Bio Documentary", "href": "https://youtu.be/0XtF8zI3WMg?si=EKN-ox_9QflGNuir"}
                 ]
-            },
-            {
-              "title": "Then and Now: The Influence of Gospel on R&B",
-              "fullText": "Ray Charles's controversial but brilliant fusion of gospel's passion with secular themes paved the way for soul music and continues to influence modern R&B and pop artists who draw on gospel vocal techniques and chord progressions.",
-              "media": [
-                  {"label": "Then: Ray Charles - 'I Got a Woman'", "href": "https://open.spotify.com/track/2xar08Fq5xra2KKZs5Bw9j?si=6284a2faf7c04c66"},
-                  {"label": "Now: John Legend - 'All of Me'", "href": "https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a?si=b307409244fd4a31"}
-              ]
             }
         ]
     },
     {
         "id": "9.06",
         "title": "9.06 Rhythm and Blues Crosses Over",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
         "bullets": [
             "A <b>crossover</b> hit is a song that charts on at least two of the three main charts: pop, R&B, and country.",
             "Chuck Berry, a father of rock and roll, created a crossover style by blending R&B with a country and western vocal delivery.",
@@ -489,6 +475,7 @@
                 "title": "Chuck Berry (1926-2017)",
                 "image": "https://i.imgur.com/cMgydDS.jpeg",
                 "altText": "A classic photo of Chuck Berry mid-performance, playing his electric guitar and doing his famous 'duck walk'.",
+                 "fullText": "Chuck Berry is the single most important guitarist in early rock and roll. On a trip to Chicago in 1955, he met Leonard Chess of Chess Records, a relationship that launched Berry’s career. He recorded his first hit—a cover of a country song named “Ida Red,” which Berry changed to “Maybellene”—in 1955. He went on to record such hits as “Roll Over Beethoven,” “School Days,” and “Johnny B. Goode.” His charismatic stage presence and signature “duck walk” made him equally popular as a live performer. His vocal delivery was so influenced by country singers that many listeners were surprised to learn that he was black.",
                 "bullets": [
                     "The most important guitarist in early rock and roll.",
                     "His first hit, 'Maybellene' (1955), was a reworking of the country song 'Ida Red.'",
@@ -496,6 +483,7 @@
                     "His song 'Johnny B. Goode' was included on the golden record aboard the Voyager spacecraft."
                 ],
                 "media": [
+                    {"label": "Read More: Rock & Roll Hall of Fame Bio", "href": "https://rockhall.com/inductees/chuck-berry/"},
                     {"label": "Listen: 'Maybellene'", "href": "https://open.spotify.com/track/3SQhmctWreNM0X6Zkm2K5R?si=cad1544a67bf4f10"},
                     {"label": "Listen: 'Johnny B. Goode'", "href": "https://open.spotify.com/track/2QfiRTz5Yc8DdShCxG1tB2?si=6d4ad5d0c03d45e6"},
                     {"label": "Listen: 'Roll Over Beethoven'", "href": "https://open.spotify.com/track/6C7aTTCUWRK7dD379yUT3W?si=d2761b0cdcbd490d"}
@@ -509,36 +497,34 @@
         }
     },
     {
-      "id": "9.06b",
-      "title": "Interactive Activity: Build a Blues Verse",
-      "headerImage": "https://i.imgur.com/4uodWhO.png",
-      "bullets": [],
-      "full": "",
-      "deep": [],
-      "buildaband": {
-          "correct": [
-              "Woke up this mornin', feelin' sad and blue.",
-              "I said, I woke up this mornin', feelin' sad and blue.",
-              "My baby left me, now I don't know what to do."
-          ],
-          "distractors": [
-              "The sun is shining bright today.",
-              "I think I'll go out for a walk.",
-              "She said she'd call me yesterday."
-          ],
-          "bandAreaTitle": "Your Blues Verse",
-          "poolTitle": "Lyrical Lines",
-          "customDropzones": [
-              {"title": "Line 1 (A)", "accepts": ["Woke up this mornin', feelin' sad and blue."]},
-              {"title": "Line 2 (A - Repeat)", "accepts": ["I said, I woke up this mornin', feelin' sad and blue."]},
-              {"title": "Line 3 (B - Rhyme/Response)", "accepts": ["My baby left me, now I don't know what to do."]}
-          ]
-      }
+        "id": "9.06b",
+        "title": "Interactive Activity: Build a Blues Verse",
+        "bullets": ["The 12-bar blues often follows an AAB lyrical pattern. Drag the lines from the pool into the correct slots to create a classic blues verse."],
+        "full": "",
+        "deep": [],
+        "buildaband": {
+            "correct": [
+                "Woke up this mornin', feelin' sad and blue.",
+                "I said, I woke up this mornin', feelin' sad and blue.",
+                "My baby left me, now I don't know what to do."
+            ],
+            "distractors": [
+                "The sun is shining bright today.",
+                "I think I'll go out for a walk.",
+                "She said she'd call me yesterday."
+            ],
+            "bandAreaTitle": "Build a Blues Verse",
+            "poolTitle": "Lyrical Lines",
+            "customDropzones": [
+                {"title": "Line 1 (A)", "accepts": ["Woke up this mornin', feelin' sad and blue."]},
+                {"title": "Line 2 (A - Repeat)", "accepts": ["I said, I woke up this mornin', feelin' sad and blue."]},
+                {"title": "Line 3 (B - Rhyme/Response)", "accepts": ["My baby left me, now I don't know what to do."]}
+            ]
+        }
     },
     {
         "id": "9.07",
         "title": "9.07 Conclusion",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
         "bullets": [
             "Gospel, doo-wop, and rhythm and blues were distinct but related genres of African American music popular in the 1940s and 50s.",
             "Initially marketed as 'race records,' this music began to cross over to white audiences via radio.",
@@ -625,9 +611,18 @@
     }
   });
   
-  function initializeInteractiveFeatures(){
+  async function initializeInteractiveFeatures(){
     if(!sessionId) return;
     sessionDataPath = `/artifacts/${appId}/public/data/sessions/${sessionId}`;
+    
+    // Add user to the session roster
+    try {
+        const userRef = doc(db, `${sessionDataPath}/attendees/${userId}`);
+        await setDoc(userRef, { name: userName, joinedAt: new Date() });
+    } catch (error) {
+        console.error("Could not record attendance:", error);
+    }
+
     setupNavigationListener();
     setupQuizBattleListener();
     setupPollListeners();
@@ -713,6 +708,13 @@ function startApp() {
     }
     
     render();
+    
+    if (isPresenter) {
+        const header = document.querySelector('#main-header .brand');
+        if (header) {
+            header.insertAdjacentHTML('beforeend', `<button class="read-btn" onclick="showAttendanceRoster()">View Roster</button>`);
+        }
+    }
 
     document.getElementById('session-overlay').classList.add('hidden');
     document.getElementById('name-entry-overlay').classList.add('hidden');
@@ -1026,7 +1028,7 @@ function startApp() {
     const items = deep.map((d,di)=>{
       const contentId = `profile-content-${sectionIdx}-${di}`;
       
-      const bulletsHTML = (d.bullets||[]).length > 0 ? `<h4>Key points</h4><ul>${(d.bullets||[]).map(b=>`<li>${b}</li>`).join('')}</ul>` : '';
+      const bulletsHTML = (d.bullets||[]).length > 0 ? `<h4>Fun Facts</h4><ul>${(d.bullets||[]).map(b=>`<li>${b}</li>`).join('')}</ul>` : '';
       
       let mediaContent = (d.media||[]).map(m=> {
           if (m.href) {
@@ -1042,17 +1044,15 @@ function startApp() {
       if (d.image) {
           fullContentHTML = `
               <div style="text-align: left;">
-                  <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
-                      <div style="flex: 1 1 250px; min-width: 200px;">
-                          <img alt="${d.altText || d.title}" src="${d.image}" style="width: 100%; height: auto; border-radius: .4rem;">
-                      </div>
-                      <div style="flex: 2 1 300px;">
-                          ${bulletsHTML}
-                          ${mediaHTML}
-                      </div>
-                  </div>
-                  <div>
-                      ${fullTextHTML}
+                  <div class="modal-body split-layout">
+                        <div class="modal-image-container">
+                            <img alt="${d.altText || d.title}" src="${d.image}" style="width: 100%; height: auto; border-radius: .4rem;">
+                        </div>
+                        <div class="modal-text-container">
+                            ${fullTextHTML}
+                            ${bulletsHTML}
+                            ${mediaHTML}
+                        </div>
                   </div>
               </div>`;
       } else {
@@ -1070,67 +1070,67 @@ function startApp() {
     return `<ul class="deep-list">${items}</ul>`;
   }
   
-    function pollHTML(check, slideId) {
-        if (!check) return '';
-        const pollId = `poll-${slideId}`;
-        const choices = check.choices.map((opt, ci) => `
-            <div class="poll-option">
-                <div class="poll-bar"></div>
-                <span class="poll-percent">0%</span>
-                <button onclick="submitPollVote('${pollId}', ${ci})">${opt}</button>
-            </div>
-        `).join('');
+   function pollHTML(check, slideId) {
+       if (!check) return '';
+       const pollId = `poll-${slideId}`;
+       const choices = check.choices.map((opt, ci) => `
+           <div class="poll-option">
+               <div class="poll-bar"></div>
+               <span class="poll-percent">0%</span>
+               <button onclick="submitPollVote('${pollId}', ${ci})">${opt}</button>
+           </div>
+       `).join('');
 
-        const revealBtn = isPresenter ? `<button class="read-btn" style="margin-top:1rem;" onclick="revealPollAnswer('${pollId}', ${check.answer})">Reveal Answer</button>` : '';
+       const revealBtn = isPresenter ? `<button class="read-btn" style="margin-top:1rem;" onclick="revealPollAnswer('${pollId}', ${check.answer})">Reveal Answer</button>` : '';
 
-        return `
-            <div class="poll interactive-section" data-poll-id="${pollId}">
-                <h3>Test Your Knowledge</h3>
-                <p>${check.q}</p>
-                <div class="choices">${choices}</div>
-                ${revealBtn}
-            </div>
-        `;
-    }
+       return `
+           <div class="poll interactive-section" data-poll-id="${pollId}">
+               <h3>Test Your Knowledge</h3>
+               <p>${check.q}</p>
+               <div class="choices">${choices}</div>
+               ${revealBtn}
+           </div>
+       `;
+   }
 
-    function buildABandHTML(data, slideId) {
-      if (!data) return '';
-      const containerId = `dnd-container-${slideId}`;
-  
-      if (data.customDropzones && data.customDropzones.length > 0) {
-          const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
-          const instrumentHTML = instruments.map(inst => `<div class="instrument" draggable="true" data-instrument="${inst}">${inst}</div>`).join('');
-          
-          const dropzoneHTML = data.customDropzones.map(zone => 
-              `<div class="band-area" data-accepts='${JSON.stringify(zone.accepts)}'><h4>${zone.title}</h4></div>`
-          ).join('');
-  
-          return `
-              <div id="${containerId}" class="interactive-section build-a-band-container">
-                  <h3>${data.bandAreaTitle || 'Build a Band'}</h3>
-                   <p>Drag each line from the pool on the left into the correct slot to build a blues verse.</p>
-                  <div class="build-a-band">
-                      <div class="instrument-pool" style="flex: 2;"><h4>${data.poolTitle || 'Items'}</h4>${instrumentHTML}</div>
-                      <div style="flex: 3; display: flex; flex-direction: column; gap: 1rem;">${dropzoneHTML}</div>
-                  </div>
-              </div>
-          `;
-      }
-      
-      // Fallback for simple drag and drop
-      const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
-      const instrumentHTML = instruments.map(inst => `<div class="instrument" draggable="true" data-instrument="${inst}">${inst}</div>`).join('');
-      return `
-          <div id="${containerId}" class="interactive-section build-a-band-container">
-              <h3>Interactive Activity</h3>
-              <p>Drag the correct items into the group area.</p>
-              <div class="build-a-band">
-                  <div class="instrument-pool"><h4>Items</h4>${instrumentHTML}</div>
-                  <div class="band-area" data-correct='${JSON.stringify(data.correct)}'><h4>Group Area</h4></div>
-              </div>
-          </div>
-      `;
-    }
+   function buildABandHTML(data, slideId) {
+     if (!data) return '';
+     const containerId = `dnd-container-${slideId}`;
+ 
+     if (data.customDropzones && data.customDropzones.length > 0) {
+         const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
+         const instrumentHTML = instruments.map(inst => `<div class="instrument" draggable="true" data-instrument="${inst}">${inst}</div>`).join('');
+         
+         const dropzoneHTML = data.customDropzones.map(zone => 
+             `<div class="band-area" data-accepts='${JSON.stringify(zone.accepts)}'><h4>${zone.title}</h4></div>`
+         ).join('');
+
+         return `
+             <div id="${containerId}" class="interactive-section build-a-band-container">
+                 <h3>${data.bandAreaTitle || 'Interactive Activity'}</h3>
+                 <p>Drag each item from the pool into the correct slot.</p>
+                 <div class="build-a-band">
+                     <div class="instrument-pool" style="flex: 2;"><h4>${data.poolTitle || 'Items'}</h4>${instrumentHTML}</div>
+                     <div style="flex: 3; display: flex; flex-direction: column; gap: 1rem;">${dropzoneHTML}</div>
+                 </div>
+             </div>
+         `;
+     }
+     
+     // Fallback for simple drag and drop
+     const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
+     const instrumentHTML = instruments.map(inst => `<div class="instrument" draggable="true" data-instrument="${inst}">${inst}</div>`).join('');
+     return `
+         <div id="${containerId}" class="interactive-section build-a-band-container">
+             <h3>Interactive Activity</h3>
+             <p>Drag the correct items into the group area.</p>
+             <div class="build-a-band">
+                 <div class="instrument-pool"><h4>Items</h4>${instrumentHTML}</div>
+                 <div class="band-area" data-correct='${JSON.stringify(data.correct)}'><h4>Group Area</h4></div>
+             </div>
+         </div>
+     `;
+   }
 
   function wordCloudHTML(data) {
     if (!data) return '';
@@ -1185,8 +1185,8 @@ function startApp() {
           ${headerImage}
           <ul class="bullets">${bullets}</ul>
            <div class="slide-actions">
-                ${s.full ? `<button class="read-btn" onclick="toggleFull(${idx})">Read Full Text</button>` : ''}
-                ${s.keywords ? `<button class="read-btn" onclick="toggleKeywords(${idx})">Keywords</button>` : ''}
+               ${s.full ? `<button class="read-btn" onclick="toggleFull(${idx})">Read Full Text</button>` : ''}
+               ${s.keywords ? `<button class="read-btn" onclick="toggleKeywords(${idx})">Keywords</button>` : ''}
            </div>
           <article id="full-${idx}" class="full" hidden>${s.full}</article>
           <article id="keywords-${idx}" class="full" hidden>${keywordsHTML}</article>
@@ -1229,35 +1229,7 @@ function startApp() {
   }
 
   let lastFocused = null;
-  function openProfile(sectionIdx, cardIdx){
-    const d = SLIDES[sectionIdx].deep[cardIdx];
-    const modal = document.getElementById('modal');
-    const mBody = document.getElementById('m-body');
-    const scrim = document.getElementById('scrim');
-    const title = d.modalTitle || d.title;
-    const baseBullets = (d.bullets||[]).map(b=>`<li>${b}</li>`).join('');
-    const media = (d.media||[]).map(m=>`<li><a href="${m.href}" target="_blank" rel="noopener">${m.label}</a></li>`).join('');
-    const extended = d.modalHTML || '';
-    const extra = EXTRA[d.title] || [];
-    const extraHTML = extra.length ? `<h4>Additional notes</h4><ul>${extra.map(x=>`<li>${x}</li>`).join('')}</ul>` : '';
-    const summaryHTML = d.summary?`<p>${d.summary}</p>`:'';
-    const bulletsHTML = baseBullets?`<h4>Key points</h4><ul>${baseBullets}</ul>`:'';
-    const mediaHTML = media?`<h4>Media</h4><ul class="media">${media}</ul>`:'';
-    document.getElementById('m-title').textContent = title;
-    if (d.image) {
-        mBody.className = 'modal-body split-layout';
-        mBody.innerHTML = `<div class="modal-image-container"><img alt="${d.altText || d.title}" src="${d.image}"></div><div class="modal-text-container">${summaryHTML}${bulletsHTML}${extraHTML}${mediaHTML}${extended}</div>`;
-    } else {
-        mBody.className = 'modal-body';
-        mBody.innerHTML = `${summaryHTML}${bulletsHTML}${extraHTML}${mediaHTML}${extended}`;
-    }
-    lastFocused = document.activeElement;
-    document.body.classList.add('modal-open');
-    scrim.classList.add('active');
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden','false');
-    document.getElementById('modalClose').focus();
-  }
+  
   function hideModal(){
     const modal = document.getElementById('modal');
     const scrim = document.getElementById('scrim');
@@ -1313,70 +1285,70 @@ function startApp() {
     }
   }
   
-    function setupDragAndDrop() {
-        document.querySelectorAll('.build-a-band-container').forEach(container => {
-            const instruments = container.querySelectorAll('.instrument');
-            const simpleDropzone = container.querySelector('.band-area[data-correct]');
-            const customDropzones = container.querySelectorAll('.band-area[data-accepts]');
-            const pool = container.querySelector('.instrument-pool');
-            let draggedItem = null;
+  function setupDragAndDrop() {
+      document.querySelectorAll('.build-a-band-container').forEach(container => {
+          const instruments = container.querySelectorAll('.instrument');
+          const simpleDropzone = container.querySelector('.band-area[data-correct]');
+          const customDropzones = container.querySelectorAll('.band-area[data-accepts]');
+          const pool = container.querySelector('.instrument-pool');
+          let draggedItem = null;
 
-            instruments.forEach(inst => {
-                inst.addEventListener('dragstart', e => {
-                    draggedItem = e.target;
-                    setTimeout(() => e.target.style.opacity = '0.5', 0);
-                });
-                inst.addEventListener('dragend', () => {
-                   setTimeout(() => {
-                        if (draggedItem) {
-                           draggedItem.style.opacity = '1';
-                           draggedItem = null;
-                        }
-                   }, 0);
-                });
-            });
-            
-            const allDropzones = simpleDropzone ? [simpleDropzone, pool] : [...customDropzones, pool];
-            allDropzones.forEach(zone => {
-                if (!zone) return;
-                zone.addEventListener('dragover', e => {
-                    e.preventDefault();
-                    zone.classList.add('drag-over');
-                });
-                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-                zone.addEventListener('drop', e => {
-                    e.preventDefault();
-                    zone.classList.remove('drag-over');
-                    if (!draggedItem) return;
+          instruments.forEach(inst => {
+              inst.addEventListener('dragstart', e => {
+                  draggedItem = e.target;
+                  setTimeout(() => e.target.style.opacity = '0.5', 0);
+              });
+              inst.addEventListener('dragend', () => {
+                  setTimeout(() => {
+                      if (draggedItem) {
+                          draggedItem.style.opacity = '1';
+                          draggedItem = null;
+                      }
+                  }, 0);
+              });
+          });
+          
+          const allDropzones = simpleDropzone ? [simpleDropzone, pool] : [...customDropzones, pool];
+          allDropzones.forEach(zone => {
+              if (!zone) return;
+              zone.addEventListener('dragover', e => {
+                  e.preventDefault();
+                  zone.classList.add('drag-over');
+              });
+              zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+              zone.addEventListener('drop', e => {
+                  e.preventDefault();
+                  zone.classList.remove('drag-over');
+                  if (!draggedItem) return;
 
-                    const instrumentName = draggedItem.dataset.instrument;
+                  const instrumentName = draggedItem.dataset.instrument;
 
-                    if (zone.classList.contains('instrument-pool')) {
-                        zone.appendChild(draggedItem);
-                        draggedItem.classList.remove('correct', 'incorrect');
-                        draggedItem.draggable = true;
-                        return;
-                    }
+                  if (zone.classList.contains('instrument-pool')) {
+                      zone.appendChild(draggedItem);
+                      draggedItem.classList.remove('correct', 'incorrect');
+                      draggedItem.draggable = true;
+                      return;
+                  }
 
-                    if (zone.dataset.correct) {
-                        const correctInstruments = JSON.parse(zone.dataset.correct);
-                        zone.appendChild(draggedItem);
-                        draggedItem.classList.remove('incorrect');
-                        draggedItem.classList.add(correctInstruments.includes(instrumentName) ? 'correct' : 'incorrect');
-                    }
-                    else if (zone.dataset.accepts) {
-                        const acceptedTypes = JSON.parse(zone.dataset.accepts);
-                        if (acceptedTypes.includes(instrumentName)) {
-                            zone.appendChild(draggedItem);
-                            draggedItem.classList.remove('incorrect');
-                            draggedItem.classList.add('correct');
-                            draggedItem.draggable = false;
-                        }
-                    }
-                });
-            });
-        });
-    }
+                  if (zone.dataset.correct) {
+                      const correctInstruments = JSON.parse(zone.dataset.correct);
+                      zone.appendChild(draggedItem);
+                      draggedItem.classList.remove('incorrect');
+                      draggedItem.classList.add(correctInstruments.includes(instrumentName) ? 'correct' : 'incorrect');
+                  }
+                  else if (zone.dataset.accepts) {
+                      const acceptedTypes = JSON.parse(zone.dataset.accepts);
+                      if (acceptedTypes.includes(instrumentName) && zone.children.length < 2) { // only allow one item per custom dropzone + h4 title
+                          zone.appendChild(draggedItem);
+                          draggedItem.classList.remove('incorrect');
+                          draggedItem.classList.add('correct');
+                          draggedItem.draggable = false;
+                      }
+                  }
+              });
+          });
+      });
+  }
 
   
   function toggleQnaPanel() {
@@ -1453,6 +1425,38 @@ function startApp() {
     }
   }
 
+  async function showAttendanceRoster() {
+      if (!isPresenter) return;
+      const attendeesRef = collection(db, `${sessionDataPath}/attendees`);
+      const snapshot = await getDocs(query(attendeesRef, orderBy("joinedAt")));
+      let attendeesHTML = '<ul style="list-style:none; padding:0; text-align:left;">';
+      let count = 0;
+      snapshot.forEach(doc => {
+          const data = doc.data();
+          const joinTime = data.joinedAt.toDate().toLocaleTimeString();
+          attendeesHTML += `<li><strong>${data.name}</strong> <small>(${joinTime})</small></li>`;
+          count++;
+      });
+      attendeesHTML += '</ul>';
+
+      openModalWithContent(`Session Roster (${count} attendees)`, attendeesHTML);
+  }
+
+  function openModalWithContent(title, content) {
+    const modal = document.getElementById('modal');
+    const mBody = document.getElementById('m-body');
+    const scrim = document.getElementById('scrim');
+    document.getElementById('m-title').textContent = title;
+    mBody.className = 'modal-body';
+    mBody.innerHTML = content;
+    lastFocused = document.activeElement;
+    document.body.classList.add('modal-open');
+    scrim.classList.add('active');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden','false');
+    document.getElementById('modalClose').focus();
+  }
+
   // --- GLOBAL EVENT LISTENERS ---
   document.getElementById('modalClose').addEventListener('click', hideModal);
   document.getElementById('contrast-toggle-btn').addEventListener('click', toggleHighContrast);
@@ -1497,6 +1501,7 @@ function startApp() {
   window.upvoteQuestion = upvoteQuestion;
   window.readSlideAloud = readSlideAloud;
   window.revealPollAnswer = revealPollAnswer;
+  window.showAttendanceRoster = showAttendanceRoster;
   
 </script>
 </body>
