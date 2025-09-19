@@ -36,9 +36,9 @@
   .slide-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:1rem;gap:.5rem}
   .home-btn{justify-self:center;background:#334055;color:var(--ink);border:1px solid var(--line)}
 
-  .quiz-battle-container{display:flex;gap:1.5rem;align-items:flex-start}
-  .quiz-main{flex:1 1 60%}
-  .leaderboard{flex:1 1 35%;background:#131622;border-radius:.45rem;padding:1rem;border:1px solid var(--line)}
+  .quiz-battle-container{display:flex;flex-wrap: wrap;gap:1.5rem;align-items:flex-start}
+  .quiz-main{flex:1 1 60%; min-width: 300px;}
+  .leaderboard{flex:1 1 35%; min-width: 280px; background:#131622;border-radius:.45rem;padding:1rem;border:1px solid var(--line)}
   .leaderboard-list li{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--line);align-items:center}
   .leaderboard-list li:last-child{border-bottom:0}
   .leaderboard-list .player-name{font-size:.9em;color:var(--muted)}
@@ -76,7 +76,7 @@
   .interactive-section h3{color:var(--accent);margin-bottom:1rem}
 
   .poll-option{position:relative;margin-bottom:.5rem;background:#131622;border-radius:.35rem;border:1px solid var(--line);overflow:hidden}
-  .poll-option button{width:100%;text-align:left;padding:.5rem .8rem;background:0 0;border:0;color:var(--ink);cursor:pointer;position:relative;z-index:2}
+  .poll-option button{width:100%;text-align:left;padding:.5rem .8rem .5rem 1rem;background:0 0;border:0;color:var(--ink);cursor:pointer;position:relative;z-index:2;box-sizing:border-box;padding-right:4rem;}
   .poll-option button:disabled{cursor:not-allowed}
   .poll-option.voted-for button{font-weight:700}
   .poll-option.correct-answer { background: rgba(6, 214, 160, .1) !important; border: 1px solid rgba(6, 214, 160, .7); }
@@ -278,8 +278,8 @@
         "id": "9.00",
         "title": "Lesson 9: Doo-Wop and Rhythm and Blues",
         "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "bullets": ["Watch this short video for an overview of this chapter's content."],
-        "full": "<div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem;'><iframe src='https://vimeo.com/762001491' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allow='fullscreen' allowfullscreen title='Chapter Synopsis Video'></iframe></div>",
+        "bullets": [],
+        "full": `<iframe title="vimeo-player" src="https://player.vimeo.com/video/762001491?h=fe0c5db381" width="100%" height="360" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen style="aspect-ratio: 16/9; width: 100%; height: auto;"></iframe>`,
         "deep": []
     },
     {
@@ -287,9 +287,9 @@
         "title": "9.01 Introduction",
         "headerImage": "https://i.imgur.com/4uodWhO.png",
         "bullets": [
-            "In the 1940s and 1950s, while white audiences listened to traditional pop, black audiences enjoyed gospel, doo-wop, and rhythm and blues.",
-            "These genres were categorized by record companies as 'race records' and later as 'rhythm and blues'.",
-            "This music began reaching white audiences due to technological advances in radio, which had no 'color lines'."
+            "In the 1940s and 1950s, while mainstream white audiences listened to traditional pop, black audiences enjoyed gospel, doo-wop, and rhythm and blues.",
+            "These genres, rooted in blues and jazz, were categorized by record companies as 'race records' and later as 'rhythm and blues'.",
+            "This music was created by and for black communities but began reaching white audiences due to technological advances like radio, which had no 'color lines'."
         ],
         "full": "While white audiences were listening to the sounds of Frank Sinatra, Patti Page, and Perry Como in the 1940s and 1950s, black listeners were consuming gospel music, doo-wop, and rhythm and blues. Although all of these genres are related to earlier styles of African American music, such as the blues, ragtime, and jazz, they all have specific features that make them unique. These sacred and secular genres were lumped together by record companies, first on race records and then on rhythm and blues, which was the new industry label for music that was created by and marketed to blacks. Technological advances in recording and broadcasting made it easier and easier to access music. As we will see, there were no color lines on the radio, which meant that white listeners began listening to rhythm and blues.",
         "deep": []
@@ -317,11 +317,11 @@
                 "image": "https://i.imgur.com/smPGy0i.jpeg",
                 "altText": "A black and white photo of Thomas A. Dorsey, the father of black gospel music, sitting at a piano.",
                 "bullets": [
-                    "Began as a blues pianist known as “Georgia Tom.”",
-                    "Combined blues/jazz idioms with sacred lyrics.",
-                    "His style was initially rejected by churches for its secular sound.",
-                    "Promoted his music with singer Mahalia Jackson, selling sheet music on street corners.",
-                    "Composed the classic 'Precious Lord, Take My Hand,' which became an anthem of the Civil Rights Movement."
+                    "Began his career as a blues pianist known as “Georgia Tom.”",
+                    "Combined the energy of blues/jazz with sacred lyrics.",
+                    "His style was initially rejected by churches for its secular sound, being called 'the devil's music'.",
+                    "Promoted his music with singer Mahalia Jackson by performing on street corners and selling sheet music directly to passersby.",
+                    "His compositions, like 'Precious Lord, Take My Hand,' became so popular they were simply called 'Dorseys'."
                 ],
                 "media": [
                     {"label": "Read More: About Thomas Dorsey", "href": "https://www.pbs.org/thisfarbyfaith/people/thomas_dorsey.html"},
@@ -329,7 +329,12 @@
                     {"label": "Watch: Aretha Franklin sings at Mahalia Jackson's funeral", "href": "https://youtu.be/aiFlfAs4Ifg?si=CPxFNV4WZfkMZCr-"}
                 ]
               }
-        ]
+        ],
+        "poll": {
+            "q": "What was Thomas A. Dorsey's method for promoting his new gospel music?",
+            "choices": ["Selling records in stores", "Performing on national radio", "Singing with Mahalia Jackson on street corners", "Starting his own television show"],
+            "answer": 2
+        }
     },
     {
         "id": "9.03",
@@ -341,7 +346,7 @@
             "A common technique was <b>blow harmony</b>, where a singer would blow into the mic while singing 'ooh-wee' to create a percussive sound.",
             "Early groups like The Ink Spots had crossover appeal, recording for major labels and performing in major venues."
         ],
-        "full": "Vocal harmony groups were popular both before and after World War II, singing a mixture of popular music, folk songs, and religious music. After WWII, these groups were often called 'street corner groups' as their style was common in urban African American neighborhoods. They came to be known as <b>Doo-wop</b> groups because they frequently used <b>vocables</b>, or non-semantic syllables like 'doo-doo-wop', to create rhythmic drive. Another technique was <b>blow harmony</b>, which was the result of a singer simultaneously blowing into the microphone and singing 'ooh-wee, ooh-wee.' These two features are the most recognizable characteristics of doo-wop music. The song 'Sh'boom' by The Chords is a classic example of the up-tempo doo-wop style.",
+        "full": "Vocal harmony groups were popular both before and after World War II, singing a mixture of popular music, folk songs, and religious music. After WWII, these groups were often called 'street corner groups' as their style was common in urban African American neighborhoods. They came to be known as <b>Doo-wop</b> groups because they frequently used <b>vocables</b>, or non-semantic syllables like 'doo-doo-wop', to create rhythmic drive. Another technique was <b>blow harmony</b>, which was the result of a singer simultaneously blowing into the microphone and singing 'ooh-wee, ooh-wee.' These two features are the most recognizable characteristics of doo-wop music. The song 'Sh-Boom' by The Chords is a classic example of the up-tempo doo-wop style.",
         "keywords": {
             "Doo-wop": "A style of vocal harmony music that emerged from 'street corner groups' in urban African American neighborhoods after WWII, incorporating harmonies from jazz and blues.",
             "Vocables": "Non-semantic syllables (e.g., 'doo-doo-wop') added to songs that provided rhythmic drive and a standard phrase for background singers.",
@@ -351,13 +356,27 @@
             {
                 "title": "The Ink Spots",
                 "image": "https://i.imgur.com/FBDjnuG.jpeg",
-                "altText": "A photo of the four members of The Ink Spots vocal group in matching suits."
+                "altText": "A photo of the four members of The Ink Spots vocal group in matching suits.",
+                 "bullets": [
+                    "Pioneered a 'Top and Bottom' style with a high tenor lead and a spoken bass part.",
+                    "Their 1939 hit 'If I Didn't Care' sold over 19 million copies and is one of the best-selling singles of all time.",
+                    "Their musical formula and smooth harmonies were a major influence on the development of doo-wop, R&B, and early rock and roll.",
+                    "Featured a signature guitar introduction in many of their songs, a simple arpeggio that made their music instantly recognizable."
+                ],
+                "fullText": "The Ink Spots were one of the most influential vocal groups of all time. Formed in the early 1930s, their unique sound, often called the 'Top and Bottom' style, was defined by Bill Kenny's floating high tenor lead vocals contrasted with Hoppy Jones's deep, spoken bass interludes, known as a 'talking chorus.' This formula, along with their signature muted guitar intro, made their music instantly identifiable and was copied by countless groups that followed. Their 1939 recording of 'If I Didn't Care' became a massive hit and solidified their place in music history, influencing the birth of doo-wop and the evolution of soul music."
             },
             {
                 "title": "The Chords",
                 "image": "https://i.imgur.com/S0Chlya.jpeg",
                 "altText": "A photo of the five members of The Chords doo-wop group.",
-                "media": [{"label": "Listen: 'Sh'boom (Life Could Be A Dream)'", "href": "https://open.spotify.com/track/0mWb7GqTPkzCkNsZ1XLOgw?si=b5526cb41ffb4cf4"}]
+                "bullets": [
+                    "An R&B and doo-wop group from The Bronx, New York.",
+                    "Their 1954 hit 'Sh-Boom' is often cited as one of the first rock and roll songs.",
+                    "The song featured a standard doo-wop progression, a catchy sax solo, and an infectious, upbeat energy that crossed over to white audiences.",
+                    "While their version was a #3 R&B hit, a more polished cover version by the white Canadian group The Crew-Cuts went to #1 on the pop charts."
+                ],
+                "fullText": "The Chords were a doo-wop group from the Bronx best known for their groundbreaking 1954 hit 'Sh-Boom'. The song was revolutionary for its time, blending an upbeat swing with doo-wop harmonies and an exuberant saxophone solo. It is widely considered one of the very first rock and roll records. 'Sh-Boom' became a major R&B hit, but its crossover to the pop charts was largely achieved through a more 'sanitized' cover version by The Crew-Cuts. This pattern of white artists covering Black R&B songs would become a common, and often controversial, practice in the early days of rock and roll.",
+                "media": [{"label": "Listen: 'Sh-Boom (Life Could Be A Dream)'", "href": "https://open.spotify.com/track/0mWb7GqTPkzCkNsZ1XLOgw?si=b5526cb41ffb4cf4"}]
             }
         ],
         "poll": {
@@ -386,7 +405,6 @@
                 "title": "Louis Jordan (1908-1975)",
                 "image": "https://i.imgur.com/N1ugU9q.jpeg",
                 "altText": "A charismatic photo of Louis Jordan playing the saxophone.",
-                "fullText": "One of the most influential rhythm and blues performers of the 1940s, Louis Jordan founded the Tympani Five in 1938. His band adapted the lively tempos of swing music to a smaller group, a style called jump blues. With their heavy boogie rhythms, strong backbeat, and preference for humor, songs such as “Saturday Night Fish Fry” and “Ain’t Nobody Here But Us Chickens” rocketed up the charts, appealing to black and white audiences alike. His high-energy performances and charismatic stage presence would be adapted by rock and roll artists of the 1950s.",
                 "bullets": [
                     "Founded the Tympani Five, a popular 'jump blues' band.",
                     "His records consistently occupied the race records charts throughout the 1940s.",
@@ -407,7 +425,12 @@
                   {"label": "Now: Brian Setzer Orchestra - 'Jump, Jive, an' Wail'", "href": "https://open.spotify.com/track/2atCRcyJp3f93a3A9a2iN5?si=89bb74b34b154e1a"}
               ]
             }
-        ]
+        ],
+        "poll": {
+            "q": "Louis Jordan's energetic, small-combo style that evolved from swing music was known as what?",
+            "choices": ["Delta Blues", "Swing Revival", "Soul Music", "Jump Blues"],
+            "answer": 3
+        }
     },
     {
         "id": "9.05",
@@ -478,7 +501,12 @@
                     {"label": "Listen: 'Roll Over Beethoven'", "href": "https://open.spotify.com/track/6C7aTTCUWRK7dD379yUT3W?si=d2761b0cdcbd490d"}
                 ]
             }
-        ]
+        ],
+        "poll": {
+            "q": "A song that becomes popular on multiple charts (e.g., pop and R&B) is known as a what?",
+            "choices": ["A Remix", "A Crossover", "A Standard", "A B-Side"],
+            "answer": 1
+        }
     },
     {
       "id": "9.06b",
@@ -558,7 +586,7 @@
     },
     {
         "q": "Which of the following songs includes vocables?",
-        "choices": ["\"Sh'boom\"", "\"I Got a Woman\"", "“Is You Is, Or Is You Ain’t My Baby?”", "\"Precious Lord, Take My Hand\""],
+        "choices": ["\"Sh-Boom\"", "\"I Got a Woman\"", "“Is You Is, Or Is You Ain’t My Baby?”", "\"Precious Lord, Take My Hand\""],
         "answer": 0
     },
     {
