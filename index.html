@@ -20,11 +20,10 @@
   .meter{color:var(--muted);font-size:.9rem}
   .bullets{margin:.6rem 0 1rem 1.1rem}
   .bullets li{margin:.35rem 0}
+  .slide-actions{display:flex; gap:.5rem; flex-wrap:wrap;}
   .read-btn,.nav-btn,.home-btn,.grade-btn{background:linear-gradient(90deg,var(--brand),#86e3ff);color:#08121f;border:0;font-weight:700;padding:.5rem .85rem;border-radius:.45rem;cursor:pointer}
   .read-btn{background:#233046;color:var(--ink);border:1px solid var(--line)}
   .full{margin:.75rem 0 .5rem 0;line-height:1.75;color:#d9e1ee}
-  .full dl dt {font-weight: bold; color: var(--accent); margin-top: .75rem;}
-  .full dl dd {margin-left: 0; }
 
   .deep-list{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin:1rem 0;list-style:none;padding:0}
   .deep-item{width:100%;display:flex;justify-content:center}
@@ -119,33 +118,56 @@
   .overlay-card button{width:100%;margin-bottom:.5rem}
   .overlay-card hr{border-color:var(--line);margin:1rem 0}
 
-  /* --- New 'Sparkle' Feature Styles --- */
-  .fun-facts { margin-top: 1rem; padding: 1rem; background: rgba(255, 209, 102, .05); border-left: 4px solid var(--accent); border-radius: .25rem; }
-  .fun-facts p { margin: .25rem 0; }
-  .fun-facts ul {padding-left: 1.2rem; margin: .5rem 0;}
-
-  .then-vs-now { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
-  .then-vs-now-card { flex: 1; min-width: 250px; background: #131622; border: 1px solid var(--line); padding: 1rem; border-radius: .45rem; }
-  .then-vs-now-card h4 { margin-top: 0; color: var(--ink); }
-  .then-vs-now-card audio { width: 100%; margin-top: .5rem; }
-  .lyrics-content { white-space: pre-wrap; background: #0e0f12; padding: 1rem; border-radius: .45rem; margin-top: .5rem; }
-
-  #build-a-verse-container { display: flex; flex-wrap: wrap; gap: 1rem; }
-  .bav-col { flex: 1; min-width: 280px; }
-  .bav-cloud { min-height: 150px; border: 1px solid var(--line); border-radius: .45rem; padding: .5rem; display:flex; flex-wrap:wrap; gap: .25rem .5rem; align-items:center; justify-content:center; }
-  .bav-cloud span { padding: .1rem .3rem; }
-  #bav-result { margin-top: 1rem; font-family: 'Courier New', Courier, monospace; background: #131622; padding: 1rem; border-radius: .45rem; white-space: pre-wrap; }
-  .audio-player-container button { margin-right: .5rem;}
-
   /* --- Accessibility Additions --- */
-  #accessibility-controls { position: fixed; top: .5rem; right: .5rem; z-index: 10003; }
-  #contrast-toggle-btn { background: #233046; color: #e8ebf0; border: 1px solid #262a35; font-size: 1.2rem; padding: .4rem .7rem; border-radius: .45rem; cursor: pointer; line-height: 1; }
-  .read-aloud-btn { background: #233046; color: #e8ebf0; border: 1px solid #262a35; padding: .3rem .6rem; border-radius: .45rem; cursor: pointer; font-size: .8em; }
+  #accessibility-controls {
+    position: fixed;
+    top: .5rem;
+    right: .5rem;
+    z-index: 10003;
+  }
+  #contrast-toggle-btn {
+    background: #233046;
+    color: #e8ebf0;
+    border: 1px solid #262a35;
+    font-size: 1.2rem;
+    padding: .4rem .7rem;
+    border-radius: .45rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .read-aloud-btn {
+    background: #233046;
+    color: #e8ebf0;
+    border: 1px solid #262a35;
+    padding: .3rem .6rem;
+    border-radius: .45rem;
+    cursor: pointer;
+    font-size: .8em;
+  }
   
-  body.high-contrast-mode { --bg: #000000; --ink: #ffffff; --muted: #dddddd; --card: #000000; --line: #ffffff; --brand: #ffff00; --accent: #ffff00; }
-  body.high-contrast-mode .profile-btn, body.high-contrast-mode .add-content-btn { background: var(--accent); color: #000; text-shadow: none; }
-  body.high-contrast-mode a { color: var(--accent); }
-  body.high-contrast-mode #contrast-toggle-btn { background-color: var(--bg); border-color: var(--line); color: var(--ink); }
+  body.high-contrast-mode {
+    --bg: #000000;
+    --ink: #ffffff;
+    --muted: #dddddd;
+    --card: #000000;
+    --line: #ffffff;
+    --brand: #ffff00;
+    --accent: #ffff00;
+  }
+  body.high-contrast-mode .profile-btn,
+  body.high-contrast-mode .add-content-btn {
+    background: var(--accent);
+    color: #000;
+    text-shadow: none;
+  }
+   body.high-contrast-mode a {
+    color: var(--accent);
+   }
+   body.high-contrast-mode #contrast-toggle-btn {
+    background-color: var(--bg);
+    border-color: var(--line);
+    color: var(--ink);
+   }
 </style>
 </head>
 <body>
@@ -227,7 +249,7 @@
 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -244,7 +266,6 @@
   let slidesEls;
   let timerInterval = null;
   let timerStartTimeout = null;
-  let audioContext, mainGainNode, oscillator, isPlayingBlues = false;
   
   // ==================================================================
   // --- LESSON CONTENT ---
@@ -254,233 +275,302 @@
     {
         "id": "9.00",
         "title": "Lesson 9: Doo-Wop and Rhythm and Blues",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
+        "headerImage": "https://i.imgur.com/uRDKyAM.png",
         "bullets": ["Watch this short video for an overview of this chapter's content."],
-        "full": "<div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem;'><iframe src='https://player.vimeo.com/video/762001491' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allow='fullscreen' allowfullscreen title='Chapter Synopsis Video'></iframe></div>",
+        "full": "<div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem;'><iframe src='https://vimeo.com/762001491' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allow='fullscreen' allowfullscreen title='Chapter Synopsis Video'></iframe></div>",
         "deep": []
     },
     {
         "id": "9.01",
         "title": "9.01 Introduction",
         "bullets": [
-            "In the 1940s and 1950s, while white audiences listened to traditional pop, black audiences enjoyed distinct but related genres like gospel, doo-wop, and rhythm and blues.",
-            "These genres, all rooted in earlier African American music, were initially categorized by record companies under the umbrella term 'race records'.",
-            "By 1949, this category was officially renamed 'rhythm and blues' on the Billboard charts.",
-            "Although created by and for Black communities, this music began to 'cross over' to white audiences due to the broad reach of radio, which had no 'color lines'."
+            "In the 1940s and 1950s, while white audiences listened to traditional pop, black audiences enjoyed gospel, doo-wop, and rhythm and blues.",
+            "These genres, rooted in blues, ragtime, and jazz, were categorized by record companies as 'race records' and later as 'rhythm and blues'.",
+            "This music was created by and for black communities but began reaching white audiences due to technological advances in radio, which had no 'color lines'."
         ],
         "full": "While white audiences were listening to the sounds of Frank Sinatra, Patti Page, and Perry Como in the 1940s and 1950s, black listeners were consuming gospel music, doo-wop, and rhythm and blues. Although all of these genres are related to earlier styles of African American music, such as the blues, ragtime, and jazz, they all have specific features that make them unique. These sacred and secular genres were lumped together by record companies, first on race records and then on rhythm and blues, which was the new industry label for music that was created by and marketed to blacks. Technological advances in recording and broadcasting made it easier and easier to access music. As we will see, there were no color lines on the radio, which meant that white listeners began listening to rhythm and blues.",
-        "deep": [],
-        "poll": {
-            "q": "What industry label replaced 'race records' for music created by and marketed to Black audiences in 1949?",
-            "choices": ["Soul", "Rhythm and Blues", "Urban Contemporary", "Jazz"],
-            "answer": 1
-        }
+        "deep": []
     },
     {
         "id": "9.02",
         "title": "9.02 Gospel Music",
-        "bullets": [
-            "During the <strong>Great Migration</strong>, many African Americans moved from the rural South to the urban North, where churches became essential community centers.",
-            "<strong>Gospel music</strong> emerged as the soundtrack for these churches, featuring instrumental accompaniment and improvisation.",
-            "The style was influenced by the <strong>Holiness-Pentecostal movement</strong>, which encouraged enthusiastic congregational participation, and it often featured <strong>melisma</strong> (many notes on one syllable).",
-            "Thomas A. Dorsey, the 'father of black gospel music,' combined blues and jazz idioms with sacred lyrics, and his popular songs became known as 'Dorseys.'"
+         "bullets": [
+            "During the <b>Great Migration</b>, the movement of African Americans from the rural South to the urban North, churches became essential community centers.",
+            "<b>Gospel Music</b>, the soundtrack for these churches, featured instrumental accompaniment and improvisation.",
+            "It was influenced by the <b>Holiness-Pentecostal Movement</b>, which encouraged enthusiastic congregational participation.",
+            "Gospel singing often features <b>melisma</b>, a technique where a singer performs many different pitches on a single syllable of text."
         ],
-        "full": "<div style='display:flex; flex-wrap:wrap; gap:1.5rem; align-items:flex-start;'><div style='flex:2; min-width:300px;'><p>During the <strong>Great Migration</strong>, many African Americans moved from the rural South to the urban North. As they sought new communities, churches became essential, with <strong>gospel music</strong> as their soundtrack. This style nearly always included instruments, evolving from piano and organ to include guitars and drums. Gospel borrowed from popular music, using structures like verse-chorus form, and was influenced by the <strong>Holiness-Pentecostal movement</strong>, which encouraged enthusiastic congregational participation and call and response over polished performance.</p><p>Composers like Charles Albert Tindley wrote early gospel songs still sung today. However, the 'father of black gospel music' is Thomas A. Dorsey. Dorsey, a former blues pianist known as “Georgia Tom,” blended the energy of blues and jazz with sacred lyrics. His music often featured opportunities for <strong>melisma</strong> (singing many notes on a single syllable of text). Though initially resisted by churches for its secular sound, Dorsey’s style, promoted with singer Mahalia Jackson, became so popular that new gospel songs were called 'Dorseys.'</p></div><div style='flex:1; min-width:200px;'><img src='https://i.imgur.com/pzOs3KD.jpeg' alt='A vibrant photo of a Black church choir singing with passion.' style='width:100%; border-radius:.4rem;' /></div></div>",
+        "full": "During the <b>Great Migration</b>, the movement of many African Americans from the rural South to the urban North between the First and Second World Wars, churches became an essential part of many people’s lives. The soundtrack for these new churches was <b>Gospel music</b>, a style of religious music almost always performed with instrumental accompaniment like piano, organ, and eventually guitars and drums. It borrowed from popular music forms and was influenced by religious movements such as the <b>Holiness-Pentecostal movement</b>, which encouraged enthusiastic congregational participation and expression. A common vocal feature is the <b>melisma</b>, where a single syllable of text is sung over many different pitches. The father of traditional gospel music is Thomas A. Dorsey, who blended blues and jazz idioms with sacred lyrics. His music was initially rejected by some churches for its secular sound but became so popular that new gospel songs were often called 'Dorseys.' He and singer Mahalia Jackson promoted his music on street corners, and his song 'Precious Lord, Take My Hand' became an anthem of the Civil Rights Movement.",
         "deep": [
-             {
-                "title": "Thomas A. Dorsey (1899-1993)", "image": "https://i.imgur.com/smPGy0i.jpeg", "altText": "A black and white photo of Thomas A. Dorsey, the father of black gospel music, sitting at a piano.",
+              {
+                "title": "Thomas A. Dorsey (1899-1993)",
+                "image": "https://i.imgur.com/smPGy0i.jpeg",
+                "altText": "A black and white photo of Thomas A. Dorsey, the father of black gospel music, sitting at a piano.",
+                "fullText": "Thomas Andrew Dorsey, the “father of black gospel music,” began his career as a blues pianist in Chicago. While he had composed gospel music since the early 1920s, he did not turn exclusively to the genre until the early 1930s. In 1932 he became Director of Gospel Choirs at the Pilgrim Baptist Church in Chicago and composed the classic, “Precious Lord, Take My Hand.” Dorsey combined the energy of blues and jazz with the sacred lyrics and ecstatic singing style of black religious music. Though initially met with resistance for being 'the devil’s music,' Dorsey’s style became the predominant form of black religious music in America. He and Mahalia Jackson promoted his music on street corners, selling sheet music directly to the public. His songs became so popular they were simply called 'Dorseys'.",
                 "bullets": [
-                    "Began as a blues pianist known as “Georgia Tom.”", "Combined blues/jazz idioms with sacred lyrics.",
-                    "His style was initially rejected by churches for its secular sound.", "Promoted his music with singer Mahalia Jackson, selling sheet music on street corners.",
-                    "His songs became so popular that new gospel songs in the 1940s and 1950s were often called 'Dorseys.'", "Composed 'Precious Lord, Take My Hand,' which became an anthem of the Civil Rights Movement."
+                    "Began as a blues pianist known as “Georgia Tom.”",
+                    "Combined blues/jazz idioms with sacred lyrics.",
+                    "His style was initially rejected by churches for its secular sound.",
+                    "Promoted his music with singer Mahalia Jackson, selling sheet music on street corners.",
+                    "Composed the classic 'Precious Lord, Take My Hand,' which became an anthem of the Civil Rights Movement."
                 ],
                 "media": [
                     {"label": "Read More: About Thomas Dorsey", "href": "https://www.pbs.org/thisfarbyfaith/people/thomas_dorsey.html"},
-                    {"label": "Watch: Melisma Example", "href": "https://youtu.be/PRS2grauL4I?si=SMd3mR_qPnvN4dOu"},
-                    {"label": "Watch: Aretha Franklin at Mahalia Jackson's funeral", "href": "https://youtu.be/aiFlfAs4Ifg?si=CPxFNV4WZfkMZCr-"}
-                ],
-                "funFacts": [ "Martin Luther King, Jr.'s favorite song was Dorsey's 'Precious Lord, Take My Hand.' He often asked Mahalia Jackson to sing it at civil rights rallies to inspire the crowds.", "Before dedicating his life to gospel, Dorsey was a successful blues composer, writing the 1928 hit 'It's Tight Like That,' which sold over seven million copies." ]
+                    {"label": "Listen: 'Precious Lord, Take My Hand'", "href": "https://open.spotify.com/track/2BPMz5V0g0uw9phgqjY7se?si=c7249f9f9d5a4c83"},
+                    {"label": "Watch: Aretha Franklin sings at Mahalia Jackson's funeral", "href": "https://youtu.be/aiFlfAs4Ifg?si=CPxFNV4WZfkMZCr-"}
+                ]
+              }
+        ]
+    },
+    {
+      "id": "9.03",
+      "title": "9.03 Vocal Harmony Groups (Doo-Wop)",
+      "bullets": [
+        "<b>Doo-wop</b> groups, often called 'street corner groups,' were popular after WWII, usually featuring four male singers performing a cappella.",
+        "The name comes from their use of <b>vocables</b>—non-semantic syllables like 'doo-doo-wop'—that provided a rhythmic background.",
+        "Another common technique was <b>blow harmony</b>, where a singer would blow into the mic while singing 'ooh-wee, ooh-wee' to create a unique percussive sound.",
+        "Early groups like The Ink Spots and The Mills Brothers had crossover appeal, recording for major labels and performing in major venues."
+      ],
+      "full": "Vocal harmony groups were popular both before and after World War II, singing a mixture of pop, folk, and religious music. These groups usually had four singers who would alternate lead vocals and frequently imitate instrumental sounds. Early groups like the Ink Spots and the Mills Brothers crossed racial boundaries by recording for major labels. After World War II, these groups were often called 'street corner groups' as their style was common in urban African American neighborhoods. They came to be known as <b>doo-wop</b> groups because they frequently used <b>vocables</b> (non-semantic syllables added to songs that provided a sense of rhythmic drive and a standard musical phrase for the background singers) like 'doo-doo-wop' to create rhythmic drive. Another technique was <b>blow harmony</b> (a gesture common in doo-wop where the singer simultaneously blew into the microphone and sang 'ooh-wee, ooh-wee'). These two features are the most recognizable characteristics of doo-wop music.",
+      "deep": [
+            {
+                "title": "The Ink Spots",
+                "image": "https://i.imgur.com/FBDjnuG.jpeg",
+                "altText": "A photo of the four members of The Ink Spots vocal group in matching suits."
+            },
+            {
+                "title": "The Chords",
+                "image": "https://i.imgur.com/S0Chlya.jpeg",
+                "altText": "A photo of the five members of The Chords doo-wop group.",
+                "media": [{"label": "Listen: 'Sh'boom (Life Could Be A Dream)'", "href": "https://open.spotify.com/track/0mWb7GqTPkzCkNsZ1XLOgw?si=b5526cb41ffb4cf4"}]
             }
-        ],
-        "keywords": [
-            {"term": "Great Migration", "definition": "The movement of many African Americans from the rural South to the urban North in search of better work and quality of life between the First and Second World Wars."},
-            {"term": "Gospel Music", "definition": "A style of religious music that was almost always performed with instrumental accompaniment, borrowed from popular music and hymns, and contained melodies intended for improvisation."},
-            {"term": "Holiness-Pentecostal Movement", "definition": "A movement in American Christianity that encouraged congregational participation and expression and eschewed polished performance styles."},
-            {"term": "Melisma", "definition": "Many notes sung to a single syllable of text."}
-        ],
-        "poll": {
-            "q": "What earlier musical career did Thomas A. Dorsey have before becoming the 'father of black gospel music'?",
-            "choices": ["Jazz trumpeter", "Ragtime pianist", "Blues pianist", "Vaudeville singer"],
+      ],
+       "poll": {
+            "q": "The name 'doo-wop' comes from what musical feature?",
+            "choices": ["The sound of the drums", "A popular dance move", "Syllables of text the groups sang", "The name of the most popular group"],
             "answer": 2
         }
     },
-    { "id": "9.02b", "title": "Interactive Activity: Call and Response", "bullets": ["Gospel music often uses a 'Call and Response' pattern.","The leader sings a line (the 'call'), and the congregation or choir sings a line back (the 'response').","Let's try it! The presenter will act as the leader.","<b>Presenter (Call):</b> Can I get an Amen?","<b>Class (Response):</b> Amen!","<b>Presenter (Call):</b> Can I get a Hallelujah?","<b>Class (Response):</b> Hallelujah!"], "full": "", "deep": [] },
     {
-        "id": "9.03",
-        "title": "9.03 Vocal Harmony Groups (Doo-Wop)",
-        "bullets": [
-            "Vocal harmony groups, typically featuring four singers who alternated lead vocals, were popular before and after WWII.",
-            "Post-war groups like The Ravens and The Chords were called 'street corner groups' in urban African American areas and incorporated jazz and blues harmonies.",
-            "They became known as <strong>doo-wop</strong> groups for their use of <strong>vocables</strong> (non-semantic syllables like 'doo-doo-wop') which provided rhythmic drive.",
-            "A common feature was performing intricate and complex vocal harmonies during the final verse of a song."
-        ],
-        "full": "Vocal harmony groups were popular both before and after World War II, singing a mixture of popular music, folk songs, and religious music. These groups usually had four singers who would alternate lead vocals, showcasing their wide vocal ranges and often imitating instrumental sounds. Early groups such as the Ink Spots, the Golden Gate Quartet, and the Mills Brothers crossed racial boundaries by recording for major labels and performing in major performance venues. After World War II, vocal harmony groups were often called 'street corner groups' because their singing styles were heard on every street corner in urban areas populated by African Americans. These postwar groups incorporated harmonies borrowed from jazz and blues. Most of the songs were in verse-chorus form, and it was very common for the singers to use the final verse of the song to perform extremely intricate and complex vocal harmonies.",
-        "deep": [
-            { "title": "The Ink Spots", "image": "https://i.imgur.com/FBDjnuG.jpeg", "altText": "A photo of the four members of The Ink Spots vocal group in matching suits." },
-            { "title": "The Chords", "image": "https://i.imgur.com/S0Chlya.jpeg", "altText": "A photo of the five members of The Chords doo-wop group." }
-        ],
-        "keywords": [
-            {"term": "Doo-wop", "definition": "A style of vocal harmony music that emerged from 'street corner groups' after WWII, characterized by the use of vocables."},
-            {"term": "Vocables", "definition": "Non-semantic syllables added to doo-wop songs that provided a sense of rhythmic drive and a standard musical phrase for the background singers."},
-            {"term": "Blow harmony", "definition": "A gesture common in doo-wop where the singer simultaneously blew into the microphone and sang “ooh-wee, ooh-wee”."}
-        ],
-        "poll": { "q": "During which part of a song was it common for doo-wop groups to sing their most intricate harmonies?", "choices": ["The introduction", "The first verse", "The final verse", "The instrumental solo"], "answer": 2 }
-    },
-    { "id": "9.03b", "title": "Interactive Activity: Build a Vocable Group", "bullets": [ "Let's build the harmony for 'Sh'boom'!", "Divide the class into four sections. Each section will be one part of the harmony.", "<b>Section 1 (Bass):</b> Doo-wop, doo-wop", "<b>Section 2 (Baritone):</b> Shang-a-lang-a-lang", "<b>Section 3 (Tenor):</b> Ooh, ooh, ooh, ooh", "<b>Section 4 (Lead):</b> Life could be a dream...", "Let's try putting it all together!" ], "full": "", "deep": [] },
-    { "id": "9.04a", "title": "Discussion: What's in a Name?", "bullets": [ "The term for Black music on the charts changed from 'race records' to 'rhythm and blues' in 1949.", "Why do you think record labels used these categories in the first place?", "What are the pros and cons of labeling music by genre or by the demographic of its artists/audience?", "Can you think of any genre names today that might be controversial or limiting?" ], "full": "", "deep": [] },
-    {
-        "id": "9.04",
-        "title": "9.04 Early Rhythm and Blues",
-        "bullets": [
-            "After WWII, the decline of large swing orchestras led to the rise of smaller combos.",
-            "<strong>Jump blues</strong> was an up-tempo style played by these combos, blending swing with a strong backbeat.",
-            "Key elements of jump blues included a 12-bar blues form, a boogie-woogie bass, and energetic <strong>shuffle rhythms</strong>.",
-            "Louis Jordan and his Tympany Five were pioneers of this style, scoring <strong>crossover</strong> hits like 'Saturday Night Fish Fry' that appealed to both black and white audiences."
-        ],
-        "full": "During the 1940s, the 'race' records category was gradually replaced by 'rhythm and blues' until Billboard officially renamed the record charts in 1949. The term was a catchall for African American music. During and after World War II, the demand for large swing orchestras plummeted, and as a result, small combos increased in popularity. One of the first musicians to take advantage of this new opportunity was Louis Jordan. He and the Tympany Five played in a style called <strong>jump blues</strong>, which includes a 12-bar blues form, boogie woogie bass, <strong>shuffle rhythms</strong>, and group singing during the choruses. Jordan’s uptempo songs with their upbeat or novelty lyrics helped listeners believe that they had reached the end of a terrible economic depression and a long, difficult war.",
-        "deep": [
-            {
-                "title": "Louis Jordan (1908-1975)", "image": "https://i.imgur.com/N1ugU9q.jpeg", "altText": "A charismatic photo of Louis Jordan playing the saxophone.",
-                "fullText": "One of the most influential rhythm and blues performers of the 1940s, Louis Jordan founded the Tympani Five in 1938. His band adapted the lively tempos of swing music to a smaller group, a style called jump blues. With their heavy boogie rhythms, strong backbeat, and preference for humor, songs such as “Saturday Night Fish Fry” and “Ain’t Nobody Here But Us Chickens” rocketed up the charts, appealing to black and white audiences alike. His high-energy performances and charismatic stage presence would be adapted by rock and roll artists of the 1950s.",
-                "bullets": [
-                    "Founded the Tympani Five, a popular 'jump blues' band.", "His records consistently occupied the race records charts throughout the 1940s.",
-                    "His music had crossover appeal, reaching both pop and R&B charts.", "His style heavily influenced the first generation of rock and roll artists."
-                ],
-                "media": [
-                    {"label": "Listen: 'Is You Is, Or Is You Ain't Ma Baby?'", "href": "https://open.spotify.com/track/09rSNL11dDpPjZEAIQVPka?si=dca8e15a705d4a4e"},
-                    {"label": "Listen: 'Let the Good Times Roll'", "href": "https://open.spotify.com/track/50y6y3iwBlKKev2U4a6GK5?si=264b998eaf8e432c"},
-                    {"label": "Watch: 'Saturday Night Fish Fry'", "href": "https://youtu.be/FCkFrff__QE?si=7iRTMvpIu1EsHK6U"},
-                    {"label": "Watch: Bio Documentary", "href": "https://www.youtube.com/watch?v=iReE7xx1nxc&t=487s"}
-                ],
-                "funFacts": [ "Louis Jordan is often called 'The Grandfather of Rock 'n' Roll.' His blend of swing, blues, and boogie-woogie, along with his showmanship, directly inspired artists like Bill Haley and Little Richard.", "He produced some of the first 'music videos,' called 'soundies,' which were short musical films shown on jukebox-like machines in the 1940s." ]
-            }
-        ],
-        "keywords": [
-            {"term": "Jump blues", "definition": "A style of African American music that featured a 12-bar blues form, boogie woogie bass, strong back beats, shuffle rhythms, and group singing during the choruses."},
-            {"term": "Shuffle rhythms", "definition": "A rhythm common in early rhythm and blues that consisted of a triplet quarter note followed by a triplet eighth note."}
-        ],
-        "poll": {
-            "q": "What major social shift after World War II led to the increased popularity of small combos and jump blues?",
-            "choices": ["The rise of television", "The decline in demand for large swing orchestras", "The invention of the electric guitar", "The baby boom"],
-            "answer": 1
-        }
-    },
-    {
-        "id": "9.04b",
-        "title": "Interactive Activity: Build a Blues Verse",
-        "bullets": ["The 12-bar blues often uses an AAB lyrical pattern: the first line is stated, then repeated, and the third line rhymes. Let's write one together!"],
-        "full": "", "deep": []
+      "id": "9.04",
+      "title": "9.04 Early Rhythm and Blues",
+      "bullets": [
+          "In 1949, Billboard renamed its 'race records' chart to 'rhythm and blues,' a catchall term for various Black music genres.",
+          "As large swing orchestras declined after WWII, smaller combos playing <b>jump blues</b> became popular.",
+          "<b>Jump blues</b> featured a 12-bar blues form, boogie-woogie bass lines, strong backbeats, and <b>shuffle rhythms</b>.",
+          "Louis Jordan and his Tympany Five were pioneers of this style, scoring crossover hits that appealed to both black and white audiences."
+      ],
+      "full": "As we saw in an earlier lesson, record labels used the term 'race records' to describe music recorded by and marketed to African Americans. During the 1940s, this category was gradually replaced by 'rhythm and blues' until Billboard officially renamed the record charts in 1949. During and after World War II, the demand for large swing orchestras plummeted, and as a result, small combos increased in popularity. One of the first musicians to take advantage of this new opportunity was Louis Jordan. He and the Tympany Five played in a style called <b>jump blues</b> (a style of African American music that featured a 12-bar blues form, boogie woogie bass, strong back beats, shuffle rhythms, and group singing during the choruses), which includes a 12-bar blues form, boogie woogie bass, and <b>shuffle rhythms</b> (a rhythm common in early rhythm and blues that consisted of a triplet quarter note followed by a triplet eighth note). Jordan’s uptempo songs with their upbeat or novelty lyrics helped listeners feel an end to the Great Depression and a long war. His song 'Choo Choo Ch’Boogie' was a massive crossover hit, selling over two million copies.",
+      "deep": [
+          {
+              "title": "Louis Jordan (1908-1975)",
+              "image": "https://i.imgur.com/N1ugU9q.jpeg",
+              "altText": "A charismatic photo of Louis Jordan playing the saxophone.",
+              "fullText": "One of the most influential rhythm and blues performers of the 1940s, Louis Jordan founded the Tympani Five in 1938. His band adapted the lively tempos of swing music to a smaller group, a style called jump blues. With their heavy boogie rhythms, strong backbeat, and preference for humor, songs such as “Saturday Night Fish Fry” and “Ain’t Nobody Here But Us Chickens” rocketed up the charts, appealing to black and white audiences alike. His high-energy performances and charismatic stage presence would be adapted by rock and roll artists of the 1950s.",
+              "bullets": [
+                  "Founded the Tympani Five, a popular 'jump blues' band.",
+                  "His records consistently occupied the race records charts throughout the 1940s.",
+                  "His music had crossover appeal, reaching both pop and R&B charts.",
+                  "His style heavily influenced the first generation of rock and roll artists."
+              ],
+              "media": [
+                  {"label": "Listen: 'Is You Is, Or Is You Ain't Ma Baby?'", "href": "https://open.spotify.com/track/09rSNL11dDpPjZEAIQVPka?si=dca8e15a705d4a4e"},
+                  {"label": "Listen: 'Let the Good Times Roll'", "href": "https://open.spotify.com/track/50y6y3iwBlKKev2U4a6GK5?si=264b998eaf8e432c"},
+                  {"label": "Watch: 'Saturday Night Fish Fry'", "href": "https://youtu.be/FCkFrff__QE?si=7iRTMvpIu1EsHK6U"},
+                  {"label": "Watch: Bio Documentary", "href": "https://www.youtube.com/watch?v=iReE7xx1nxc&t=487s"}
+              ]
+          },
+          {
+              "title": "Then and Now: The Influence of Jump Blues",
+              "fullText": "The high-energy, horn-driven sound of Louis Jordan's jump blues directly influenced not only early rock and roll but also the swing revival movement of the 1990s. Listen to the similarities in instrumentation, rhythmic drive, and showmanship.",
+              "media": [
+                  {"label": "Then: Louis Jordan - 'Choo Choo Ch'Boogie'", "href": "https://open.spotify.com/track/4vPJK1gKyygRS2mep7iyDq?si=813209c5ebb343ca"},
+                  {"label": "Now: Brian Setzer Orchestra - 'Jump, Jive, an' Wail'", "href": "https://open.spotify.com/track/2atCRcyJp3f93a3A9a2iN5?si=89bb74b34b154e1a"}
+              ]
+          }
+      ]
     },
     {
         "id": "9.05",
         "title": "9.05 From Gospel to Rhythm and Blues",
         "bullets": [
-            "Ray Charles was a pivotal artist who masterfully blended the soulful feeling of gospel music with secular R&B lyrics, helping to pioneer 'soul' music.",
-            "Losing his sight at age seven, he became a multi-instrumentalist who learned to read and write music in Braille.",
-            "He controversially adapted the melodies of gospel songs into R&B hits: 'I Got a Savior' became 'I Got a Woman,' and 'This Little Light of Mine' became 'This Little Girl of Mine.'",
-            "Charles was a musical innovator, being among the first to use the Fender Rhodes electric piano and forming the Raelets, a call-and-response backing group that became a model for later girl groups."
+            "Ray Charles was a pivotal artist who masterfully blended gospel music with secular R&B lyrics.",
+            "Losing his sight at age seven, he learned to read and write music in Braille.",
+            "He controversially adapted gospel songs into R&B hits: 'I Got a Savior' became 'I Got a Woman,' and 'This Little Light of Mine' became 'This Little Girl of Mine.'",
+            "Charles was a musical innovator, being among the first to use the Fender Rhodes electric piano and forming the Raelets, a model for later girl groups."
         ],
         "full": "One of the first artists to move freely between gospel music and rhythm and blues and achieve commercial success was Ray Charles. Wrapping the sounds and rhythms of black gospel music around traditional secular lyrics made him one of the most influential musicians of the twentieth century. In 1952, Charles signed with Atlantic and began recording songs that freely blended gospel with rhythm and blues. Although some listeners were shocked at Charles’s combination of sacred and secular genres into this new style of gospel blues, he saw no reason to separate them. His combinations often took the form of adapting the melodies and lyrics of gospel songs into electrifying rhythm and blues numbers.",
         "deep": [
-             {
-                "title": "Ray Charles (1930-2004)", "image": "https://i.imgur.com/Wvbi6AU.jpeg", "altText": "A classic photo of Ray Charles at the piano, wearing his signature sunglasses.",
+            {
+                "title": "Ray Charles (1930-2004)",
+                "image": "https://i.imgur.com/Wvbi6AU.jpeg",
+                "altText": "A classic photo of Ray Charles at the piano, wearing his signature sunglasses.",
                 "fullText": "Ray Charles Robinson lost his sight due to glaucoma at age 6. He learned to play a number of instruments at the St. Augustine School for the Deaf and Blind and began his career as a traveling musician at 15. In 1952 he signed with Atlantic Records and scored his first hit with “I Got A Woman” in late 1954. Combining the soulful vocal style and call-and-response of gospel music with the sexual overtones and energy of R&B, the song ushered in the new style of soul music. His musical diversity has influenced countless performers and earned him inductions into multiple halls of fame.",
                 "bullets": [
-                    "Blinded by glaucoma at age 6.", "Signed with Atlantic Records in 1952.",
-                    "His 1954 hit 'I Got A Woman' helped pioneer the genre of soul music.", "His call-and-response with his backup singers, the Raelets, became a signature part of his sound."
+                    "Blinded by glaucoma at age 6.",
+                    "Signed with Atlantic Records in 1952.",
+                    "His 1954 hit 'I Got A Woman' helped pioneer the genre of soul music.",
+                    "His call-and-response with his backup singers, the Raelets, became a signature part of his sound."
                 ],
                 "media": [
+                    {"label": "Listen: 'I Got a Woman'", "href": "https://open.spotify.com/track/2xar08Fq5xra2KKZs5Bw9j?si=6284a2faf7c04c66"},
+                    {"label": "Listen: 'What'd I Say'", "href": "https://open.spotify.com/track/5yQ9iMZXGcr5rlO4hoLsP4?si=81aa1f6106a24add"},
                     {"label": "Watch: 'I Got a Woman' (Live)", "href": "https://youtu.be/lp246rpr2ck?si=yq1qb3idn1CUGLKR"},
                     {"label": "Watch: 'Shake a Tail Feather' (from The Blues Brothers)", "href": "https://youtu.be/qdbrIrFxas0?si=UwUWr1u0JB27NATf"}
-                ],
-                "funFacts": [ "Ray Charles was one of the first artists to own his master recordings and have complete creative control, a revolutionary business move for any artist at the time, especially a Black artist.", "He was a master of many genres, not just R&B. His 1962 album 'Modern Sounds in Country and Western Music' is considered a landmark album that broke down racial and genre barriers." ]
+                ]
+            },
+            {
+              "title": "Then and Now: The Influence of Gospel on R&B",
+              "fullText": "Ray Charles's controversial but brilliant fusion of gospel's passion with secular themes paved the way for soul music and continues to influence modern R&B and pop artists who draw on gospel vocal techniques and chord progressions.",
+              "media": [
+                  {"label": "Then: Ray Charles - 'I Got a Woman'", "href": "https://open.spotify.com/track/2xar08Fq5xra2KKZs5Bw9j?si=6284a2faf7c04c66"},
+                  {"label": "Now: John Legend - 'All of Me'", "href": "https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a?si=b307409244fd4a31"}
+              ]
             }
-        ],
-        "thenVsNow": {
-          "title": "Then vs. Now: The Gospel-Pop Connection",
-          "then": {"artist": "Ray Charles", "song": "'I Got A Woman'", "audioSrc": "https://storage.googleapis.com/gemini-pro-us-west1-media/f/m/I_Got_A_Woman_Clip.mp3", "lyrics": "Well...\n\nI got a woman, way over town\nThat's good to me, oh yeah\nShe give me money when I'm in need\nYeah, she's a kind of friend indeed\nI got a woman, way over town\nThat's good to me, oh yeah\n\nShe saves her lovin', early in the mornin'\nJust for me, oh yeah..."},
-          "now": {"artist": "Kanye West", "song": "'Gold Digger'", "audioSrc": "https://storage.googleapis.com/gemini-pro-us-west1-media/f/m/Gold_Digger_Clip.mp3", "lyrics": "[Intro: Jamie Foxx and Kanye West]\nShe take my money when I'm in need\nYeah, she's a triflin' friend indeed\nOh, she's a gold digger\nWay over town that digs on me\n\n[Chorus: Kanye West & (Jamie Foxx)]\n(She give me money) Now, I ain't sayin' she a gold digger\n(When I'm in need) But she ain't messin' with no broke n*ggas..."}
-        },
-        "poll": {
-            "q": "Ray Charles was innovative for being one of the first popular artists to use which instrument?",
-            "choices": ["Synthesizer", "Electric Guitar", "Hammond Organ", "Fender Rhodes electric piano"],
-            "answer": 3
-        }
+        ]
     },
     {
         "id": "9.06",
         "title": "9.06 Rhythm and Blues Crosses Over",
         "bullets": [
-            "A <strong>crossover</strong> hit is a song that holds a prominent place on at least two of the three main charts: pop, R&B, and country.",
-            "Chuck Berry, a father of rock and roll, created a crossover style by blending R&B with a country vocal delivery, which surprised many listeners who learned he was black.",
-            "Berry's lyrics focused on teen culture (cars, school, romance), and his first hit 'Maybellene' was a reworking of the country song 'Ida Red.'",
-            "His iconic guitar style and 'duck walk' stage move influenced generations of musicians."
+            "A <b>crossover</b> hit is a song that charts on at least two of the three main charts: pop, R&B, and country.",
+            "Chuck Berry, considered a father of rock and roll, created a crossover style by blending R&B with country and western vocal delivery.",
+            "Berry's lyrics focused on teen culture (cars, school, romance), making them relatable to both black and white audiences.",
+            "His guitar style and 'duck walk' stage move became iconic and influenced generations of musicians."
         ],
-        "full": "While artists such as Ray Charles were stitching gospel and rhythm and blues together, other artists in the rhythm and blues genre were taking stylistic gestures from early rhythm and blues artists such as Louis Jordan and adding electrified instruments and performance styles. These artists also borrowed performance elements from hillbilly music and country and western. One of the most important artists in this style of rhythm and blues was Chuck Berry, whom many historians consider to be the father of rock and roll. A <strong>crossover</strong> refers to a song that holds a prominent place on at least two of the three types of charts: pop, rhythm and blues, and country. Other crossover artists included Fats Domino ('Blueberry Hill') and the flamboyant Little Richard ('Good Golly Miss Molly').",
+        "full": "While artists such as Ray Charles were stitching gospel and rhythm and blues together, other artists were taking gestures from early rhythm and blues artists like Louis Jordan and adding electrified instruments and elements from country and western music. One of the most important artists in this style was Chuck Berry, whom many consider the father of rock and roll. A <b>crossover</b> refers to a song that holds a prominent place on at least two of the three types of charts: pop, rhythm and blues, and country. Berry's music frequently crossed over, as did the music of other pioneers like Fats Domino ('Blueberry Hill') and Little Richard ('Good Golly Miss Molly').",
         "deep": [
-             {
-                "title": "Chuck Berry (1926-2017)", "image": "https://i.imgur.com/cMgydDS.jpeg", "altText": "A classic photo of Chuck Berry mid-performance, playing his electric guitar and doing his famous 'duck walk'.",
+            {
+                "title": "Chuck Berry (1926-2017)",
+                "image": "https://i.imgur.com/cMgydDS.jpeg",
+                "altText": "A classic photo of Chuck Berry mid-performance, playing his electric guitar and doing his famous 'duck walk'.",
                 "fullText": "Chuck Berry is the single most important guitarist in early rock and roll. On a trip to Chicago in 1955, he met Leonard Chess of Chess Records, a relationship that launched Berry’s career. He recorded his first hit—a cover of a country song named “Ida Red,” which Berry changed to “Maybellene”—in 1955. He went on to record such hits as “Roll Over Beethoven,” “School Days,” and “Johnny B. Goode.” His charismatic stage presence and signature “duck walk” made him equally popular as a live performer. His vocal delivery was so influenced by country singers that many listeners were surprised to learn that he was black.",
                 "bullets": [
-                    "Considered the most important guitarist in early rock and roll.", "His first hit, 'Maybellene' (1955), was a reworking of the country song 'Ida Red.'",
-                    "Wrote lyrics about teen culture: cars, school, and relationships.", "His song 'Johnny B. Goode' was included on the golden record aboard the Voyager spacecraft."
+                    "The most important guitarist in early rock and roll.",
+                    "His first hit, 'Maybellene' (1955), was a reworking of the country song 'Ida Red.'",
+                    "Wrote lyrics about teen culture: cars, school, and relationships.",
+                    "His song 'Johnny B. Goode' was included on the golden record aboard the Voyager spacecraft."
                 ],
                 "media": [
                     {"label": "Read More: Rock & Roll Hall of Fame Bio", "href": "https://rockhall.com/inductees/chuck-berry/"},
-                    {"label": "Listen: 'Maybellene'", "href": "https://open.spotify.com/track/3SQhmctWreNM0X6Zkm2K5R?si=cad1544a67bf4f10"}
-                ],
-                "funFacts": [ "The 'duck walk' was invented by accident. Berry was trying to hide the wrinkles in his rayon suit by bending his knees as he moved across the stage, and the audience loved it.", "His song 'Johnny B. Goode' is on the Voyager Golden Record, sent into space as a representation of human culture for any extraterrestrials who might find it." ]
+                    {"label": "Listen: 'Maybellene'", "href": "https://open.spotify.com/track/3SQhmctWreNM0X6Zkm2K5R?si=cad1544a67bf4f10"},
+                    {"label": "Listen: 'Johnny B. Goode'", "href": "https://open.spotify.com/track/2QfiRTz5Yc8DdShCxG1tB2?si=6d4ad5d0c03d45e6"},
+                    {"label": "Listen: 'Roll Over Beethoven'", "href": "https://open.spotify.com/track/6C7aTTCUWRK7dD379yUT3W?si=d2761b0cdcbd490d"}
+                ]
             }
-        ],
-        "keywords": [ {"term": "Crossover", "definition": "a song that holds a prominent place on at least two of the three types of charts: pop, rhythm and blues, and country"} ],
-        "thenVsNow": {
-          "title": "Then vs. Now: The Birth of the Rock Riff",
-          "then": {"artist": "Chuck Berry", "song": "'Johnny B. Goode'", "audioSrc": "https://storage.googleapis.com/gemini-pro-us-west1-media/f/m/Johnny_B_Goode_Clip.mp3", "lyrics": "Deep down in Louisiana close to New Orleans\nWay back up in the woods among the evergreens\nThere stood a log cabin made of earth and wood\nWhere lived a country boy named Johnny B. Goode\nWho never ever learned to read or write so well\nBut he could play a guitar just like a-ringin' a bell..."},
-          "now": {"artist": "AC/DC", "song": "'Back In Black'", "audioSrc": "https://storage.googleapis.com/gemini-pro-us-west1-media/f/m/Back_In_Black_Clip.mp3", "lyrics": "Back in black\nI hit the sack\nI've been too long, I'm glad to be back\nYes, I'm let loose\nFrom the noose\nThat's kept me hangin' around\nI've been lookin' at the sky\n'Cause it's gettin' me high\nForget the hearse, 'cause I never die\nI got nine lives\nCat's eyes\nAbusin' every one of them and running wild..."}
-        },
-        "poll": { "q": "Listen to the clips. Which of these crossover pioneers do you think had the most appeal to a wide audience in the 1950s?", "choices": ["Fats Domino ('Blueberry Hill')", "Little Richard ('Good Golly Miss Molly')", "Chuck Berry ('Maybellene')"], "answer": 0 }
+        ]
     },
-    { "id": "9.06b", "title": "Interactive Activity: Match the Artist to their Style", "bullets": ["Drag each artist to the musical style they are most known for pioneering."], "full": "", "deep": [], "buildaband": { "correct": ["Ray Charles", "Chuck Berry", "The Chords"], "distractors": ["Thomas A. Dorsey", "Louis Jordan", "Mahalia Jackson"] }, "bandAreaTitle": "Drag Artist to Their Style", "poolTitle": "Artists", "customDropzones": [ {"title": "Gospel / R&B Hybrid", "accepts": ["Ray Charles"]}, {"title": "Doo-Wop", "accepts": ["The Chords"]}, {"title": "Country-Influenced R&B", "accepts": ["Chuck Berry"]} ] },
+    {
+      "id": "9.06b",
+      "title": "Interactive Activity: Match the Artist to their Style",
+       "bullets": ["Drag each artist from the pool on the left into the box that best describes their primary musical style."],
+      "full": "",
+      "deep": [],
+      "buildaband": {
+          "correct": ["Ray Charles", "Chuck Berry", "The Chords"],
+          "distractors": ["Thomas A. Dorsey", "Louis Jordan", "Mahalia Jackson"],
+          "bandAreaTitle": "Match Artist to Their Style",
+          "poolTitle": "Artists",
+          "customDropzones": [
+              {"title": "Gospel / R&B Hybrid", "accepts": ["Ray Charles"]},
+              {"title": "Doo-Wop", "accepts": ["The Chords"]},
+              {"title": "Country-Influenced R&B", "accepts": ["Chuck Berry"]}
+          ]
+      }
+    },
     {
         "id": "9.07",
         "title": "9.07 Conclusion",
         "bullets": [
             "Gospel, doo-wop, and rhythm and blues were distinct but related genres of African American music popular in the 1940s and 50s.",
             "Initially marketed as 'race records' and then 'rhythm and blues,' this music began to cross over to white audiences via radio.",
-            "This cultural crossover was essential in laying the groundwork for the transformation of rhythm and blues into the new genre of rock and roll."
+            "This cultural crossover set the stage for the transformation of rhythm and blues into the new genre of rock and roll."
         ],
         "full": "Many different types of African American music were popular in the 1940s and 1950s, including gospel, doo-wop, and rhythm and blues. Although record labels kept this music confined first to the 'race' label and then to the 'rhythm and blues' label, white audiences eventually began hearing and consuming rhythm and blues. As we will see in the next lesson, rhythm and blues underwent a number of musical and racial changes as it was transformed into rock and roll.",
         "deep": [],
-        "wordcloud": { "title": "Final Thoughts?", "prompt": "What one word describes the music from this chapter? Add it to our word cloud!" }
+        "wordcloud": {
+            "title": "Final Thoughts?",
+            "prompt": "What one word describes the music from this chapter? Add it to our word cloud!"
+        }
     }
   ];
   
   const QUIZ = [
-    { "q": "Which of the following songs was NOT by Louis Jordan?", "choices": ["\"We Will Understand It Better By and By\"", "\"Let the Good Times Roll\"", "\"Is You Is, Or Is You Ain't Ma Baby?\"", "\"Saturday Night Fish Fry\""], "answer": 0 },
-    { "q": "How did Thomas Dorsey first promote his gospel music?", "choices": ["He and Mahalia Jackson would perform on a street corner.", "He asked Louis Jordan’s band to perform it.", "He recorded it with Atlantic Records.", "He asked a university choir to sing it."], "answer": 0 },
-    { "q": "Which of the following was typical for a doo-wop group?", "choices": ["The use of orchestral instruments", "Religious subject matter", "Racially integrated membership", "Four male singers"], "answer": 3 },
-    { "q": "Chuck Berry performed his famous _________ during his guitar solos.", "choices": ["\"boogie woogie\"", "\"duck walk\"", "\"turkey trot\"", "\"jump blues\""], "answer": 1 },
-    { "q": "All of the following were vocal harmony groups EXCEPT:", "choices": ["The Chords", "The Mills Brothers", "The Orioles", "The Fisk Jubilee Singers"], "answer": 3 },
-    { "q": "In 1949, what term did the Billboard charts use to replace 'race records'?", "choices": ["sepia records", "rhythm and blues", "rock and roll", "blues"], "answer": 1 },
-    { "q": "Which of the following songs includes vocables?", "choices": ["\"Sh'boom\"", "\"I Got a Woman\"", "“Is You Is, Or Is You Ain’t My Baby?”", "\"Precious Lord, Take My Hand\""], "answer": 0 },
-    { "q": "'Maybellene' is based on a country and western song.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "Gospel music was influenced by the Holiness-Pentecostal movement.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "New gospel songs during the 1940s and 1950s were often called 'Dorseys.'", "choices": ["True", "False"], "answer": 0 },
-    { "q": "The name 'doo-wop' comes from syllables of text that groups sang.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "After World War II, small combos like jump blues bands increased in popularity.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "Louis Jordan's music had crossover appeal with white audiences.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "Race records included gospel music, vocal harmony groups, and rhythm and blues music.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "During a final chorus, it was common for doo-wop groups to sing intricate harmonies.", "choices": ["True", "False"], "answer": 0 }
+    {
+        "q": "Which of the following songs was NOT by Louis Jordan?",
+        "choices": ["\"We Will Understand It Better By and By\"", "\"Let the Good Times Roll\"", "\"Is You Is, Or Is You Ain't Ma Baby?\"", "\"Saturday Night Fish Fry\""],
+        "answer": 0
+    },
+    {
+        "q": "How did Thomas Dorsey first promote his gospel music?",
+        "choices": ["He and Mahalia Jackson would perform on a street corner.", "He asked Louis Jordan’s band to perform it.", "He recorded it with Atlantic Records.", "He asked a university choir to sing it."],
+        "answer": 0
+    },
+    {
+        "q": "Which of the following was typical for a doo-wop group?",
+        "choices": ["The use of orchestral instruments", "Religious subject matter", "Racially integrated membership", "Four male singers"],
+        "answer": 3
+    },
+    {
+        "q": "Chuck Berry performed his famous _________ during his guitar solos.",
+        "choices": ["\"boogie woogie\"", "\"duck walk\"", "\"turkey trot\"", "\"jump blues\""],
+        "answer": 1
+    },
+    {
+        "q": "All of the following were vocal harmony groups EXCEPT:",
+        "choices": ["The Chords", "The Mills Brothers", "The Orioles", "The Fisk Jubilee Singers"],
+        "answer": 3
+    },
+    {
+        "q": "In 1949, what term did the Billboard charts use to replace 'race records'?",
+        "choices": ["sepia records", "rhythm and blues", "rock and roll", "blues"],
+        "answer": 1
+    },
+    {
+        "q": "Which of the following songs includes vocables?",
+        "choices": ["\"Sh'boom\"", "\"I Got a Woman\"", "“Is You Is, Or Is You Ain’t My Baby?”", "\"Precious Lord, Take My Hand\""],
+        "answer": 0
+    },
+    {
+        "q": "'Maybellene' is based on a country and western song.",
+        "choices": ["True", "False"],
+        "answer": 0
+    },
+    {
+        "q": "Gospel music was influenced by the Holiness-Pentecostal movement.",
+        "choices": ["True", "False"],
+        "answer": 0
+    },
+    {
+        "q": "New gospel songs during the 1940s and 1950s were often called 'Dorseys.'",
+        "choices": ["True", "False"],
+        "answer": 0
+    },
+    {
+        "q": "The name 'doo-wop' comes from syllables of text that groups sang.",
+        "choices": ["True", "False"],
+        "answer": 0
+    },
+    {
+        "q": "After World War II, small combos like jump blues bands increased in popularity.",
+        "choices": ["True", "False"],
+        "answer": 0
+    },
+    {
+        "q": "Louis Jordan's music had crossover appeal with white audiences.",
+        "choices": ["True", "False"],
+        "answer": 0
+    },
+    {
+        "q": "Race records included gospel music, vocal harmony groups, and rhythm and blues music.",
+        "choices": ["True", "False"],
+        "answer": 0
+    },
+    {
+        "q": "During a final chorus, it was common for doo-wop groups to sing intricate harmonies.",
+        "choices": ["True", "False"],
+        "answer": 0
+    }
   ];
   
   const EXTRA = {};
@@ -491,8 +581,15 @@
 
   // --- AUTHENTICATION & INITIALIZATION ---
   onAuthStateChanged(auth, async (user) => {
-    if (user) { userId = user.uid; checkSessionState(); } 
-    else { try { if (initialAuthToken) { await signInWithCustomToken(auth, initialAuthToken); } else { await signInAnonymously(auth); } } catch (error) { console.error("Firebase authentication failed:", error); } }
+    if (user) {
+        userId = user.uid;
+        checkSessionState();
+    } else {
+        try {
+            if (initialAuthToken) { await signInWithCustomToken(auth, initialAuthToken); }
+            else { await signInAnonymously(auth); }
+        } catch (error) { console.error("Firebase authentication failed:", error); }
+    }
   });
   
   function initializeInteractiveFeatures(){
@@ -503,7 +600,6 @@
     setupPollListeners();
     setupWordCloudListener();
     setupQnaListener();
-    setupBuildABluesListeners();
   }
   
   function showApp(){
@@ -544,7 +640,7 @@
     function joinWithName(name) {
         if (!name || !sessionId) return;
         userName = name;
-        localStorage.setItem(`lesson_userName_${sessionId}`, name);
+        localStorage.setItem(`lesson_userName_${sessionId}`, name); // Generic key
         startApp();
     };
 
@@ -556,6 +652,7 @@
    function checkSessionState() {
     const sessionOverlay = document.getElementById('session-overlay');
     const nameOverlay = document.getElementById('name-entry-overlay');
+
     const urlParams = new URLSearchParams(window.location.search);
     sessionId = urlParams.get('session');
     isPresenter = urlParams.get('presenter') === 'true';
@@ -563,19 +660,30 @@
     if (sessionId) {
         sessionOverlay.classList.add('hidden');
         document.getElementById('session-id-display').textContent = sessionId;
-        const storedName = localStorage.getItem(`lesson_userName_${sessionId}`);
-        if (storedName) { userName = storedName; startApp(); } 
-        else { nameOverlay.classList.remove('hidden'); }
+        
+        const storedName = localStorage.getItem(`lesson_userName_${sessionId}`); // Generic key
+        if (storedName) {
+            userName = storedName;
+            startApp();
+        } else {
+            nameOverlay.classList.remove('hidden');
+        }
     } else {
         sessionOverlay.classList.remove('hidden');
     }
 }
 
 function startApp() {
-    if (!userId || !sessionId || !userName) { console.error("Cannot start app, missing user, session, or name info", {userId, sessionId, userName}); return; }
+    if (!userId || !sessionId || !userName) {
+        console.error("Cannot start app, missing user, session, or name info", {userId, sessionId, userName});
+        return;
+    }
+    
     render();
+
     document.getElementById('session-overlay').classList.add('hidden');
     document.getElementById('name-entry-overlay').classList.add('hidden');
+    
     showApp();
     initializeInteractiveFeatures();
 }
@@ -587,7 +695,9 @@ function startApp() {
         const slideState = docSnap.exists() ? docSnap.data() : { currentSlide: 0 };
         const newIndex = slideState.currentSlide ?? 0;
         show(newIndex);
-    }, (error) => { console.error("[Listener Error] Navigation listener failed:", error); });
+    }, (error) => {
+        console.error("[Listener Error] Navigation listener failed:", error);
+    });
   }
 
   // Polls
@@ -643,12 +753,12 @@ function startApp() {
             const word = doc.data().text.toLowerCase().trim();
             words[word] = (words[word] || 0) + 1;
         });
-        renderWordCloud(words, 'word-cloud-display');
+        renderWordCloud(words);
     });
   }
 
-  function renderWordCloud(words, displayId) {
-    const display = document.getElementById(displayId);
+  function renderWordCloud(words) {
+    const display = document.getElementById('word-cloud-display');
     if (!display) return;
     display.innerHTML = '';
     const maxFreq = Math.max(...Object.values(words), 1);
@@ -657,7 +767,7 @@ function startApp() {
         const freq = words[word];
         const span = document.createElement('span');
         span.textContent = word;
-        const size = 0.8 + (freq / maxFreq) * 1.5;
+        const size = 1 + (freq / maxFreq) * 2;
         span.style.fontSize = `${size}em`;
         span.style.opacity = 0.6 + (freq / maxFreq) * 0.4;
         display.appendChild(span);
@@ -672,52 +782,6 @@ function startApp() {
         input.value = '';
     }
   };
-
-  // Build a Blues
-  function setupBuildABluesListeners() {
-      const categories = ['places', 'feelings', 'actions'];
-      categories.forEach(category => {
-          const wordsRef = collection(db, `${sessionDataPath}/buildABlues/${category}`);
-          onSnapshot(query(wordsRef), (snapshot) => {
-              const words = {};
-              snapshot.forEach(doc => {
-                  const word = doc.data().text.toLowerCase().trim();
-                  words[word] = (words[word] || 0) + 1;
-              });
-              renderWordCloud(words, `bav-cloud-${category}`);
-          });
-      });
-  }
-  async function submitBluesWord(category) {
-      const input = document.getElementById(`bav-input-${category}`);
-      const text = input.value.trim();
-      if (text && userId) {
-          await addDoc(collection(db, `${sessionDataPath}/buildABlues/${category}`), { text, author: userId });
-          input.value = '';
-      }
-  }
-  async function generateClassBlues() {
-      const categories = ['places', 'feelings', 'actions'];
-      const topWords = {};
-      for (const category of categories) {
-          const q = query(collection(db, `${sessionDataPath}/buildABlues/${category}`));
-          const querySnapshot = await getDocs(q);
-          const words = {};
-          querySnapshot.forEach(doc => {
-              const word = doc.data().text.toLowerCase().trim();
-              words[word] = (words[word] || 0) + 1;
-          });
-          const sortedWords = Object.keys(words).sort((a, b) => words[b] - words[a]);
-          topWords[category] = sortedWords[0];
-      }
-      
-      const resultEl = document.getElementById('bav-result');
-      const line1 = `Woke up this mornin', lookin' down at ${topWords.places || 'the station'},`;
-      const line2 = `Yeah, I woke up this mornin', lookin' down at ${topWords.places || 'the station'},`;
-      const line3 = `Feelin' so ${topWords.feelings || 'blue'}, I just ${topWords.actions || 'packed my bags'}.`;
-      resultEl.textContent = `${line1}\n${line2}\n${line3}`;
-  }
-
 
   // Q&A
   function setupQnaListener() {
@@ -738,7 +802,8 @@ function startApp() {
         const li = document.createElement('li');
         li.innerHTML = `
             <button class="upvote-btn ${hasVoted ? 'voted' : ''}" onclick="upvoteQuestion('${q.id}')" ${hasVoted ? 'disabled' : ''}>
-                <span>▲</span><span>${q.upvotes || 0}</span>
+                <span>▲</span>
+                <span>${q.upvotes || 0}</span>
             </button>
             <div>
                 <p>${q.text}</p>
@@ -804,14 +869,20 @@ function startApp() {
       questionArea.innerHTML = '<p>The quiz battle is about to begin!</p>';
       feedbackArea.innerHTML = ''; 
       timerArea.style.display = 'none';
-      if (isPresenter) { controlsArea.innerHTML = `<button class="grade-btn" onclick="startOrAdvanceQuiz()">Start Quiz Battle</button>`; } 
-      else { controlsArea.innerHTML = `<p><i>Waiting for the presenter to start the quiz...</i></p>`; }
+      if (isPresenter) {
+          controlsArea.innerHTML = `<button class="grade-btn" onclick="startOrAdvanceQuiz()">Start Quiz Battle</button>`;
+      } else {
+          controlsArea.innerHTML = `<p><i>Waiting for the presenter to start the quiz...</i></p>`;
+      }
     } else if (state.status === 'finished') {
       questionArea.innerHTML = '<h3>Quiz Battle Over!</h3><p>Check the final scores on the leaderboard.</p>';
       feedbackArea.innerHTML = ''; 
       timerArea.style.display = 'none';
-      if (isPresenter) { controlsArea.innerHTML = `<button class="grade-btn" onclick="startOrAdvanceQuiz()">Play Again?</button>`; } 
-      else { controlsArea.innerHTML = `<p><i>The quiz has ended.</i></p>`; }
+      if (isPresenter) {
+          controlsArea.innerHTML = `<button class="grade-btn" onclick="startOrAdvanceQuiz()">Play Again?</button>`;
+      } else {
+          controlsArea.innerHTML = `<p><i>The quiz has ended.</i></p>`;
+      }
     } else { 
       timerArea.style.display = 'block';
       const qIndex = state.currentQuestion, question = BATTLE_QUIZ[qIndex];
@@ -820,40 +891,44 @@ function startApp() {
       questionArea.innerHTML = `<div class="q"><h4>Q${qIndex + 1}. ${question.q}</h4>${media}<div class="choices">${choices}</div></div>`;
       feedbackArea.innerHTML = '';
 
-      if (isPresenter) { controlsArea.innerHTML = `<button class="grade-btn" onclick="startOrAdvanceQuiz()">Next Question ▶</button>`; } 
-      else { controlsArea.innerHTML = `<p><i>Waiting for the presenter to advance to the next question...</i></p>`; }
+      if (isPresenter) {
+          controlsArea.innerHTML = `<button class="grade-btn" onclick="startOrAdvanceQuiz()">Next Question ▶</button>`;
+      } else {
+          controlsArea.innerHTML = `<p><i>Waiting for the presenter to advance to the next question...</i></p>`;
+      }
       
       const startTime = state.questionStartTime;
       timerArea.textContent = 'Get Ready...';
       
       if(localAnswers[qIndex] === undefined) { 
-          timerStartTimeout = setTimeout(() => {
-              timerInterval = setInterval(() => {
-                  const elapsedSeconds = (new Date().getTime() - startTime) / 1000;
-                  if (elapsedSeconds >= 20) { // Total time: 5s grace + 15s scoring
-                      timerArea.textContent = '0 points';
-                      clearInterval(timerInterval);
-                      if (localAnswers[qIndex] === undefined) {
-                          document.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
-                          const correctBtn = document.getElementById(`choice-${question.answer}`);
-                          if (correctBtn) correctBtn.classList.add('correct');
-                          if (feedbackArea) feedbackArea.textContent = "Time's up!";
-                      }
-                  } else if (elapsedSeconds >= 5) { // Scoring period
-                      const scoringSeconds = elapsedSeconds - 5;
-                      const points = Math.round(1000 * (1 - (scoringSeconds / 15)));
-                      timerArea.textContent = `${points} points`;
-                  }
-              }, 100);
-          }, 5000);
+        timerStartTimeout = setTimeout(() => {
+            timerInterval = setInterval(() => {
+                const elapsedSeconds = (new Date().getTime() - startTime) / 1000;
+                if (elapsedSeconds >= 20) { // Total time: 5s grace + 15s scoring
+                    timerArea.textContent = '0 points';
+                    clearInterval(timerInterval);
+                    if (localAnswers[qIndex] === undefined) {
+                        document.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
+                        const correctBtn = document.getElementById(`choice-${question.answer}`);
+                        if (correctBtn) correctBtn.classList.add('correct');
+                        if (feedbackArea) feedbackArea.textContent = "Time's up!";
+                    }
+                } else if (elapsedSeconds >= 5) { // Scoring period
+                    const scoringSeconds = elapsedSeconds - 5;
+                    const points = Math.round(1000 * (1 - (scoringSeconds / 15)));
+                    timerArea.textContent = `${points} points`;
+                }
+            }, 100);
+        }, 5000);
       } else {
-          showAnswerFeedback(qIndex, localAnswers[qIndex]);
+        showAnswerFeedback(qIndex, localAnswers[qIndex]);
       }
     }
   }
 
   async function startOrAdvanceQuiz() {
     if (!isPresenter || !userId || !userName) return;
+
     const battleStateRef = doc(db, `${sessionDataPath}/quizState/battle`);
     const docSnap = await getDoc(battleStateRef);
     const currentState = docSnap.exists() ? docSnap.data() : { status: 'waiting', currentQuestion: -1 };
@@ -881,6 +956,7 @@ function startApp() {
 
       const question = BATTLE_QUIZ[qIndex], isCorrect = question.answer === choiceIndex;
       const scoreRef = doc(db, `${sessionDataPath}/scores/${userId}`);
+      
       const elapsedSeconds = (new Date().getTime() - questionStartTime) / 1000;
 
       if (isCorrect) {
@@ -907,81 +983,54 @@ function startApp() {
   }
   
   // --- RENDERING & DOM MANIPULATION ---
-  function toggleSection(elementId, buttonEl, baseText) {
+  function toggleProfile(elementId) {
     const el = document.getElementById(elementId);
-    if(el) {
-        el.hidden = !el.hidden;
-        if(buttonEl) {
-            buttonEl.textContent = el.hidden ? baseText : `Hide ${baseText}`;
-        }
-    }
+    if (el) el.hidden = !el.hidden;
   }
 
-  function funFactsHTML(facts) {
-    if (!facts || facts.length === 0) return '';
-    const factId = `fun-facts-${Math.random().toString(36).substr(2, 9)}`;
-    const factList = facts.map(f => `<li>${f}</li>`).join('');
-    return `
-      <div style="margin-top:.5rem;">
-        <button class="read-btn" style="background: var(--accent); color: #08121f;" onclick="toggleSection('${factId}', this, '🤔 Did You Know?')">🤔 Did You Know?</button>
-        <div id="${factId}" class="fun-facts" hidden><ul>${factList}</ul></div>
-      </div>`;
-  }
-
-  function thenVsNowHTML(data) {
-    if (!data) return '';
-    return `
-      <div class="interactive-section">
-        <h3>${data.title}</h3>
-        <div class="then-vs-now">
-          <div class="then-vs-now-card">
-            <h4>THEN: ${data.then.artist}</h4>
-            <p>${data.then.song}</p>
-            <audio controls src="${data.then.audioSrc}"></audio>
-            <button class="read-btn" onclick="toggleSection('lyrics-then-${data.then.artist.replace(/\s/g, '')}', this, 'Show Lyrics')">Show Lyrics</button>
-            <div id="lyrics-then-${data.then.artist.replace(/\s/g, '')}" class="lyrics-content" hidden>${data.then.lyrics}</div>
-          </div>
-          <div class="then-vs-now-card">
-            <h4>NOW: ${data.now.artist}</h4>
-            <p>${data.now.song}</p>
-            <audio controls src="${data.now.audioSrc}"></audio>
-            <button class="read-btn" onclick="toggleSection('lyrics-now-${data.now.artist.replace(/\s/g, '')}', this, 'Show Lyrics')">Show Lyrics</button>
-            <div id="lyrics-now-${data.now.artist.replace(/\s/g, '')}" class="lyrics-content" hidden>${data.now.lyrics}</div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-  
   function deepListHTML(sectionIdx, deep){
     if(!deep || !deep.length) return '';
     const items = deep.map((d,di)=>{
       const contentId = `profile-content-${sectionIdx}-${di}`;
+      
       const bulletsHTML = (d.bullets||[]).length > 0 ? `<h4>Key points</h4><ul>${(d.bullets||[]).map(b=>`<li>${b}</li>`).join('')}</ul>` : '';
-      let mediaContent = (d.media||[]).map(m=> m.href ? `<li><a href="${m.href}" target="_blank" rel="noopener">${m.label}</a></li>` : '').join('');
+      
+      let mediaContent = (d.media||[]).map(m=> {
+          if (m.href) {
+              return `<li><a href="${m.href}" target="_blank" rel="noopener">${m.label}</a></li>`;
+          }
+          return '';
+      }).join('');
       const mediaHTML = mediaContent ? `<h4>Media</h4><ul>${mediaContent}</ul>` : '';
-      const funFacts = funFactsHTML(d.funFacts);
+
+      const rightColumnTextHTML = d.rightColumnText ? `<p>${d.rightColumnText}</p>` : '';
       const fullTextHTML = d.fullText ? `<p>${d.fullText}</p>`: '';
       
       let fullContentHTML = '';
       if (d.image) {
           fullContentHTML = `
-            <div style="text-align: left;">
-                <div style="display: flex; flex-wrap: nowrap; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
-                    <div style="flex: 0 0 250px; min-width: 200px;">
-                        <img alt="${d.altText || d.title}" src="${d.image}" style="width: 100%; height: auto; border-radius: .4rem;">
-                    </div>
-                    <div style="flex: 1 1 auto;">${bulletsHTML}${mediaHTML}</div>
-                </div>
-                <div>${fullTextHTML}${funFacts}</div>
-            </div>`;
+              <div style="text-align: left;">
+                  <div style="display: flex; flex-wrap: nowrap; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
+                      <div style="flex: 0 0 250px; min-width: 200px;">
+                          <img alt="${d.altText || d.title}" src="${d.image}" style="width: 100%; height: auto; border-radius: .4rem;">
+                      </div>
+                      <div style="flex: 1 1 auto;">
+                          ${rightColumnTextHTML}
+                          ${bulletsHTML}
+                          ${mediaHTML}
+                      </div>
+                  </div>
+                  <div>
+                      ${fullTextHTML}
+                  </div>
+              </div>`;
       } else {
-          fullContentHTML = `<div style="text-align: left;">${bulletsHTML}${mediaHTML}${fullTextHTML}${funFacts}</div>`;
+          fullContentHTML = `<div style="text-align: left;">${rightColumnTextHTML}${bulletsHTML}${mediaHTML}${fullTextHTML}</div>`;
       }
 
       return `
         <li class="deep-item" style="flex-direction: column; gap: 0;">
-          <button type="button" class="profile-btn" onclick="toggleSection('${contentId}', this, '${d.title}')">${d.title}</button>
+          <button type="button" class="profile-btn" onclick="toggleProfile('${contentId}')">${d.title}</button>
           <div id="${contentId}" class="full" hidden style="max-width: 100%; box-sizing: border-box; padding: 1.2rem; background: #1a1d29; border-radius: 0 0 .55rem .55rem;">
             ${fullContentHTML}
           </div>
@@ -1000,97 +1049,71 @@ function startApp() {
             <button onclick="submitPollVote('${pollId}', ${ci})">${opt}</button>
         </div>
     `).join('');
-    const revealBtn = isPresenter ? `<button class="read-btn" style="margin-top:1rem;" onclick="revealPollAnswer('${pollId}', ${check.answer})">Reveal Answer</button>` : '';
+
     return `
         <div class="poll interactive-section" data-poll-id="${pollId}">
             <h3>Test Your Knowledge</h3>
             <p>${check.q}</p>
             <div class="choices">${choices}</div>
-            ${revealBtn}
         </div>
     `;
   }
-
-  function keywordsHTML(slide, slideIndex) {
-      if (!slide.keywords || slide.keywords.length === 0) return '';
-      const list = slide.keywords.map(kw => `<dt>${kw.term}</dt><dd>${kw.definition}</dd>`).join('');
-      return `<article id="keywords-${slideIndex}" class="full" hidden><dl>${list}</dl></article>`;
+  
+  function buildABandHTML(data, slideId) {
+      if (!data) return '';
+      const containerId = `dnd-container-${slideId}`;
+  
+      if (data.customDropzones && data.customDropzones.length > 0) {
+          const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
+          const instrumentHTML = instruments.map(inst => `<div class="instrument" draggable="true" data-instrument="${inst}">${inst}</div>`).join('');
+          
+          const dropzoneHTML = data.customDropzones.map(zone => 
+              `<div class="band-area" data-accepts='${JSON.stringify(zone.accepts)}'><h4>${zone.title}</h4></div>`
+          ).join('');
+  
+          return `
+              <div id="${containerId}" class="interactive-section build-a-band-container">
+                  <h3>${data.bandAreaTitle || 'Build a Band'}</h3>
+                  <div class="build-a-band">
+                      <div class="instrument-pool"><h4>${data.poolTitle || 'Items'}</h4>${instrumentHTML}</div>
+                      ${dropzoneHTML}
+                  </div>
+              </div>
+          `;
+      }
+      
+      // Fallback to original simple build a band
+      const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
+      const instrumentHTML = instruments.map(inst => `<div class="instrument" draggable="true" data-instrument="${inst}">${inst}</div>`).join('');
+      return `
+          <div id="${containerId}" class="interactive-section build-a-band-container">
+              <h3>Identify the Crooners</h3>
+              <p>Drag the names of the singers known as 'crooners' into the group area.</p>
+              <div class="build-a-band">
+                  <div class="instrument-pool"><h4>Artists</h4>${instrumentHTML}</div>
+                  <div class="band-area" data-correct='${JSON.stringify(data.correct)}'><h4>Crooners Group</h4></div>
+              </div>
+          </div>
+      `;
   }
 
-  function buildABandHTML(data) {
-    if (!data) return '';
-    if (data.customDropzones && data.customDropzones.length > 0) {
-        const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
-        const instrumentHTML = instruments.map(inst => `<div class="instrument" draggable="true" data-instrument="${inst}">${inst}</div>`).join('');
-        const dropzoneHTML = data.customDropzones.map(zone => `<div class="band-area" data-accepts='${JSON.stringify(zone.accepts)}'><h4>${zone.title}</h4></div>`).join('');
-        return `
-            <div class="interactive-section build-a-band-container">
-                <h3>${data.bandAreaTitle || 'Build a Band'}</h3>
-                <div class="build-a-band">
-                    <div class="instrument-pool"><h4>${data.poolTitle || 'Items'}</h4>${instrumentHTML}</div>
-                    ${dropzoneHTML}
-                </div>
-            </div>`;
-    }
-  }
 
   function wordCloudHTML(data) {
     if (!data) return '';
+    const title = data.title || 'Final Thoughts?';
+    const prompt = data.prompt || 'What one word describes this topic to you? Add it to our word cloud!';
     return `
         <div class="interactive-section word-cloud-container">
             <div class="word-cloud-input">
-                <h3>${data.title || 'Final Thoughts?'}</h3>
-                <p>${data.prompt || 'What one word describes this topic to you?'}</p>
+                <h3>${title}</h3>
+                <p>${prompt}</p>
                 <div class="content-input-container">
-                    <input type="text" id="word-cloud-input" class="content-input" placeholder="e.g., Soulful, Rhythmic...">
+                    <input type="text" id="word-cloud-input" class="content-input" placeholder="e.g., Smooth, Sentimental...">
                     <button class="add-content-btn" onclick="submitWord()">Submit</button>
                 </div>
             </div>
             <div id="word-cloud-display" class="word-cloud-display"></div>
-        </div>`;
-  }
-
-  function buildAVerseHTML(slide) {
-    if(slide.id !== '9.04b') return '';
-    const presenterButton = isPresenter ? `<button class="grade-btn" onclick="generateClassBlues()">Write the Class Blues!</button>` : '';
-    return `
-      <div class="interactive-section">
-        <h3>Build a Blues Verse</h3>
-        <div id="build-a-verse-container">
-          <div class="bav-col">
-            <h4>1. Add a Place</h4>
-            <div class="content-input-container">
-              <input type="text" id="bav-input-places" class="content-input" placeholder="e.g., the city, my front porch">
-              <button class="add-content-btn" onclick="submitBluesWord('places')">Add</button>
-            </div>
-            <div class="bav-cloud" id="bav-cloud-places"></div>
-          </div>
-          <div class="bav-col">
-            <h4>2. Add a Feeling</h4>
-            <div class="content-input-container">
-              <input type="text" id="bav-input-feelings" class="content-input" placeholder="e.g., lonely, happy, tired">
-              <button class="add-content-btn" onclick="submitBluesWord('feelings')">Add</button>
-            </div>
-            <div class="bav-cloud" id="bav-cloud-feelings"></div>
-          </div>
-          <div class="bav-col">
-            <h4>3. Add an Action</h4>
-            <div class="content-input-container">
-              <input type="text" id="bav-input-actions" class="content-input" placeholder="e.g., started to cry, danced all night">
-              <button class="add-content-btn" onclick="submitBluesWord('actions')">Add</button>
-            </div>
-            <div class="bav-cloud" id="bav-cloud-actions"></div>
-          </div>
         </div>
-        <div style="text-align:center; margin-top:1rem;">
-          ${presenterButton}
-          <div id="bav-result">Your generated blues verse will appear here...</div>
-        </div>
-         <div class="interactive-section audio-player-container">
-            <h4>12-Bar Blues Progression Example</h4>
-            <button class="read-btn" onclick="toggleBluesProgression(this)">▶️ Play</button>
-         </div>
-      </div>
     `;
   }
 
@@ -1104,15 +1127,10 @@ function startApp() {
       const bullets = s.bullets.map(b=>`<li>${b}</li>`).join('');
       const deep = deepListHTML(idx, s.deep);
       const poll = pollHTML(s.poll, s.id);
-      const buildaband = buildABandHTML(s.buildaband);
-      const buildaverse = buildAVerseHTML(s);
+      const buildaband = buildABandHTML(s.buildaband, s.id);
       const wordcloud = wordCloudHTML(s.wordcloud);
       const headerImage = s.headerImage ? `<img src="${s.headerImage}" alt="${s.title}" style="width: 100%; border-radius: .4rem; margin-bottom: 1rem;" />` : '';
-      const keywordsDiv = keywordsHTML(s, idx);
-      const thenVsNowDiv = thenVsNowHTML(s.thenVsNow);
-      const fullTextBtn = s.full ? `<button class="read-btn" onclick="toggleSection('full-${idx}', this, 'Full Text')">Full Text</button>` : '';
-      const keywordsBtn = s.keywords ? `<button class="read-btn" onclick="toggleSection('keywords-${idx}', this, 'Keywords')">Keywords</button>` : '';
-
+      
       let footerHTML = '';
       if (isPresenter) {
           const prevBtn = idx > 0 ? `<button class="nav-btn" onclick="go(${idx-1})">◀ Previous</button>` : '<span></span>';
@@ -1131,12 +1149,11 @@ function startApp() {
           </header>
           ${headerImage}
           <ul class="bullets">${bullets}</ul>
-          <div style="display: flex; gap: .5rem; flex-wrap: wrap;">${fullTextBtn}${keywordsBtn}</div>
+           <div class="slide-actions">
+                ${s.full ? `<button class="read-btn" onclick="toggleFull(${idx})">Read Full Text</button>` : ''}
+           </div>
           <article id="full-${idx}" class="full" hidden>${s.full}</article>
-          ${keywordsDiv}
           ${deep}
-          ${thenVsNowDiv}
-          ${buildaverse}
           ${poll}
           ${buildaband}
           ${wordcloud}
@@ -1174,6 +1191,36 @@ function startApp() {
     setupDragAndDrop();
   }
 
+  let lastFocused = null;
+  function openProfile(sectionIdx, cardIdx){
+    const d = SLIDES[sectionIdx].deep[cardIdx];
+    const modal = document.getElementById('modal');
+    const mBody = document.getElementById('m-body');
+    const scrim = document.getElementById('scrim');
+    const title = d.modalTitle || d.title;
+    const baseBullets = (d.bullets||[]).map(b=>`<li>${b}</li>`).join('');
+    const media = (d.media||[]).map(m=>`<li><a href="${m.href}" target="_blank" rel="noopener">${m.label}</a></li>`).join('');
+    const extended = d.modalHTML || '';
+    const extra = EXTRA[d.title] || [];
+    const extraHTML = extra.length ? `<h4>Additional notes</h4><ul>${extra.map(x=>`<li>${x}</li>`).join('')}</ul>` : '';
+    const summaryHTML = d.summary?`<p>${d.summary}</p>`:'';
+    const bulletsHTML = baseBullets?`<h4>Key points</h4><ul>${baseBullets}</ul>`:'';
+    const mediaHTML = media?`<h4>Media</h4><ul class="media">${media}</ul>`:'';
+    document.getElementById('m-title').textContent = title;
+    if (d.image) {
+        mBody.className = 'modal-body split-layout';
+        mBody.innerHTML = `<div class="modal-image-container"><img alt="${d.altText || d.title}" src="${d.image}"></div><div class="modal-text-container">${summaryHTML}${bulletsHTML}${extraHTML}${mediaHTML}${extended}</div>`;
+    } else {
+        mBody.className = 'modal-body';
+        mBody.innerHTML = `${summaryHTML}${bulletsHTML}${extraHTML}${mediaHTML}${extended}`;
+    }
+    lastFocused = document.activeElement;
+    document.body.classList.add('modal-open');
+    scrim.classList.add('active');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden','false');
+    document.getElementById('modalClose').focus();
+  }
   function hideModal(){
     const modal = document.getElementById('modal');
     const scrim = document.getElementById('scrim');
@@ -1195,51 +1242,98 @@ function startApp() {
 
   async function go(i){ 
     if (!isPresenter) return;
+    
     const totalSlides = SLIDES.length + 1;
     if (i < 0 || i >= totalSlides) return;
+    
     try {
         const stateRef = doc(db, `${sessionDataPath}/sessionState/state`);
         await setDoc(stateRef, { currentSlide: i }, { merge: true });
-    } catch (error) { console.error("[Firebase Write Error] Failed to update slide state:", error); }
+    } catch (error) {
+        console.error("[Firebase Write Error] Failed to update slide state:", error);
+    }
+  }
+
+  function toggleFull(i){ 
+    const el=document.getElementById('full-'+i); 
+    if(el) {
+        el.hidden=!el.hidden;
+        const button = el.previousElementSibling.querySelector('.read-btn');
+        if(button) {
+            button.textContent = el.hidden ? 'Read Full Text' : 'Hide Full Text';
+        }
+    }
   }
   
   function setupDragAndDrop() {
     document.querySelectorAll('.build-a-band-container').forEach(container => {
         const instruments = container.querySelectorAll('.instrument');
+        const simpleDropzone = container.querySelector('.band-area[data-correct]');
         const customDropzones = container.querySelectorAll('.band-area[data-accepts]');
         const pool = container.querySelector('.instrument-pool');
+
         let draggedItem = null;
 
         instruments.forEach(inst => {
-            inst.addEventListener('dragstart', e => { draggedItem = e.target; setTimeout(() => e.target.style.display = 'none', 0); });
-            inst.addEventListener('dragend', () => { setTimeout(() => { if (draggedItem) { draggedItem.style.display = 'block'; draggedItem = null; } }, 0); });
+            inst.addEventListener('dragstart', e => {
+                draggedItem = e.target;
+                setTimeout(() => e.target.style.display = 'none', 0);
+            });
+            inst.addEventListener('dragend', () => {
+                setTimeout(() => {
+                    if (draggedItem) {
+                        draggedItem.style.display = 'block';
+                        draggedItem = null;
+                    }
+                }, 0);
+            });
         });
 
-        if (customDropzones.length > 0) {
-            customDropzones.forEach(zone => {
-                zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
-                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-                zone.addEventListener('drop', e => {
-                    e.preventDefault(); zone.classList.remove('drag-over');
-                    if (draggedItem) {
-                        const acceptedTypes = JSON.parse(zone.dataset.accepts);
-                        const instrumentType = draggedItem.dataset.instrument;
-                        if (acceptedTypes.includes(instrumentType)) {
-                            zone.appendChild(draggedItem);
-                            draggedItem.classList.add('correct');
-                            draggedItem.draggable = false;
-                        }
-                    }
-                });
-            });
+        const allDropzones = simpleDropzone ? [simpleDropzone, pool] : [...customDropzones, pool];
 
-            if (pool) {
-              pool.addEventListener('dragover', e => e.preventDefault());
-              pool.addEventListener('drop', e => {
-                if(draggedItem){ pool.appendChild(draggedItem); draggedItem.classList.remove('correct', 'incorrect'); }
-              });
-            }
-        }
+        allDropzones.forEach(zone => {
+            if (!zone) return;
+            zone.addEventListener('dragover', e => {
+                e.preventDefault();
+                zone.classList.add('drag-over');
+            });
+            zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+                if (!draggedItem) return;
+
+                const instrumentName = draggedItem.dataset.instrument;
+
+                // Handle return to pool
+                if (zone.classList.contains('instrument-pool')) {
+                    zone.appendChild(draggedItem);
+                    draggedItem.classList.remove('correct', 'incorrect');
+                    draggedItem.draggable = true;
+                    return;
+                }
+
+                // Handle simple dropzone
+                if (zone.dataset.correct) {
+                    const correctInstruments = JSON.parse(zone.dataset.correct);
+                    zone.appendChild(draggedItem);
+                    if (correctInstruments.includes(instrumentName)) {
+                        draggedItem.classList.add('correct');
+                    } else {
+                        draggedItem.classList.add('incorrect');
+                    }
+                }
+                // Handle custom dropzones
+                else if (zone.dataset.accepts) {
+                    const acceptedTypes = JSON.parse(zone.dataset.accepts);
+                    if (acceptedTypes.includes(instrumentName)) {
+                        zone.appendChild(draggedItem);
+                        draggedItem.classList.add('correct');
+                        draggedItem.draggable = false; // Optional: lock correct answers
+                    }
+                }
+            });
+        });
     });
   }
   
@@ -1254,7 +1348,8 @@ function startApp() {
   // --- ACCESSIBILITY & OTHER FUNCTIONS ---
   function toggleHighContrast() {
     document.body.classList.toggle('high-contrast-mode');
-    localStorage.setItem('highContrast', document.body.classList.contains('high-contrast-mode'));
+    const isHighContrast = document.body.classList.contains('high-contrast-mode');
+    localStorage.setItem('highContrast', isHighContrast);
   }
 
   function readSlideAloud(slideIndex) {
@@ -1267,84 +1362,61 @@ function startApp() {
 
     const slideEl = document.getElementById(`slide-${slideIndex}`);
     if (!slideEl) return;
+
     let textToRead = [];
     const title = slideEl.querySelector('h2');
     if (title) textToRead.push(title.textContent);
+
     const bullets = slideEl.querySelectorAll('.bullets li');
     if (bullets.length > 0) {
       textToRead.push("Bullet points:");
       bullets.forEach(li => textToRead.push(li.textContent));
     }
+    
+    const fullText = slideEl.querySelector('article.full');
+    if (fullText && !fullText.hidden) {
+       textToRead.push("Full text:");
+       textToRead.push(fullText.textContent);
+    }
+    
+    const images = slideEl.querySelectorAll('img');
+    if (images.length > 0) {
+      images.forEach((img, index) => {
+        if(img.alt) {
+          textToRead.push(`Image ${index + 1} description: ${img.alt}`);
+        }
+      });
+    }
+    
     const fullSpeech = textToRead.join('. ');
     const utterance = new SpeechSynthesisUtterance(fullSpeech);
-    utterance.onstart = () => { if(btn) btn.textContent = '■ Stop Reading'; };
-    utterance.onend = () => { if(btn) btn.textContent = '🔊 Read Aloud'; };
+    
+    utterance.onstart = () => {
+        if(btn) btn.textContent = '■ Stop Reading';
+    };
+    
+    utterance.onend = () => {
+        if(btn) btn.textContent = '🔊 Read Aloud';
+    };
+
     speechSynthesis.speak(utterance);
   }
-
-  function revealPollAnswer(pollId, correctIndex) {
-    const pollEl = document.querySelector(`[data-poll-id="${pollId}"]`);
-    if (!pollEl) return;
-    const correctOption = pollEl.querySelectorAll('.poll-option')[correctIndex];
-    if(correctOption) { correctOption.classList.add('correct-answer'); }
-  }
-
-  function toggleBluesProgression(button) {
-      if (!audioContext) {
-          audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          mainGainNode = audioContext.createGain();
-          mainGainNode.gain.value = 0.5; // Set volume
-          mainGainNode.connect(audioContext.destination);
-      }
-
-      if (isPlayingBlues) {
-          if (oscillator) {
-              oscillator.stop();
-          }
-          isPlayingBlues = false;
-          button.textContent = '▶️ Play';
-          return;
-      }
-
-      isPlayingBlues = true;
-      button.textContent = '⏹️ Stop';
-      
-      const noteFreq = { 'C4': 261.63, 'F4': 349.23, 'G4': 392.00 };
-      const progression = [
-          'C4', 'C4', 'C4', 'C4', 
-          'F4', 'F4', 'C4', 'C4',
-          'G4', 'F4', 'C4', 'G4' 
-      ];
-      let noteDuration = 0.5; // seconds
-      let currentTime = audioContext.currentTime;
-
-      function scheduleNextBar() {
-          if (!isPlayingBlues) return;
-          progression.forEach(note => {
-              oscillator = audioContext.createOscillator();
-              oscillator.type = 'sine';
-              oscillator.frequency.setValueAtTime(noteFreq[note], currentTime);
-              oscillator.connect(mainGainNode);
-              oscillator.start(currentTime);
-              oscillator.stop(currentTime + noteDuration);
-              currentTime += noteDuration;
-          });
-          setTimeout(scheduleNextBar, noteDuration * progression.length * 1000);
-      }
-      scheduleNextBar();
-  }
-
+  
   // --- GLOBAL EVENT LISTENERS ---
   document.getElementById('modalClose').addEventListener('click', hideModal);
   document.getElementById('contrast-toggle-btn').addEventListener('click', toggleHighContrast);
   document.getElementById('scrim').addEventListener('click', ()=>{
       hideModal();
-      if(document.getElementById('qna-panel').classList.contains('active')){ toggleQnaPanel(); }
+      if(document.getElementById('qna-panel').classList.contains('active')){
+          toggleQnaPanel();
+      }
   });
   document.addEventListener('keydown', (e)=>{ 
     if(e.key==='Escape') {
         hideModal();
-        if(document.getElementById('qna-panel').classList.contains('active')){ toggleQnaPanel(); }
+        if(document.getElementById('qna-panel').classList.contains('active')){
+          toggleQnaPanel();
+        }
     }
     else if(e.key==='ArrowRight') go(ix+1); 
     else if(e.key==='ArrowLeft') go(ix-1); 
@@ -1361,7 +1433,9 @@ function startApp() {
   
   // --- WINDOW-SCOPED FUNCTIONS FOR HTML ---
   window.go = go;
-  window.toggleSection = toggleSection;
+  window.toggleFull = toggleFull;
+  window.openProfile = openProfile;
+  window.toggleProfile = toggleProfile;
   window.submitPollVote = submitPollVote;
   window.submitWord = submitWord;
   window.startOrAdvanceQuiz = startOrAdvanceQuiz;
@@ -1370,10 +1444,6 @@ function startApp() {
   window.submitQuestion = submitQuestion;
   window.upvoteQuestion = upvoteQuestion;
   window.readSlideAloud = readSlideAloud;
-  window.revealPollAnswer = revealPollAnswer;
-  window.toggleBluesProgression = toggleBluesProgression;
-  window.submitBluesWord = submitBluesWord;
-  window.generateClassBlues = generateClassBlues;
   
 </script>
 </body>
