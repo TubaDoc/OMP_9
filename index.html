@@ -527,7 +527,7 @@
             },
             {
                 "title": "Fats Domino (1928-2017)",
-                "image": "https://i.imgur.com/H6f3nZt.jpeg",
+                "image": "https://i.imgur.com/f1gm0A6.jpeg",
                 "altText": "A photo of Fats Domino smiling and playing the piano.",
                 "bullets": [
                     "A New Orleans-based pianist and singer-songwriter.",
@@ -910,7 +910,7 @@ function startApp() {
   };
   
   // Quiz Battle
-  const BATTLE_QUIZ = QUIZ.filter(q => !q.media || !q.media.includes('spotify.com'));
+  const BATTLE_QUIZ = QUIZ.filter(q => !q.media);
   let localAnswers = {}; 
 
   async function setupQuizBattleListener() {
@@ -1152,8 +1152,8 @@ function startApp() {
       const containerId = `dnd-container-${slideId}`;
   
       if (data.customDropzones && data.itemMap) {
-          const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
-          const instrumentHTML = instruments.map(id => `<div class="instrument" draggable="true" data-instrument-id="${id}">${data.itemMap[id]}</div>`).join('');
+          const items = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
+          const itemHTML = items.map(id => `<div class="instrument" draggable="true" id="dnd-item-${id}" data-instrument-id="${id}">${data.itemMap[id]}</div>`).join('');
           
           const dropzoneHTML = data.customDropzones.map(zone => 
               `<div class="band-area" data-accepts='${JSON.stringify(zone.accepts)}'><h4>${zone.title}</h4></div>`
@@ -1164,7 +1164,7 @@ function startApp() {
                   <h3>${data.bandAreaTitle || 'Build a Band'}</h3>
                    <p>Drag each line from the pool on the left into the correct slot to build a blues verse.</p>
                   <div class="build-a-band">
-                      <div class="instrument-pool" style="flex: 2;"><h4>${data.poolTitle || 'Items'}</h4>${instrumentHTML}</div>
+                      <div class="instrument-pool" style="flex: 2;"><h4>${data.poolTitle || 'Items'}</h4>${itemHTML}</div>
                       <div style="flex: 3; display: flex; flex-direction: column; gap: 1rem;">${dropzoneHTML}</div>
                   </div>
               </div>
@@ -1197,27 +1197,21 @@ function startApp() {
     if (!host) return;
     host.innerHTML = ''; 
     
-    let slidesToRender = SLIDES;
-    let quizSlideIndex = slidesToRender.length;
-    let totalSlides = slidesToRender.length + 1; // +1 for Quiz
-    
-    if(isPresenter) {
+    let slidesToRender = [...SLIDES];
+    if (isPresenter) {
         const attendanceSlide = {
             id: "9.99_attendance",
             title: "Session Attendance",
-            presenterOnly: true,
             headerImage: "https://i.imgur.com/4uodWhO.png",
             bullets: ["The following users have joined this session:"],
-            full: "<ul id='attendance-list'><li>Loading...</li></ul>"
+            full: "<ul id='attendance-list' style='list-style-type: disc; padding-left: 2rem;'><li>Loading...</li></ul>",
         };
-        slidesToRender = [...SLIDES, attendanceSlide];
-        quizSlideIndex = SLIDES.length; 
-        totalSlides = slidesToRender.length + 1;
+        slidesToRender.splice(11, 0, attendanceSlide);
     }
+    
+    const totalSlides = slidesToRender.length + 1; // +1 for Quiz
 
     slidesToRender.forEach((s,idx)=>{
-      if (s.presenterOnly && !isPresenter) return;
-      
       const bullets = s.bullets.map(b=>`<li>${b}</li>`).join('');
       const deep = deepListHTML(idx, s.deep);
       const poll = pollHTML(s.poll, s.id);
@@ -1235,7 +1229,7 @@ function startApp() {
           footerHTML = `<footer class="slide-nav">${prevBtn}<button class="home-btn" onclick="go(0)">Home</button>${nextBtn}</footer>`;
       }
       
-      const mainBody = s.id === '9.99_attendance' ? s.full : `
+      const mainBody = s.id === '9.99_attendance' ? `<div class="${mainContentClass}">${s.full}</div>` : `
         <div class="${mainContentClass}">
             <ul class="bullets">${bullets}</ul>
             <div class="slide-actions">
@@ -1390,7 +1384,7 @@ function startApp() {
 
             draggables.forEach(draggable => {
                 draggable.addEventListener('dragstart', e => {
-                    e.dataTransfer.setData('text/plain', e.target.dataset.instrumentId);
+                    e.dataTransfer.setData('text/plain', e.target.id);
                     setTimeout(() => draggable.classList.add('dragging'), 0);
                 });
                 draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
@@ -1407,9 +1401,11 @@ function startApp() {
                 zone.addEventListener('drop', e => {
                     e.preventDefault();
                     zone.classList.remove('drag-over');
-                    const id = e.dataTransfer.getData('text/plain');
-                    const draggable = container.querySelector(`[data-instrument-id="${id}"]`);
+                    const draggableId = e.dataTransfer.getData('text/plain');
+                    const draggable = document.getElementById(draggableId);
                     if (!draggable) return;
+
+                    const instrumentId = draggable.dataset.instrumentId;
 
                     if (zone.classList.contains('instrument-pool')) {
                         pool.appendChild(draggable);
@@ -1420,7 +1416,7 @@ function startApp() {
 
                     if (zone.dataset.accepts) {
                         const acceptedTypes = JSON.parse(zone.dataset.accepts);
-                        if (acceptedTypes.includes(id) && zone.children.length < 2) { // Allow drop if zone is empty or only has a header
+                        if (acceptedTypes.includes(instrumentId) && !zone.querySelector('.instrument')) {
                             zone.appendChild(draggable);
                             draggable.classList.add('correct');
                             draggable.draggable = false;
