@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Lesson 10 — The Birth of Rock and Roll</title>
+<title>Lesson 10: Early Rock and Roll</title>
 <style>
   :root{--bg:#0e0f12;--ink:#e8ebf0;--muted:#b6bdc9;--card:#161821;--line:#262a35;--brand:#59d0ff;--accent:#ffd166}
   html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'Segoe UI',system-ui,Roboto,sans-serif}
@@ -201,7 +201,7 @@
 
   <header class="top" id="main-header">
     <div class="app brand">
-      <h1>Lesson 10: The Birth of Rock and Roll</h1>
+      <h1>Lesson 10: Early Rock and Roll</h1>
       <small>Use Next/Previous or ← → keys. Session ID: <b id="session-id-display"></b></small>
     </div>
   </header>
@@ -259,21 +259,22 @@
 
 <script type="module">
   // --- IMPORTS AND CONFIG ---
+  // You must replace these with your actual Firebase project configuration.
   const firebaseConfig = {
-    apiKey: "AIzaSyDxpDj0axohHIFfRQ53NLWBQbf_yI2lJo0",
-    authDomain: "interactive-lecture-app.firebaseapp.com",
-    projectId: "interactive-lecture-app",
-    storageBucket: "interactive-lecture-app.firebasestorage.app",
-    messagingSenderId: "47230608512",
-    appId: "1:47230608512:web:ba649a4a9ba16cef1df265",
-    measurementId: "G-NDLP7MWFH9"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+    // measurementId: "YOUR_MEASUREMENT_ID" // Optional
   };
   const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
   const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -298,663 +299,1230 @@
   
   const SLIDES = [
     {
-        "id": "10.00",
-        "title": "Lesson 10: The Birth of Rock and Roll",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": ["Watch this short video for an overview of this chapter's content."],
-        "full": `<div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem;'><iframe src='https://player.vimeo.com/video/762001582?h=37c83ffa80' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allow='fullscreen' allowfullscreen title='Chapter Synopsis Video'></iframe></div>`,
-        "deep": []
+      "id": "10.00",
+      "title": "Lesson 10: Early Rock and Roll",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "bullets": [
+        "In the early 1950s, various musical genres merged to create rock and roll.",
+        "Artists like Ray Charles, Chuck Berry, and Fats Domino had some of the first crossover hits.",
+        "New technology, hybrid musical forms, and changes in music consumption patterns all contributed to a permanent shift in American popular music."
+      ],
+      "full": `
+        <div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem;'>
+          <iframe title='vimeo-player' src='https://player.vimeo.com/video/762001582?h=37c83ffa80' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allow='autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share' allowfullscreen></iframe>
+        </div>
+        <p>In the early 1950s, many different musical threads came together to create the earliest rock and roll. Soon, white artists such as Bill Haley and the Comets and Pat Boone began recording cover versions of black artists’ songs, most of which were more commercially successful than their black counterparts. Changes in technology, new and hybrid musical forms, and shifts in music consumption patterns all contributed to a reworking of the American popular music landscape that would forever alter the history of popular music consumption in the United States.</p>
+      `,
+      "deep": []
     },
     {
-        "id": "10.01",
-        "title": "10.01 Introduction",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": [
-            "In the early 1950s, multiple musical threads converged to create the earliest rock and roll.",
-            "Artists like Ray Charles, Chuck Berry, and Fats Domino wrote and recorded some of the first crossover hits.",
-            "White artists like Bill Haley and Pat Boone began covering black artists' songs, often achieving greater commercial success.",
-            "Technological changes, new musical forms, and shifts in consumption patterns reshaped American popular music."
-        ],
-        "full": "In the early 1950s, many different musical threads came together to create the earliest rock and roll. Artists such as Ray Charles, Chuck Berry, and Fats Domino wrote and recorded some of the earliest crossover hits. Soon, white artists such as Bill Haley and the Comets and Pat Boone began recording cover versions of black artists' songs, most of which were more commercially successful than their black counterparts. Changes in technology, new and hybrid musical forms, and shifts in music consumption patterns all contributed to a reworking of the American popular music landscape that would forever alter the history of popular music consumption in the United States.",
-        "deep": []
+      "id": "10.01",
+      "title": "10.01: New Technologies and Means of Consumption",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "asideImage": "https://omp.s3.amazonaws.com/img/img_omp10_02_WurlitzerJukebox.jpg",
+      "bullets": [
+        "The <b>magnetic tape recorder</b>, developed by the Germans, allowed for sound to be recorded, erased, and re-recorded cheaply and easily.",
+        "This technology liberated recording from large, expensive studios and allowed for recordings to be made anywhere by untrained personnel.",
+        "The <b>45 RPM</b> record, invented by RCA, was inexpensive to produce and purchase, leading to a huge jump in the popularity of pop singles.",
+        "The <b>transistor radio</b>, developed by Bell Laboratory in 1947, and affordable car radios made music more portable and accessible.",
+        "The decline of radio drama led to the development of the <b>Top 40</b> radio format, which repeated the same forty tunes every 24 hours based on the number of records in Wurlitzer jukeboxes."
+      ],
+      "full": "The magnetic recording process changed how music was recorded and distributed. Developed by the Germans to guide radio-controlled V-2 bombs, the magnetic tape recorder revolutionized the music industry. Recording was no longer confined to gigantic and elaborate studios owned by major companies in a few big cities, and tolerably decent recordings could now be made anywhere by untrained personnel who knew very little about engineering or acoustics. Around the same time, high fidelity 45 RPM technology exploded onto the scene. Peter Goldmark, the head of CBS labs for many years, invented high fidelity ('hi-fi') and the 33-1/3 RPM process in the 1930s. After the war, when CBS made its move to 33-1/3 RPMs, RCA countered with a 45 RPM record, and it immediately invented a little economical 45 RPM playback unit. CBS then caught up by making a three-speed turntable with an adapter for the 45 RPM option. The result of this corporate warfare was a huge jump in pop singles. 45 RPMs were inexpensive to produce and to purchase. It was in the world of 45 RPM singles (two sides, the favored one called the A side, and the throwaway gesture called the B side) that rhythm and blues had its first great moment in pop music history. Music listening and consumption was also affected by the radio. The transistor radio, developed by Bell Laboratory in 1947, appeared on the market in the early 1950s. About the same time, the car radio became an affordable option in the automobile industry, and people began listening to the radio in their cars as well as in their homes. By the late 1940s and early 1950s, many popular talk, drama, and comedy radio programs had moved from radio to television, and radio programmers needed to find new material to fill the airtime. Several innovations in radio programming arose, the most important of which was the development of the Top 40 radio format. The same forty songs would be repeated every 24-hour radio cycle, and the top ten songs would receive more frequent play than the bottom thirty. In addition, Top 40 radio integrated short new spots, contests, promotional gimmicks, and frequent station identification spots by talkative disc jockeys speaking the language of the teenage listening market. Why forty tunes? Because the Wurlitzer jukeboxes, which flooded the industry at the time, contained forty recordings.",
+      "keywords": {
+        "magnetic tape recorder": "A recording technology that allowed for sound to be recorded, erased, and re-recorded on the same tape many times, allowed for recordings to be duplicated from tape to tape, allowed for recordings to be edited, and made recording much cheaper.",
+        "45 RPM": "A record that plays at 45 revolutions per minute; had a limit of around three to four minutes per side.",
+        "Top 40": "A radio format where the same forty tunes were repeated every 24-hour radio cycle, and the top ten singles received the most airplay."
+      },
+      "deep": [],
+      "poll": {
+        "q": "The transistor radio was developed by:",
+        "choices": ["General Electric", "Bell Laboratory", "Nikola Tesla", "Thomas Edison"],
+        "answer": 1
+      }
     },
     {
-        "id": "10.02",
-        "title": "10.02 New Technologies and Means of Consumption",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "asideImage": "https://omp.s3.amazonaws.com/img/img_omp10_02_WurlitzerJukebox.jpg",
-         "bullets": [
-            "The <b>magnetic tape recorder</b> revolutionized music recording, allowing for editing, duplication, and cheaper production.",
-            "<b>45 RPM records</b> became the standard for pop singles, with each side playing for about 3-4 minutes.",
-            "The <b>transistor radio</b> (developed by Bell Labs in 1947) and car radios made music more portable and accessible.",
-            "<b>Top 40 radio format</b> emerged, playing the same forty songs every 24 hours with the top ten receiving the most airplay."
-        ],
-        "full": "The magnetic recording process changed how music was recorded and distributed. Developed by the Germans to guide radio-controlled V-2 bombs, magnetic tape allowed for sound to be recorded, erased, and re-recorded on the same tape many times, allowed for recordings to be duplicated from tape to tape, allowed for recordings to be edited, and made recording much cheaper. Recording was no longer confined to gigantic and elaborate studios owned by the major companies in a few big cities. Tolerably decent recordings could now be made anywhere by untrained personnel who knew very little about engineering or acoustics. Around the same time, high fidelity 45 RPM technology exploded onto the scene. 45 RPMs were inexpensive to produce and to purchase. It was in the world of 45 RPM singles that rhythm and blues had its first great moment in pop music history. Music listening and consumption was also affected by the radio. The transistor radio, developed by Bell Laboratory in 1947, appeared on the market in the early 1950s. About the same time, the car radio became an affordable option in the automobile industry, and people began listening to the radio in their cars as well as in their homes. By the late 1940s and early 1950s, many popular talk, drama, and comedy radio programs had moved from radio to television, and radio programmers needed to find new material to fill the airtime. Several innovations in radio programming arose, the most important of which was the development of the Top 40 radio format. Top 40 became the new radio format. The same forty songs would be repeated every 24-hour radio cycle, and the top ten songs would receive more frequent play than the bottom thirty. Why forty tunes? Because the Wurlitzer jukeboxes, which flooded the industry at the time, contained forty recordings.",
-        "keywords": {
-            "Magnetic tape recorder": "Recording on magnetic tape allowed for sound to be recorded, erased, and re-recorded on the same tape many times, allowed for recordings to be duplicated from tape to tape, allowed for recordings to be edited, and made recording much cheaper.",
-            "45 RPM": "A record that plays at 45 revolutions per minute; had a limit of around three to four minutes per side.",
-            "Top 40": "A radio format where the same forty tunes were repeated every 24-hour radio cycle, and the top ten singles received the most airplay."
-        },
-        "deep": [],
-        "poll": {
-            "q": "Which technology allowed for music to be recorded, erased, and re-recorded on the same medium?",
-            "choices": ["Vinyl records", "Magnetic tape recorder", "Radio broadcasting", "CD technology"],
-            "answer": 1
+      "id": "10.02",
+      "title": "10.02: Alan Freed",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "asideImage": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
+      "bullets": [
+        "The disc jockey (DJ) emerged as a key promoter of popular music with the rise of radio.",
+        "Alan Freed, a Cleveland DJ, began playing rhythm and blues music on his show and dubbed it 'rock and roll' to appeal to white audiences.",
+        "Freed organized interracial rock and roll concerts that drew massive crowds and appeared in films and on TV.",
+        "His career was ended by a Congressional investigation into 'payola' (receiving bribes for playing records)."
+      ],
+      "full": "With the rise of radio and Top 40 radio, the disc jockey emerged as one of popular music’s most important promoters. The most important disc jockey of the era, and indeed, one of the most important figures in the promotion of early rock and roll, was Alan Freed. Freed was quite successful with his early evening classical music program. But, as he saw the musical and commercial appeal of African American popular music, he decided to promote this music to his listeners. Freed obtained permission from the station owner to follow his classical program with a program of rhythm and blues music. Because he thought the term 'rhythm and blues' might drive away his white audience, Freed used the phrase 'rock and roll' to describe the African American popular music that he was playing. It is still not known whether or not Freed knew that the term 'rock and roll' was used as a slang term in the African American community as a euphemism for sex. Regardless, 'rock and roll' is typically used to describe rhythm and blues music from the 1950s that was geared to an audience of teenaged radio listeners, black or white. Freed became a celebrity of the highest order, and he used his celebrity to promote black musicians despite the racism that was still rampant in American society. He sponsored concerts which featured Charles Brown, the Orioles, the Moonglows, the Dominoes, and many other rhythm and blues acts. In March of 1953, he sold eighteen thousand tickets for an auditorium that had only nine thousand seats. When eighteen thousand screaming teenagers appeared, he had to cancel the show, and police vans hauled away the rioting youngsters to cool them off in jail for a few hours. In 1954, at age 33, Freed went to WINS in New York and was soon making nearly a millions dollars a year—not only playing, but selling records over the air, along with dozens of other teenage commodities made by his sponsors. He became a spokesman for the new teenage subculture, and soon he appeared in three movies, Don’t Knock the Rock, Rock, Rock, Rock, and Rock Around the Clock. Freed used many different tactics to promote recordings on-air, and not all of them were exactly legal or even ethical. He accepted bribes from record companies to play their recordings. He struck deals with singers and songwriters in exchange for top spots on his programs. For example, in return for being listed as co-author on Chuck Berry’s 'Maybellene,' Freed promoted the record on his Cleveland radio show, and it rose to number 1 in the rhythm and blues charts and number 5 in the pop charts. Freed eventually was summoned before Congress and indicted for accepting bribes from record companies to push their recordings, which we will discuss in greater detail in later lessons. Regardless of the tactics he used to promote this new popular music, Freed was one of the driving forces behind the popularity of this new rock and roll music.",
+      "keywords": {
+        "rock and roll": "Term used by Alan Freed to describe the rhythm and blues music of African American artists that he played on the radio."
+      },
+      "deep": [
+        {
+          "title": "Alan Freed (1921-1965)",
+          "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
+          "altText": "A black and white photo of Alan Freed, the influential disc jockey.",
+          "bullets": [
+            "Began his career in Akron, Ohio, before moving to Cleveland in 1951.",
+            "Dubbed rhythm and blues music 'rock and roll', a term that stuck and defined the genre.",
+            "His radio show 'The Moondog Show' and later 'The Rock and Roll Party' were immensely popular with teenagers.",
+            "Organized pioneering interracial concerts that brought black and white teenagers together.",
+            "Career ended due to a Congressional investigation into 'payola' (bribery)."
+          ],
+          "fullText": "Alan Freed was the most influential disc jockey of early rock and roll. He began his radio career in 1946 in Akron, Ohio before moving to Cleveland in 1951. He soon transformed his evening classical-music program into The Moondog Show, which featured rhythm and blues records by black artists. He dubbed the music “rock and roll”—a term used in African American music since the 1930s as a euphemism for sex—and the name stuck. The new music was a hit for teenagers, and Freed soon gained an immense radio following. In addition to champion rock and roll on the radio, Freed also organized rock and roll concerts that drew large crowd of both black and white teenagers. His success in Cleveland prompted a move to a larger market, and he began his new show, The Rock and Roll Party, on WINS in New York in 1954. Freed eventually organized a traveling concert show featuring Jerry Lee Lewis and Buddy Holly called The Big Beat, produced several rock-and-roll themed movies (including Rock Around the Clock (1956) and Don’t Know the Rock (1957)), and hosted a television show called Dance Party. His career ended on a sour note when he was the target of a Congressional investigation over receiving bribes in return for playing particular records. He was found guilty of bribery, or “payola,” in 1962 and he died of kidney failure in 1965."
         }
+      ],
+      "poll": {
+        "q": "Alan Freed used the phrase 'rock and roll' to describe the African American popular music that he was playing.",
+        "choices": ["True", "False"],
+        "answer": 0
+      }
     },
     {
-        "id": "10.03",
-        "title": "10.03 Alan Freed",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "asideImage": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
-        "bullets": [
-            "<b>Alan Freed</b> was the most influential disc jockey of early rock and roll, starting his career in Cleveland.",
-            "He transformed his classical program into <i>The Moondog Show</i>, featuring rhythm and blues by black artists.",
-            "Freed coined the term <b>rock and roll</b> (previously a euphemism for sex in African American music) to describe this music.",
-            "He organized massive rock and roll concerts, produced movies, and hosted TV shows before his career ended due to payola scandals."
-        ],
-        "full": "With the rise of radio and top 40 radio, the disc jockey emerged as one of popular music's most important promoters. The most important disc jockey of the era, and indeed, one of the most important figures in the promotion of early rock and roll, was Alan Freed. Freed was the most influential disc jockey of early rock and roll. He began his radio career in 1946 in Akron, Ohio before moving to Cleveland in 1951. He soon transformed his evening classical-music program into The Moondog Show, which featured rhythm and blues records by black artists. He dubbed the music 'rock and roll'—a term used in African American music since the 1930s as a euphemism for sex—and the name stuck. The new music was a hit for teenagers, and Freed soon gained an immense radio following. In addition to champion rock and roll on the radio, Freed also organized rock and roll concerts that drew large crowd of both black and white teenagers. His success in Cleveland prompted a move to a larger market, and he began his new show, The Rock and Roll Party, on WINS in New York in 1954. Freed eventually organized a traveling concert show featuring Jerry Lee Lewis and Buddy Holly called The Big Beat, produced several rock-and-roll themed movies (including Rock Around the Clock (1956) and Don't Knock the Rock (1957)), and hosted a television show called Dance Party. His career ended on a sour note when he was the target of a Congressional investigation over receiving bribes in return for playing particular records. He was found guilty of bribery, or 'payola,' in 1962 and he died of kidney failure in 1965.",
-        "keywords": {
-            "Rock and roll": "Term used by Alan Freed to describe the rhythm and blues music of African American artists that he played on the radio."
+      "id": "10.03",
+      "title": "10.03: Cover Versions",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "bullets": [
+        "A <b>cover version</b> is a song that is re-recorded by another artist, often with changes to the lyrics and style.",
+        "White artists like Pat Boone and Bill Haley recorded 'sanitized' covers of Black artists' R&B songs.",
+        "These covers often removed or toned down the suggestive lyrics to make them palatable to white, mainstream audiences.",
+        "Boone's covers of songs like 'Tutti Frutti' and 'Ain't That a Shame' were commercially more successful than the originals."
+      ],
+      "full": `Teenagers may have loved rhythm and blues lyrics such as "I got a girl named Sue, she knows just what to do" (from Little Richard’s "Tutti Frutti") and "You’re wearin those dresses, the sun comes shinin’ through / I can’t believe my eyes, all of this belongs to you" (from Big Joe Turner’s "Shake, Rattle, and Roll"), but parents, record companies, and radio stations were less than impressed. In response, white artists and record companies began releasing cover versions of black artists’ songs. In general, a cover version refers to a song that is re-recorded by another artist. During the age of early rock and roll, however, these cover versions had a very specific purpose: to modify black artists’ rhythm and blues songs in order to make them more appropriate for white audiences. The sexual references in the original black version were muted, modified, or deleted entirely. The black artists delivered all those sexual innuendoes in jest, with whimsical good humor. Double entendres and playful, metaphoric lyrics were common in rhythm and blues, but white record executives interpreted them as devious, overtly sexual, and thus unfit for white audiences’ consumption. Recordings by the squeaky-clean white singer Pat Boone exemplify the goals of early cover versions. Boone’s covers of "Ain't That a Shame," "Long Tall Sally," and "Tutti Frutti" were highly sanitized versions of the black rhythm and blues originals, but during the 1950s, they achieved far more commercial success than the original songs that Boone was covering. Another success story among cover artists was Bill Haley. Bill Haley often claimed to have invented rock and roll, but this claim is hardly reputable. Haley was, however, one of the first artists to achieve commercial success with crossover versions of rhythm and blues songs. During his musical career, Haley was first a country yodeler, then disc jockey, then leader of The Four Aces of Western Swing, later called The Saddlemen. They played country and western music. In 1951, Haley did a cover of Jackie Brenston’s blues release, "Rocket 88," and though the recording sold only a few copies, Haley’s live performances of the tune drove his white teenage dancers wild. In response, he renamed his group Bill Haley and The Comets, and he set out to create a new rhythm and blues image for his band. He signed with Decca Records in 1954, and his band promptly covered Sunny Dae’s 1952 "Rock Around the Clock" and Big Joe Turner’s 1954 "Shake, Rattle, and Roll." "Rock Around the Clock" was of only modest interest until it appeared in the movie The Blackboard Jungle; after its appearance in the film, it spent forty weeks in the top ten. Comparing the cover version of "Shake, Rattle, and Roll" by Bill Haley and His Comets (1954) with the original version by Big Joe Turner (also 1954) reveals how white rock and roll cover versions of black songs worked. In the cover version, suggestive lyrics such as "you’re wearin’ those dresses, the sun comes shinin’ through" are scrubbed into "wearin’ those dresses, your hair done up so nice." Despite this modification of the lyrics, Haley consciously modeled his musical style on that of black musicians, Louis Jordan in particular. According to Haley’s producer, Milt Gabler, "We’d begin with Jordan’s shuffle rhythm. You know, dotted eighth notes and sixteenths, and we’d build on it. They got a sound that had the drive of the Tympany Five and the color of country and western." The 12-bar blues verses of "Shake, Rattle, and Roll" combined with the country and western background of Bill Haley’s band led to a unique sound for these early crossover hits.`,
+      "keywords": {
+        "cover version": "A song that is re-recorded by another artist, often with changes to the lyrics and style."
+      },
+      "deep": [
+        {
+          "title": "Little Richard's 'Tutti Frutti'",
+          "image": "https://i.imgur.com/eP6z3kE.jpeg",
+          "altText": "Little Richard looking exuberant, playing piano",
+          "bullets": [
+            "Little Richard's original 1955 version was a wild, energetic R&B hit with a sexually suggestive lyric: 'Tutti Frutti, good booty.'",
+            "Pat Boone's 1956 cover changed the lyric to a more innocuous 'Tutti Frutti, good a wop bop a loo bop a lop bam boom.'",
+            "Boone's version was a huge commercial success, reaching number 12 on the pop charts, while Little Richard's original peaked at number 17."
+          ],
+          "fullText": "Little Richard's original 'Tutti Frutti' was a high-energy R&B track with suggestive lyrics. The opening line was 'Tutti Frutti, good booty.' This was deemed too risqué for mainstream radio. Pat Boone's cover version, released a year later, famously changed this lyric to the nonsensical 'Tutti Frutti, good a wop bop a loo bop a lop bam boom.' This sanitized version was much more palatable to white, mainstream audiences and became a bigger commercial hit. The comparison between the two highlights the common practice of white artists covering Black artists' music in the 1950s to make it more commercially viable for a broader audience.",
+          "media": [
+            { "label": "Listen: Little Richard's 'Tutti Frutti'", "href": "https://open.spotify.com/embed/track/2iXcvnD3d1gfLBum0cE5Eg?utm_source=generator" },
+            { "label": "Listen: Pat Boone's 'Tutti Frutti'", "href": "https://open.spotify.com/embed/track/5GWHzvmJIrGQ5F4m7MUtfN?utm_source=generator" }
+          ]
         },
-        "deep": [
-            {
-                "title": "Alan Freed (1921-1965)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
-                "altText": "A photo of Alan Freed, the influential disc jockey who popularized rock and roll.",
-                "bullets": [
-                    "Began his radio career in 1946 in Akron, Ohio before moving to Cleveland in 1951.",
-                    "Transformed his classical program into The Moondog Show, featuring rhythm and blues records by black artists.",
-                    "Coined the term 'rock and roll' to describe African American popular music.",
-                    "Organized massive rock and roll concerts that drew crowds of both black and white teenagers.",
-                    "Produced rock-and-roll themed movies including Rock Around the Clock and Don't Knock the Rock.",
-                    "His career ended due to payola scandals, being found guilty of bribery in 1962."
-                ],
-                "funFacts": [
-                    "Freed's March 1953 concert sold 18,000 tickets for an auditorium with only 9,000 seats, leading to a riot.",
-                    "By 1954, Freed was making nearly a million dollars a year from his radio show and sponsors.",
-                    "He appeared in three movies: Don't Knock the Rock, Rock, Rock, Rock, and Rock Around the Clock.",
-                    "Freed was listed as co-author on Chuck Berry's 'Maybellene' in exchange for promoting the record."
-                ],
-                "media": [
-                    {"label": "Watch: Alan Freed Introduction", "href": "https://www.youtube.com/watch?v=6HblkQJ7D-c"},
-                    {"label": "Listen: Alan Freed Radio Show", "href": "https://www.youtube.com/watch?v=Q9b4aZ-1X_0"},
-                    {"label": "Read More: Alan Freed Biography", "href": "https://rockhall.com/inductees/alan-freed/"}
-                ]
-            }
-        ],
-        "poll": {
-            "q": "What term did Alan Freed use to describe rhythm and blues music to make it more appealing to white audiences?",
-            "choices": ["Pop music", "Race records", "Rock and roll", "Soul music"],
-            "answer": 2
+        {
+          "title": "Big Joe Turner vs. Bill Haley: 'Shake, Rattle, and Roll'",
+          "image": "https://i.imgur.com/U1pM710.jpeg",
+          "altText": "Big Joe Turner and Bill Haley photos side by side",
+          "bullets": [
+            "Big Joe Turner's original was a swaggering R&B song with sexually suggestive lyrics.",
+            "Bill Haley's version, released the same year, removed the suggestive lyrics.",
+            "Turner's version featured a boogie-woogie piano and a strong backbeat, while Haley's version was more of a country-rock hybrid.",
+            "Both songs were successful, but Haley's cover became a major crossover hit, reaching #7 on the pop chart."
+          ],
+          "fullText": "Big Joe Turner's original 'Shake, Rattle, and Roll' was a rhythm and blues hit with a powerful vocal performance and a driving beat. Its lyrics were rife with sexual innuendo. The most notable difference in Bill Haley's cover version was the sanitization of these lyrics, changing lines like 'you’re wearin’ those dresses, the sun comes shinin’ through' to the more innocent 'wearin’ those dresses, your hair done up so nice.' This change was a deliberate attempt to make the song more acceptable to a wider, white audience, and it proved successful, with Haley's version becoming a major pop hit.",
+          "media": [
+            { "label": "Listen: Big Joe Turner's 'Shake, Rattle, and Roll'", "href": "https://open.spotify.com/embed/track/7aLoa1F3EoM8AeC6Ao1RKz?utm_source=generator" },
+            { "label": "Listen: Bill Haley's 'Shake, Rattle, and Roll'", "href": "https://open.spotify.com/embed/track/2NGx9gXQatPYK6DY9XAwSy?utm_source=generator" }
+          ]
+        },
+        {
+          "title": "Bill Haley (1925-1981)",
+          "image": "https://s3.amazonaws.com/ompv2/images/artist_profile/BillHaley.jpg",
+          "altText": "A black and white portrait of Bill Haley.",
+          "bullets": [
+            "Began his career in country music with The Saddlemen.",
+            "Covered Jackie Brenston's 'Rocket 88,' considered the first rock and roll recording by a white artist.",
+            "His biggest hit, 'Rock Around the Clock,' was not popular until featured in the 1955 film 'Blackboard Jungle'."
+          ],
+          "fullText": "Often viewed as the first star of rock and roll, Bill Haley began his career playing country music, most notably with The Saddlemen. Haley was interested in blending other styles with country, and in 1951 Haley and The Saddlemen recorded a cover of Jackie Brenston’s “Rockett 88.” Brenston’s original song has been cited as the first rock and roll record, and The Saddlemen’s cover the first rock and roll recording by a white artist. In 1953, The Saddlemen changed their name to Bill Haley and His Comets and recorded the rock and roll hit “Crazy, Man, Crazy.” Their biggest success—and the song that began the rock and roll craze—was “Rock Around the Clock.” Although recorded in 1954, the song did not achieve popularity until it was featured in the film Blackboard Jungle in 1955. The film, about delinquency in high school, struck a chord with 1950s youth and “Rock Around the Clock” became the new teenage anthem. Although popular throughout the 1950s, Haley never repeated the success of “Rock Around the Clock.” In the 1960s he moved away from rock and roll and returned to playing country music, only occasionally revisiting his rock hits in revival concerts later in his life.",
+          "media": [
+            { "label": "Listen: Bill Haley's 'Rock Around the Clock'", "href": "https://open.spotify.com/embed/track/2XBsQSZqHPPAtZpRG6TvIm?utm_source=generator" }
+          ]
         }
+      ],
+      "poll": {
+        "q": "What prompted the success of Bill Haley's version of 'Rock Around the Clock?'",
+        "choices": ["They began a national tour to promote the song", "The group appeared in the film Blackboard Jungle", "The group appeared on Alan Freed's show", "They were promoted by Chuck Berry"],
+        "answer": 1
+      }
     },
     {
-        "id": "10.04",
-        "title": "10.04 Cover Versions",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": [
-            "White artists began releasing <b>cover versions</b> of black artists' songs to make them more appropriate for white audiences.",
-            "Sexual references in original black versions were muted, modified, or deleted entirely in cover versions.",
-            "<b>Pat Boone</b> exemplified the sanitized cover approach with his versions of 'Ain't That a Shame,' 'Long Tall Sally,' and 'Tutti Frutti.'",
-            "<b>Bill Haley</b> was one of the first white artists to achieve commercial success with crossover versions of rhythm and blues songs."
-        ],
-        "full": "Teenagers may have loved rhythm and blues lyrics such as 'I got a girl named Sue, she knows just what to do' (from Little Richard's 'Tutti Frutti') and 'You're wearin those dresses, the sun comes shinin' through / I can't believe my eyes, all of this belongs to you' (from Big Joe Turner's 'Shake, Rattle, and Roll'), but parents, record companies, and radio stations were less than impressed. In response, white artists and record companies began releasing cover versions of black artists' songs. In general, a cover version refers to a song that is re-recorded by another artist. During the age of early rock and roll, however, these cover versions had a very specific purpose: to modify black artists' rhythm and blues songs in order to make them more appropriate for white audiences. The sexual references in the original black version were muted, modified, or deleted entirely. Recordings by the squeaky-clean white singer Pat Boone exemplify the goals of early cover versions. Boone's covers of 'Ain't That a Shame' (Fats Domino), 'Long Tall Sally' (Little Richard), and 'Tutti Frutti' (Little Richard) were all more commercially successful than the original black versions. Bill Haley was one of the first white artists to achieve commercial success with crossover versions of rhythm and blues songs. His version of 'Shake, Rattle, and Roll' (1954) was a sanitized version of Big Joe Turner's original, and his recording of 'Rock Around the Clock' (1955) was the first rock-and-roll recording to become a number one hit on the pop charts.",
-        "keywords": {
-            "Cover version": "A song that is re-recorded by another artist. In the 1950s, these were often sanitized versions of black artists' rhythm and blues songs made for white audiences."
+      "id": "10.04",
+      "title": "10.04: Elvis’s Cover Versions",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "asideImage": "https://omp.s3.amazonaws.com/img/img_omp10_05_Hounddog.jpg",
+      "bullets": [
+        "Elvis Presley was a singer, not a songwriter, and all of his songs were either covers or written by teams.",
+        "His iconic hit 'Hound Dog' was a cover of a song originally recorded by R&B singer Big Mama Thornton in 1953.",
+        "Elvis's version, like other white covers, had sanitized, nonsensical lyrics compared to Thornton's raw and suggestive original.",
+        "Elvis's manager, Colonel Tom Parker, was instrumental in building his career through strategic marketing and TV appearances."
+      ],
+      "full": `Elvis Presley was a singer, not a songwriter. He never wrote any original material. Although he could play the guitar reasonably well, he did not know how to read or write music, and he learned all of his material by rote. As a result, all of his songs were either the products of cover versions or of songwriting teams, or sometimes both, as was the case of "Hound Dog." Written by the songwriting duo of Jerry Leiber and Mike Stoller, "Hound Dog" was first recorded by the rhythm and blues artist Big Mama Thornton in 1953. Big Mama Thornton’s version of the song is raw, gritty, and far more suggestive than Presley’s cover. While Big Mama Thornton’s lyrics have a clearly sexual undertone, the lyrics of Presley’s cover version become almost nonsensical. As we saw in the previous lesson, white rock and roll covers of black artists’ rhythm and blues songs frequently edited the lyrics almost to the point of incomprehensibility in order to negate any possible references to sex or sexuality. "Hound Dog" was a runaway success for Presley, spending eleven weeks at number one on the pop charts in 1956.`,
+      "deep": [
+        {
+          "title": "Elvis Presley (1935-1977)",
+          "image": "https://s3.amazonaws.com/ompv2/images/artist_profile/Elvis.jpg",
+          "altText": "A black and white photo of Elvis Presley smiling and posing.",
+          "bullets": [
+            "Known as 'The King of Rock and Roll', a cultural icon who blended country, blues, and gospel.",
+            "His career launched after meeting Sam Phillips at Sun Records.",
+            "His scandalous performances on 'The Milton Berle Show' and 'The Ed Sullivan Show' made him a national sensation.",
+            "Managed by Colonel Tom Parker, who helped him achieve massive commercial success."
+          ],
+          "fullText": "Elvis Presley’s unique blend of many different styles and genres made him one of the most legendary rock and roll performers of all time. He grew up immersed in the music of the Pentecostal church, country and western, and the rural blues. In 1953, he met Sam Phillips and began recording for Sun Records, producing ten recordings (including “That’s All Right” (1954) “Blue Moon of Kentucky” (1954) and “Mystery Train” (1955)) before his contract was sold to RCA-Victor in 1955. It was during this time that Elvis rose to superstardom, recording a string of hits including “Heartbreak Hotel”, “Hound Dog,” and “Don’t Be Cruel” (all from 1956). His infamous performances on The Milton Berle Show and The Ed Sullivan Show came in that same year, and soon his fame had risen to the point where he was starring in his own Hollywood films. In 1958, Elvis began a stint in the United States Army, and when he returned to recording in 1960, his career was never the same. Struggles with his manager Colonel Parker, the death of his mother, a grueling filmmaking schedule, a growing dependence on amphetamines and prescription drugs, and a long courtship with, marriage to, and eventual divorce from Priscilla Beaulieu all complicated his life. He never returned to the same sex symbol status that he had held in the 1950s, although he continued to release number 1 records until his death in 1977. To this day, he is the best-selling recording artist of all time.",
+          "media": [
+            { "label": "Listen: Elvis's 'Hound Dog'", "href": "https://open.spotify.com/embed/track/64Ny7djQ6rNJspquof2KoX?utm_source=generator" },
+            { "label": "Listen: Big Mama Thornton's 'Hound Dog'", "href": "https://open.spotify.com/embed/track/2McHF33C9Tx4lfwKBefE4n?utm_source=generator" },
+            { "label": "Watch: Elvis's 'Hound Dog' TV Performance", "href": "https://youtu.be/aNYWl13IWhY?si=gKIs1SbwdVF71hpk" },
+            { "label": "Watch: Big Mama Thornton's 'Hound Dog' Live", "href": "https://youtu.be/BmpwvxW0gW0?si=d2V_oMsCgfZ1VvN" },
+            { "label": "Watch: Doja Cat's 'Vegas' (2022) with 'Hound Dog' sample", "href": "https://youtu.be/QZp2biJul1c?si=cOtslpObQYwNBi7-" }
+          ]
         },
-        "deep": [
-            {
-                "title": "Pat Boone (b. 1934)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_04_PatBoone.jpg",
-                "altText": "A photo of Pat Boone, the clean-cut singer known for his cover versions of rhythm and blues songs.",
-                "bullets": [
-                    "Born in Jacksonville, Florida, Boone was a clean-cut, white singer who became a teen idol in the 1950s.",
-                    "His cover versions of rhythm and blues songs were often more commercially successful than the original black versions.",
-                    "Notable covers include 'Ain't That a Shame' (Fats Domino), 'Long Tall Sally' (Little Richard), and 'Tutti Frutti' (Little Richard).",
-                    "Boone's versions typically removed or toned down sexual references and made the music more palatable for white audiences.",
-                    "He had 38 Top 40 hits between 1955 and 1962, making him one of the most successful artists of the era."
-                ],
-                "funFacts": [
-                    "Pat Boone sold over 45 million records, had 38 Top 40 hits, and appeared in more than 12 Hollywood movies.",
-                    "He was a descendant of American pioneer Daniel Boone.",
-                    "In 1957, he was the second biggest charting artist, behind only Elvis Presley.",
-                    "Boone's version of 'Tutti Frutti' sold over a million copies, while Little Richard's original sold around 500,000."
-                ]
-            },
-            {
-                "title": "Bill Haley (1925-1981)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_04_BillHaley.jpg",
-                "altText": "A photo of Bill Haley, one of the first white artists to achieve commercial success with rock and roll.",
-                "bullets": [
-                    "Born in Highland Park, Michigan, Haley was a country and western singer before transitioning to rock and roll.",
-                    "His band, Bill Haley and His Comets, was one of the first rock and roll groups to achieve mainstream success.",
-                    "Haley's version of 'Shake, Rattle, and Roll' (1954) was a sanitized version of Big Joe Turner's original.",
-                    "His recording of 'Rock Around the Clock' (1955) was the first rock-and-roll recording to become a number one hit on the pop charts.",
-                    "The song gained even more popularity when featured in the 1955 film 'Blackboard Jungle'."
-                ],
-                "funFacts": [
-                    "'Rock Around the Clock' is often cited as the song that brought rock and roll into mainstream culture worldwide.",
-                    "Bill Haley was nearly 30 years old when he recorded 'Rock Around the Clock,' making him older than most rock and roll pioneers.",
-                    "He was one of the first musicians to be inducted into the Rock and Roll Hall of Fame in 1987.",
-                    "Haley's trademark was his distinctive spit-curl hairstyle, which became his visual signature."
-                ]
-            }
-        ],
-        "thenVsNow": {
-            "title": "Cover Versions: Then vs. Now",
-            "then": {
-                "title": "1950s Covers",
-                "description": "In the 1950s, cover versions were primarily used to sanitize black music for white audiences, removing sexual references and making the music more palatable to mainstream tastes.",
-                "examples": ["Pat Boone's 'Tutti Frutti'", "Bill Haley's 'Shake, Rattle, and Roll'", "The Crew-Cuts' 'Sh-Boom'"]
-            },
-            "now": {
-                "title": "Modern Covers",
-                "description": "Today, cover versions are often artistic reinterpretations or tributes to original works, sometimes completely transforming the song's genre or style.",
-                "examples": ["Johnny Cash's 'Hurt' (Nine Inch Nails cover)", "Jeff Buckley's 'Hallelujah' (Leonard Cohen cover)", "Whitney Houston's 'I Will Always Love You' (Dolly Parton cover)"]
-            }
-        },
-        "poll": {
-            "q": "What was the primary purpose of cover versions in the 1950s?",
-            "choices": ["To pay tribute to original artists", "To make songs more appropriate for white audiences", "To create new musical genres", "To make songs longer for radio play"],
-            "answer": 1
+        {
+          "title": "Colonel Tom Parker (1909-1997)",
+          "image": "https://s3.amazonaws.com/ompv2/images/artist_profile/ColonelTomParker.jpg",
+          "altText": "A photo of Colonel Tom Parker with a cigar.",
+          "bullets": [
+            "Born Andreas Cornelius van Kujik, he was an illegal immigrant from the Netherlands.",
+            "Worked in traveling carnivals before becoming a music promoter.",
+            "Became Elvis's manager in 1956 and brokered the lucrative RCA-Victor deal.",
+            "Known for his over-the-top promotional style and taking an unusually large cut of Elvis's profits."
+          ],
+          "fullText": "One of the most notorious managers in rock history, Colonel Tom Parker (whose real name was Andreas Cornelius van Kujik) was an illegal immigrant from the Netherlands. In the 1920s, he began his career in traveling carnivals hawking anything he could sell. An eccentric and crude huckster, Parker moved on to music promotion in the late 1930s. He garnered success as manager for country stars Eddy Arnold and Hank Snow with his over-the-top promotional style and shrewd business practices. In 1956 he began managing Elvis Presley and was pivotal in engineering the lucrative sale of Presley’s contract from Sun to RCA-Victor. Parker was able to secure national gigs, TV spots, merchandizing, Las Vegas performances, and Hollywood films for Presley, all the while taking a large cut of the profits (the usual cut for a business manager was 10%, but Parker made as much as 50%). Parker also shielded Elvis from the public, letting him appear only occasionally to perform, which contributed both to Presley’s increasingly legendary persona and his growing, isolation-induced drug problems. After Presley died in 1977, Parker went through a series of legal battles with Elvis’s estate over rights and royalties. The matter was settled out of court in 1983, and Parker spent the last years of his life gambling in Las Vegas."
         }
+      ],
+      "poll": {
+        "q": "Elvis's first notorious hip-swiveling performance occurred on which television show?",
+        "choices": ["The Steve Allen Show", "The Rosemary Clooney Show", "The Milton Berle Show", "The Ed Sullivan Show"],
+        "answer": 2
+      }
     },
     {
-        "id": "10.05",
-        "title": "10.05 Ray Charles",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "asideImage": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_05_RayCharles.jpg",
-        "bullets": [
-            "<b>Ray Charles</b> was one of the most important and influential musicians in American popular music history.",
-            "He blended gospel, blues, and jazz to create <b>soul music</b>, pioneering a new genre.",
-            "Charles had hits with 'I Got a Woman' (1954), 'What'd I Say' (1959), and 'Georgia on My Mind' (1960).",
-            "He was one of the first black artists to achieve artistic control over his recordings and to cross over to mainstream success without sanitizing his music."
-        ],
-        "full": "Ray Charles was one of the most important and influential musicians in the history of American popular music. He was born in Albany, Georgia, in 1930 and lost his sight at the age of seven. He began his professional career in the late 1940s, recording in a smooth, Nat King Cole-inspired style. By the early 1950s, however, he had developed a unique style that blended gospel, blues, and jazz. This new style, which would later be called soul music, was pioneered by Charles. His first major hit was 'I Got a Woman' (1954), which combined the call-and-response structure and piano style of gospel music with secular lyrics. Charles followed this with a string of hits including 'What'd I Say' (1959) and 'Georgia on My Mind' (1960). Charles was one of the first black artists to achieve artistic control over his recordings and to cross over to mainstream success without sanitizing his music for white audiences. He continued to record and perform until his death in 2004.",
-        "keywords": {
-            "Soul music": "A music genre that combines elements of African-American gospel music, rhythm and blues, and jazz. Ray Charles is considered one of its pioneers."
+      "id": "10.05",
+      "title": "10.05: Sam Phillips and Sun Records",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "asideImage": "https://s3.amazonaws.com/ompv2/images/artist_profile/SamPhillips.jpg",
+      "bullets": [
+        "<b>Sam Phillips</b> founded the Memphis Recording Service in 1950, which became <b>Sun Records</b> in 1952.",
+        "Phillips was famous for his quote about finding 'a white man who had the Negro sound and the Negro feel.'",
+        "He discovered Elvis Presley, who recorded for Sun from 1953 to 1955.",
+        "Elvis's early recordings were a unique blend of country and R&B, leading to the term 'rockabilly'."
+      ],
+      "full": `In 1950, Sam Phillips started the Memphis Recording Studio, which was the only convenient recording studio for Memphis blues artists. Phillips recorded artists such as B.B. King, Little Walter, and Howlin’ Wolf simply because he offered one of the few available recording spaces. Although Phillips initially leased his masters to the Chess and Modern labels, he eventually launched his own label, Sun Records, in 1952. Presley recorded ten sides for Sun Records before his contract was sold to RCA-Victor. These recordings do not feature a drum set but instead, include only Presley with musicians Scotty Moore on electric guitar and Bill Black on string bass. None of these recordings include a drum set because drums were typically associated with rhythm and blues, and Moore and Black were country musicians. Presley’s first single for Sun Records included 'That's All Right' and 'Blue Moon of Kentucky.' Other Sun recordings such as 'Mystery Train' and 'Blue Moon' were covers of blues songs, country and western numbers, and Broadway songs. He was initially billed as 'The Hillbilly Cat' or 'The King of Country Bop,' both titles attempting to convey his simultaneous country and rhythm and blues sounds. Presley’s Sun recordings were marketed as country, although they combined country with rhythm and blues. According to Sam Phillips, 'I recall one [disc] jockey telling me that Presley was so country he shouldn’t be played after 5 AM. And others said he was too black for them.' Phillips knew that he had a star in the making, but he had to figure out how to market him. According to Phillips’s secretary, 'Over and over, I remember Sam saying, ‘If I could find a white man who had the Negro sound and the Negro feel, I could make a billion dollars.’' Regardless of the marketing dilemma, Presley’s music quickly became infectious. Sam Phillips sent a recording of Presley’s 'That's All Right' to the disc jockey Dewey Phillips, who ended up playing the record thirty times in a single night on his Red, Hot, and Blue radio show. Bill Randle, a Cleveland disc jockey, played one Presley recording every fifteen minutes all weekend long. According to Randle, 'I don’t know what those Presley records have, but I put them on yesterday, and the switchboard lit up like Glitter Gulch in Las Vegas. He hits them [the kids] like a bolt of electricity. My phone hasn’t stopped ringing and I haven’t been able to stop playing those records.' This hybridity of styles contributed to what is now known as the rockabilly style, which we will focus on in greater detail in later lessons. Although these early recordings at Sun Records were an important part of Presley’s career and output, he did not achieve his meteoric rise to superstardom and international celebrity until he began working with Colonel Tom Parker.`,
+      "keywords": {
+        "Sun Records": "Record company launched by Sam Phillips in 1952; located in Memphis."
+      },
+      "deep": [
+        {
+          "title": "Sam Phillips (1923-2003)",
+          "image": "https://s3.amazonaws.com/ompv2/images/artist_profile/SamPhillips.jpg",
+          "altText": "A black and white portrait of Sam Phillips.",
+          "bullets": [
+            "Started a recording studio in Memphis in 1949 and founded Sun Records in 1952.",
+            "Developed the signature 'slapback echo' sound for his recordings.",
+            "Discovered and recorded Elvis Presley, as well as other legendary artists like Johnny Cash and Jerry Lee Lewis."
+          ],
+          "fullText": "As a record producer, Sam Phillips left an indelible mark on the history of rock and roll. He began his career as a DJ, first in Muscle Shoals, Alabama, and later in Memphis, and he started a recording studio in 1949 with the slogan “We Record Anything—Anywhere—Anytime.” Rather than selling the recordings himself, he often leased his recordings to other record companies, most notably Chess and Modern, including Jackie Brenston’s “Rocket 88” (1951). In 1953, he founded his own label, Sun Records, where he served as an engineer, producer, and talent scout. During this time he developed a type of tape-delay echo known as “slapback echo” that became the signature sound of his recordings. His desire to discover an artist with crossover appeal was fulfilled when he met Elvis Presley in August of 1953. Together Phillips and Presley would record such hits as “That’s All Right” (1954), “Blue Moon of Kentucky” (1954), and “Mystery Train” (1955). When Presley left Sun for RCA near the end of 1955, Phillips continued to release important records with Johnny Cash, Carl Perkins, and Jerry Lee Lewis. Phillips was inducted in the Rock and Roll Hall of Fame in 1986 and the Country Music Hall of Fame in 2001."
         },
-        "deep": [
-            {
-                "title": "Ray Charles (1930-2004)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_05_RayCharles.jpg",
-                "altText": "A photo of Ray Charles, the pioneering soul musician.",
-                "bullets": [
-                    "Born in Albany, Georgia, Charles lost his sight at age seven due to glaucoma.",
-                    "He began his career in the late 1940s, initially recording in a Nat King Cole-inspired style.",
-                    "Developed a unique style blending gospel, blues, and jazz that would become known as soul music.",
-                    "His first major hit was 'I Got a Woman' (1954), which combined gospel structure with secular lyrics.",
-                    "Other hits include 'What'd I Say' (1959) and 'Georgia on My Mind' (1960).",
-                    "One of the first black artists to achieve artistic control over his recordings.",
-                    "Continued recording and performing until his death in 2004."
-                ],
-                "funFacts": [
-                    "Ray Charles was a pioneer in the genre of soul music during the 1950s.",
-                    "He was often referred to by contemporaries as 'The Genius'.",
-                    "Charles was one of the first black musicians to be granted artistic control by a mainstream record company.",
-                    "He recorded over 60 albums in his career spanning various genres including blues, jazz, R&B, gospel, country, and pop.",
-                    "His version of 'Georgia on My Mind' was made the official state song of Georgia in 1979."
-                ],
-                "media": [
-                    {"label": "Listen: 'I Got a Woman' (1954)", "href": "https://open.spotify.com/track/2xhoi6e7rT5XQlXtV1nXjZ"},
-                    {"label": "Watch: Ray Charles Performance", "href": "https://www.youtube.com/watch?v=ggGzE5KfCio"},
-                    {"label": "Read More: Ray Charles Biography", "href": "https://www.raycharles.com/"}
-                ]
-            }
-        ],
-        "poll": {
-            "q": "Which musical genre did Ray Charles help pioneer by blending gospel, blues, and jazz?",
-            "choices": ["Rockabilly", "Soul music", "Doo-wop", "Funk"],
-            "answer": 1
+        {
+          "title": "Early Elvis: The 'Hillbilly Cat'",
+          "image": "https://omp.s3.amazonaws.com/img/img_omp10_06_HillbillyElvis.jpg",
+          "altText": "Elvis Presley wearing a hat and a striped shirt, billed as 'The Hillbilly Cat'.",
+          "bullets": [
+            "Before his superstardom with RCA, Elvis was a regional star on Sun Records.",
+            "His style was a unique blend of country and R&B, which some listeners found confusing.",
+            "He was billed as 'The Hillbilly Cat' to reflect his country-influenced sound."
+          ],
+          "fullText": "Before he became a global sensation, Elvis was known in the South as 'The Hillbilly Cat' for his unique fusion of country and rhythm and blues. This blend was a testament to his musical influences, which included both rural blues and country music. While his Sun recordings were revolutionary, their hybrid sound made them difficult to market, as they were 'too black' for country stations and 'too country' for R&B stations. This marketing dilemma highlights how Elvis, and the rockabilly genre, blurred the racial and musical lines of the time. The initial success of his songs on regional radio, despite the marketing challenges, showed that a wide audience was ready for this new, hybrid sound.",
+          "media": [
+            { "label": "Listen: 'That's All Right'", "href": "https://open.spotify.com/embed/track/4O958xeV2blAhD95Qo24nc?utm_source=generator" },
+            { "label": "Listen: 'Blue Moon of Kentucky'", "href": "https://open.spotify.com/embed/track/2Ips4yH0buWXoqISU4y2if?utm_source=generator" }
+          ]
         }
+      ],
+      "poll": {
+        "q": "What was the name of the recording studio started by Sam Phillips?",
+        "choices": ["RCA", "Atlantic", "Sun Records", "The Nashville Recording Studio"],
+        "answer": 2
+      }
     },
     {
-        "id": "10.06",
-        "title": "10.06 Chuck Berry",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "asideImage": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_06_ChuckBerry.jpg",
-        "bullets": [
-            "<b>Chuck Berry</b> was one of the most important and influential guitarists and songwriters in rock and roll history.",
-            "His songs like 'Maybellene,' 'Roll Over Beethoven,' and 'Johnny B. Goode' became rock and roll standards.",
-            "Berry developed a distinctive guitar style featuring double-stop bends and flashy showmanship.",
-            "His lyrics captured teenage life in postwar America, focusing on cars, school, and romance."
-        ],
-        "full": "Chuck Berry was one of the most important and influential guitarists and songwriters in the history of rock and roll. Born in St. Louis, Missouri, in 1926, Berry began playing guitar as a teenager. He was discovered by Muddy Waters in 1955 and signed to Chess Records. His first single, 'Maybellene' (1955), was a hit, and he followed it with a string of classics including 'Roll Over Beethoven' (1956), 'School Day' (1957), 'Rock and Roll Music' (1957), 'Sweet Little Sixteen' (1958), and 'Johnny B. Goode' (1958). Berry developed a distinctive guitar style that featured double-stop bends and flashy showmanship. His lyrics captured the essence of teenage life in postwar America, focusing on cars, school, and romance. Berry's influence on subsequent rock musicians is immeasurable; his songs have been covered by countless artists, and his guitar style has been emulated by generations of rock guitarists.",
-        "keywords": {
-            "Double-stop bends": "A guitar technique where two strings are bent simultaneously, creating a distinctive sound that became a hallmark of Chuck Berry's style."
-        },
-        "deep": [
-            {
-                "title": "Chuck Berry (1926-2017)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_06_ChuckBerry.jpg",
-                "altText": "A photo of Chuck Berry, the influential rock and roll guitarist and songwriter.",
-                "bullets": [
-                    "Born in St. Louis, Missouri, Berry began playing guitar as a teenager.",
-                    "Discovered by Muddy Waters in 1955 and signed to Chess Records.",
-                    "His first single, 'Maybellene' (1955), was a major hit.",
-                    "Developed a distinctive guitar style featuring double-stop bends and flashy showmanship.",
-                    "His lyrics captured teenage life in postwar America, focusing on cars, school, and romance.",
-                    "Classic songs include 'Roll Over Beethoven,' 'School Day,' 'Rock and Roll Music,' 'Sweet Little Sixteen,' and 'Johnny B. Goode.'",
-                    "His influence on subsequent rock musicians is immeasurable."
-                ],
-                "funFacts": [
-                    "Chuck Berry's 'Johnny B. Goode' is the only rock and roll song included on the Voyager Golden Record sent into space.",
-                    "He was among the first musicians inducted into the Rock and Roll Hall of Fame in 1986.",
-                    "Berry's famous 'duck walk' stage move was accidentally created when he tried to hide wrinkles in his suit by crouching down while performing.",
-                    "At age 90, Berry announced he would release his first new album in 38 years, titled 'Chuck,' which was released posthumously in 2017."
-                ],
-                "media": [
-                    {"label": "Listen: 'Johnny B. Goode' (1958)", "href": "https://open.spotify.com/track/2QfiRTz5Yc8DdShCxG1tB2"},
-                    {"label": "Watch: Chuck Berry Performance", "href": "https://www.youtube.com/watch?v=ZFo8-JqzSCM"},
-                    {"label": "Read More: Chuck Berry Biography", "href": "https://www.rockhall.com/inductees/chuck-berry"}
-                ]
-            }
-        ],
-        "poll": {
-            "q": "Which Chuck Berry song is about a country boy who becomes a guitar hero?",
-            "choices": ["Maybellene", "Roll Over Beethoven", "Johnny B. Goode", "Sweet Little Sixteen"],
-            "answer": 2
-        }
+      "id": "10.06",
+      "title": "10.06: Colonel Tom Parker and Presley at RCA-Victor",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "bullets": [
+        "Elvis's manager, <b>Colonel Tom Parker</b>, sold his contract to RCA-Victor in 1955 for a record $35,000.",
+        "This deal was a major turning point, as it signaled to the music industry that rock and roll was a legitimate and lucrative genre.",
+        "At RCA, Elvis's first single, 'Heartbreak Hotel,' became a #1 hit, and his double-sided hit 'Hound Dog' and 'Don't Be Cruel' topped the pop, country, and R&B charts simultaneously.",
+        "Parker secured major TV appearances for Elvis, leading to his iconic, and often censored, performances."
+      ],
+      "full": `The disc jockey Bob Neal had been serving as Presley’s manager until 1955, when Colonel Tom Parker stepped in and transformed Presley’s career. Parker brokered a deal and sold Presley’s contract to RCA-Victor for an astronomical $35,000, plus $5,000 in back royalties. To Parker, Presley could not achieve national success unless he left Sun Records. The importance of this transfer of Presley’s contract from Sun to RCA-Victor cannot be overstated. In the mid-1950s, major record labels were not interested in rock and roll because they thought it was a fad. By buying Presley’s contract for an unheard-of sum of money, RCA showed the recording industry that the times were changing. Soon after Presley began recording for RCA, the other major record labels began adding rock and roll musicians to their rosters. Soon, rock and roll was squarely in the center of mainstream popular music. RCA set about transforming the Hillbilly Cat into a mainstream pop star. The first recording Presley made for RCA, "Heartbreak Hotel" (1956), held the number one spot on the pop charts for eight weeks. Later in 1956, the double-sided hit "Hound Dog" and "Don't Be Cruel" went to number 1 on the pop charts, the country and western charts, and the rhythm and blues charts simultaneously. This was the first record to achieve this level of crossover success. It was not uncommon for artists such as Chuck Berry or Bill Haley and His Comets to occupy space on both the pop and rhythm and blues charts, or on the pop and country and western charts, but until Presley, it was unheard of for an artist to not only cross over to all three charts, but also to hold the number one spot on all of those charts. In 1956, Parker secured several important television appearances for Presley. He scandalized audiences on Milton Berle’s program when he swiveled his hips and quaked his entire body during the performance, exciting the studio audience and infuriating the national media. Steve Allen neutralized some of Presley’s sex appeal by asking him to sing "Hound Dog" to an actual basset hound during the singer’s appearance on his show. Perhaps the most famous attempt to tame Presley’s sexuality came when he appeared on the Ed Sullivan Show and was filmed only from the waist up. These limitations did nothing to staunch Presley’s popular appeal and the throngs of screaming fans.`,
+      "deep": [],
+      "poll": {
+        "q": "What was Elvis's first recording for RCA?",
+        "choices": ["'Blue Moon of Kentucky'", "'That's All Right'", "'Hound Dog'", "“Heartbreak Hotel”"],
+        "answer": 3
+      }
     },
     {
-        "id": "10.07",
-        "title": "10.07 Little Richard",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "asideImage": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_07_LittleRichard.jpg",
-        "bullets": [
-            "<b>Little Richard</b> was one of the most flamboyant and energetic performers in early rock and roll.",
-            "His hits like 'Tutti Frutti,' 'Long Tall Sally,' and 'Good Golly, Miss Molly' featured his powerful voice and pounding piano style.",
-            "Richard's androgynous appearance and overtly sexual lyrics challenged 1950s social norms.",
-            "He left rock and roll at the height of his fame to become a minister, though he later returned to performing."
-        ],
-        "full": "Little Richard was one of the most flambamboyant and energetic performers in early rock and roll. Born Richard Penniman in Macon, Georgia, in 1932, he began his career in the late 1940s singing in a style influenced by gospel and blues. He signed with Specialty Records in 1955 and recorded a string of hits including 'Tutti Frutti' (1955), 'Long Tall Sally' (1956), 'Rip It Up' (1956), 'Lucille' (1957), and 'Good Golly, Miss Molly' (1958). Richard's performances were characterized by his powerful voice, pounding piano style, and flamboyant stage presence. His androgynous appearance and overtly sexual lyrics challenged the social norms of the 1950s. In 1957, at the height of his fame, Richard left rock and roll to become a minister. He returned to performing in the 1960s, but never regained the commercial success he had enjoyed in the 1950s.",
-        "keywords": {
-            "Androgynous": "Having both male and female characteristics; Little Richard's appearance challenged traditional gender norms of the 1950s."
-        },
-        "deep": [
-            {
-                "title": "Little Richard (1932-2020)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_07_LittleRichard.jpg",
-                "altText": "A photo of Little Richard, the flamboyant rock and roll pioneer.",
-                "bullets": [
-                    "Born Richard Penniman in Macon, Georgia, he began his career in the late 1940s.",
-                    "Signed with Specialty Records in 1955 and recorded a string of hits.",
-                    "His performances were characterized by his powerful voice, pounding piano style, and flamboyant stage presence.",
-                    "His androgynous appearance and overtly sexual lyrics challenged 1950s social norms.",
-                    "Left rock and roll at the height of his fame in 1957 to become a minister.",
-                    "Returned to performing in the 1960s but never regained his earlier commercial success."
-                ],
-                "funFacts": [
-                    "Little Richard's original lyrics to 'Tutti Frutti' contained explicit sexual references that were cleaned up for the released version.",
-                    "He was known as 'The Architect of Rock and Roll' for his foundational influence on the genre.",
-                    "James Brown, Otis Redding, and Jimi Hendrix all served as backup musicians for Little Richard early in their careers.",
-                    "He was among the first group of inductees into the Rock and Roll Hall of Fame in 1986.",
-                    "Richard claimed to have invented rock and roll, saying: 'I am the innovator. I am the originator. I am the emancipator. I am the architect of rock and roll!'"
-                ],
-                "media": [
-                    {"label": "Listen: 'Tutti Frutti' (1955)", "href": "https://open.spotify.com/track/0FpBFFRdP7T7jJ9Tq5S5UI"},
-                    {"label": "Watch: Little Richard Performance", "href": "https://www.youtube.com/watch?v=7LKC7pC38n0"},
-                    {"label": "Read More: Little Richard Biography", "href": "https://www.rockhall.com/inductees/little-richard"}
-                ]
-            }
-        ],
-        "poll": {
-            "q": "Why did Little Richard leave rock and roll at the height of his fame in 1957?",
-            "choices": ["To pursue acting", "To become a minister", "Due to health problems", "Because of contract disputes"],
-            "answer": 1
-        }
-    },
-    {
-        "id": "10.08",
-        "title": "10.08 Fats Domino",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "asideImage": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_08_FatsDomino.jpg",
-        "bullets": [
-            "<b>Fats Domino</b> was one of the most commercially successful rock and roll artists of the 1950s.",
-            "His relaxed, good-natured style blended New Orleans rhythm and blues with boogie-woogie piano.",
-            "Hits like 'Ain't That a Shame,' 'Blueberry Hill,' and 'I'm Walkin'' sold millions of records.",
-            "Unlike many black artists, Domino wrote much of his own material and maintained artistic control over his recordings."
-        ],
-        "full": "Fats Domino was one of the most commercially successful rock and roll artists of the 1950s. Born Antoine Domino in New Orleans in 1928, he began recording in the late 1940s. His relaxed, good-natured style blended New Orleans rhythm and blues with boogie-woogie piano. Domino had a string of hits including 'Ain't That a Shame' (1955), 'I'm in Love Again' (1956), 'Blueberry Hill' (1956), and 'I'm Walkin'' (1957). Unlike many black artists of the era, Domino wrote much of his own material and maintained artistic control over his recordings. He continued to record and perform into the 21st century, though his career was interrupted by Hurricane Katrina in 2005, which destroyed his home and many of his possessions.",
-        "keywords": {
-            "Boogie-woogie": "A style of blues piano playing characterized by a repetitive bass pattern, often in eight-to-the-bar rhythm."
-        },
-        "deep": [
-            {
-                "title": "Fats Domino (1928-2017)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_08_FatsDomino.jpg",
-                "altText": "A photo of Fats Domino, the New Orleans rock and roll pianist.",
-                "bullets": [
-                    "Born Antoine Domino in New Orleans, he began recording in the late 1940s.",
-                    "His style blended New Orleans rhythm and blues with boogie-woogie piano.",
-                    "Had a string of hits including 'Ain't That a Shame,' 'Blueberry Hill,' and 'I'm Walkin'.",
-                    "Unlike many black artists, he wrote much of his own material and maintained artistic control.",
-                    "Continued to record and perform into the 21st century.",
-                    "His career was interrupted by Hurricane Katrina in 2005, which destroyed his home."
-                ],
-                "funFacts": [
-                    "Fats Domino sold more than 65 million records, making him one of the best-selling musicians of all time.",
-                    "He had 35 records in the U.S. Billboard Top 40, a record for any rock artist before 1964.",
-                    "His version of 'Blueberry Hill' was actually a cover of a 1940 song by Gene Autry, though Domino's version became the most famous.",
-                    "Domino was notoriously reluctant to tour outside of New Orleans, preferring to stay close to home.",
-                    "He was rescued from his flooded home during Hurricane Katrina after initially refusing to evacuate; rumors of his death circulated but were false."
-                ],
-                "media": [
-                    {"label": "Listen: 'Blueberry Hill' (1956)", "href": "https://open.spotify.com/track/5e7TquC4RcljxkTk2VpRXx"},
-                    {"label": "Watch: Fats Domino Performance", "href": "https://www.youtube.com/watch?v=5bW_C9xH6eE"},
-                    {"label": "Read More: Fats Domino Biography", "href": "https://www.rockhall.com/inductees/fats-domino"}
-                ]
-            }
-        ],
-        "poll": {
-            "q": "Which natural disaster in 2005 destroyed Fats Domino's home and interrupted his career?",
-            "choices": ["Earthquake", "Hurricane Katrina", "Tornado", "Wildfire"],
-            "answer": 1
-        }
-    },
-    {
-        "id": "10.09",
-        "title": "10.09 The Rock and Roll Business",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": [
-            "The rise of rock and roll created new business opportunities and challenges for the music industry.",
-            "Independent record labels like <b>Chess</b>, <b>Sun</b>, and <b>Specialty</b> played a crucial role in discovering and promoting early rock and roll artists.",
-            "The <b>payola scandal</b> of the late 1950s involved disc jockeys accepting bribes to play certain records.",
-            "Congressional hearings on payola led to tighter regulations and the decline of many influential disc jockeys like Alan Freed."
-        ],
-        "full": "The rise of rock and roll created new business opportunities and challenges for the music industry. Independent record labels such as Chess, Sun, and Specialty played a crucial role in discovering and promoting early rock and roll artists. These labels were often more willing to take risks on new and unconventional artists than the major labels. The payola scandal of the late 1950s involved disc jockeys accepting bribes to play certain records. Congressional hearings on payola led to tighter regulations and the decline of many influential disc jockeys, including Alan Freed. Despite these challenges, rock and roll continued to grow in popularity, and by the end of the 1950s, it had become the dominant form of popular music in the United States.",
-        "keywords": {
-            "Payola": "The practice of paying radio stations to play particular songs without disclosing the payment to listeners."
-        },
-        "deep": [
-            {
-                "title": "Independent Record Labels",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_09_ChessRecords.jpg",
-                "altText": "The Chess Records building in Chicago, an important independent label for early rock and roll.",
-                "bullets": [
-                    "Chess Records (Chicago): Founded by Leonard and Phil Chess, specialized in blues and R&B. Artists: Chuck Berry, Bo Diddley, Muddy Waters.",
-                    "Sun Records (Memphis): Founded by Sam Phillips, known for rockabilly and early rock and roll. Artists: Elvis Presley, Jerry Lee Lewis, Carl Perkins, Johnny Cash.",
-                    "Specialty Records (Los Angeles): Founded by Art Rupe, focused on gospel, R&B, and rock and roll. Artists: Little Richard, Lloyd Price, Larry Williams.",
-                    "Atlantic Records (New York): Founded by Ahmet Ertegun and Herb Abramson, became a major force in R&B and soul. Artists: Ray Charles, The Coasters, The Drifters."
-                ],
-                "funFacts": [
-                    "Sam Phillips of Sun Records famously said: 'If I could find a white man who had the Negro sound and the Negro feel, I could make a billion dollars.' He found Elvis Presley.",
-                    "Chess Records was originally called Aristocrat Records before being renamed in 1950.",
-                    "Specialty Records owner Art Rupe was known for his keen ear for hit songs and carefully crafted the sound of his recordings.",
-                    "Atlantic Records began as a small independent label operating out of a hotel room before becoming one of the most successful labels in music history."
-                ]
-            }
-        ],
-        "poll": {
-            "q": "What was the name of the scandal involving disc jockeys accepting bribes to play certain records?",
-            "choices": ["Watergate scandal", "Payola scandal", "Teapot Dome scandal", "Credit Mobilier scandal"],
-            "answer": 1
-        }
-    },
-    {
-        "id": "10.10",
-        "title": "10.10 Quiz Battle: The Birth of Rock and Roll",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": [
-            "Test your knowledge of the birth of rock and roll with this 10-question quiz battle!",
-            "Compete against your classmates to see who can answer the most questions correctly in the shortest time.",
-            "Questions cover key artists, technologies, and historical developments from this chapter.",
-            "Good luck, and may the best rock historian win!"
-        ],
-        "full": "This quiz battle will test your knowledge of the birth of rock and roll. You'll answer 10 questions covering the key artists, technologies, and historical developments discussed in this chapter. The quiz is timed, so try to answer as quickly as possible while maintaining accuracy. Your score will be based on both correctness and speed. Compete against your classmates to see who can achieve the highest score!",
-        "quiz": [
-            {
-                "q": "Which technology allowed for sound to be recorded, erased, and re-recorded on the same medium?",
-                "choices": ["Vinyl records", "Magnetic tape recorder", "Radio broadcasting", "CD technology"],
-                "answer": 1
-            },
-            {
-                "q": "What term did Alan Freed use to describe rhythm and blues music to make it more appealing to white audiences?",
-                "choices": ["Pop music", "Race records", "Rock and roll", "Soul music"],
-                "answer": 2
-            },
-            {
-                "q": "What was the primary purpose of cover versions in the 1950s?",
-                "choices": ["To pay tribute to original artists", "To make songs more appropriate for white audiences", "To create new musical genres", "To make songs longer for radio play"],
-                "answer": 1
-            },
-            {
-                "q": "Which musical genre did Ray Charles help pioneer by blending gospel, blues, and jazz?",
-                "choices": ["Rockabilly", "Soul music", "Doo-wop", "Funk"],
-                "answer": 1
-            },
-            {
-                "q": "Which Chuck Berry song is about a country boy who becomes a guitar hero?",
-                "choices": ["Maybellene", "Roll Over Beethoven", "Johnny B. Goode", "Sweet Little Sixteen"],
-                "answer": 2
-            },
-            {
-                "q": "Why did Little Richard leave rock and roll at the height of his fame in 1957?",
-                "choices": ["To pursue acting", "To become a minister", "Due to health problems", "Because of contract disputes"],
-                "answer": 1
-            },
-            {
-                "q": "Which natural disaster in 2005 destroyed Fats Domino's home and interrupted his career?",
-                "choices": ["Earthquake", "Hurricane Katrina", "Tornado", "Wildfire"],
-                "answer": 1
-            },
-            {
-                "q": "What was the name of the scandal involving disc jockeys accepting bribes to play certain records?",
-                "choices": ["Watergate scandal", "Payola scandal", "Teapot Dome scandal", "Credit Mobilier scandal"],
-                "answer": 1
-            },
-            {
-                "q": "Which radio format played the same forty songs every 24 hours with the top ten receiving the most airplay?",
-                "choices": ["Freeform radio", "Top 40", "Album-oriented rock", "Talk radio"],
-                "answer": 1
-            },
-            {
-                "q": "Which artist was known for his distinctive 'duck walk' stage move and double-stop guitar bends?",
-                "choices": ["Elvis Presley", "Chuck Berry", "Little Richard", "Fats Domino"],
-                "answer": 1
-            }
-        ],
-        "deep": []
+      "id": "10.07",
+      "title": "10.07: Conclusion",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "bullets": [
+        "Early rock and roll was a rebranding of African American R&B music.",
+        "White artists like Pat Boone and Bill Haley recorded 'sanitized' cover versions of Black artists' songs, often with greater commercial success.",
+        "Elvis Presley, a white artist, achieved unprecedented crossover success, proving to major labels that rock and roll was here to stay."
+      ],
+      "full": "The earliest rock and roll music was simply a rebranding of rhythm and blues music by black artists. Disc jockey Alan Freed hoped that the term 'rock and roll' would be more appealing to his white listeners compared to 'rhythm and blues.' As the new rock and roll music caught on, white artists began covering rhythm and blues recordings, frequently achieving significantly more financial success than the black artists who had originally recorded the tune. These covers ranged from the safe and sanitary versions by Pat Boone to the renditions by Elvis Presley that had teenagers swooning and parents nervous.",
+      "deep": [],
+      "wordcloud": {
+        "title": "Final Thoughts?",
+        "prompt": "What one word describes the music from this chapter? Add it to our word cloud!"
+      }
     }
   ];
+  
+  const QUIZ = [
+    { "q": "Who was the original performer of 'Hound Dog'?", "choices": ["Elvis Presley", "Big Mama Thornton", "Big Joe Turner", "Pat Boone"], "answer": 1 },
+    { "q": "Which of these artists performed covers almost exclusively?", "choices": ["Little Richard", "Fats Domino", "Bill Haley", "Chuck Berry"], "answer": 2 },
+    { "q": "What prompted the success of Bill Haley's version of 'Rock Around the Clock?'", "choices": ["They began a national tour to promote the song", "The group appeared in the film 'Blackboard Jungle'", "The group appeared on Alan Freed's show", "They were promoted by Chuck Berry"], "answer": 1 },
+    { "q": "What was Elvis's first recording for RCA?", "choices": ["'Blue Moon of Kentucky'", "'That's All Right'", "'Hound Dog'", "“Heartbreak Hotel”"], "answer": 3 },
+    { "q": "What was the name of the recording studio started by Sam Phillips?", "choices": ["RCA", "Atlantic", "Sun Records", "The Nashville Recording Studio"], "answer": 2 },
+    { "q": "Which of the following Elvis songs did Jerry Leiber and Mike Stoller write?", "choices": ["'Mystery Train'", "'Hound Dog'", "'Blue Moon'", "'Heartbreak Hotel'"], "answer": 1 },
+    { "q": "Which recording was the first to be number 1 on the pop, country, and rhythm and blues charts simultaneously?", "choices": ["'Hound Dog'", "'Rock Around the Clock'", "'That's All Right'", "'Maybellene'"], "answer": 0 },
+    { "q": "Alan Freed used the phrase 'rock and roll' to describe the African American popular music that he was playing.", "choices": ["True", "False"], "answer": 0 },
+    { "q": "Elvis's first notorious hip-swiveling performance occurred on which television show?", "choices": ["The Steve Allen Show", "The Rosemary Clooney Show", "The Milton Berle Show", "The Ed Sullivan Show"], "answer": 2 },
+    { "q": "The transistor radio was developed by:", "choices": ["General Electric", "Bell Laboratory", "Nikola Tesla", "Thomas Edison"], "answer": 1 }
+  ];
+  
+  const EXTRA = {};
 
-  // --- FIREBASE AUTHENTICATION ---
-  async function initAuth() {
-    try {
-      if (initialAuthToken) {
-        await signInWithCustomToken(auth, initialAuthToken);
-      } else {
-        await signInAnonymously(auth);
-      }
-    } catch (error) {
-      console.error("Auth error:", error);
-    }
-  }
+  // ==================================================================
+  // --- APPLICATION LOGIC (It is best not to modify below this line) ---
+  // ==================================================================
 
-  onAuthStateChanged(auth, (user) => {
+  // --- AUTHENTICATION & INITIALIZATION ---
+  onAuthStateChanged(auth, async (user) => {
     if (user) {
-      userId = user.uid;
-      document.getElementById("session-overlay").classList.add("hidden");
-      document.getElementById("name-entry-overlay").classList.remove("hidden");
+        userId = user.uid;
+        checkSessionState();
     } else {
-      console.log("User signed out");
+        try {
+            if (initialAuthToken) { await signInWithCustomToken(auth, initialAuthToken); }
+            else { await signInAnonymously(auth); }
+        } catch (error) { console.error("Firebase authentication failed:", error); }
     }
   });
-
-  // --- SESSION MANAGEMENT ---
-  function generateSessionId() {
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
+  
+  function initializeInteractiveFeatures(){
+    if(!sessionId) return;
+    sessionDataPath = `/artifacts/${appId}/public/data/sessions/${sessionId}`;
+    setupNavigationListener();
+    setupQuizBattleListener();
+    setupPollListeners();
+    setupWordCloudListener();
+    setupQnaListener();
+    if(isPresenter) {
+        setupAttendanceListener();
+    }
+  }
+  
+  function showApp(){
+      document.getElementById('session-overlay').classList.add('hidden');
+      document.getElementById('name-entry-overlay').classList.add('hidden');
+      document.getElementById('main-header').style.display = 'block';
+      document.getElementById('main-content').style.display = 'block';
+      document.getElementById('qna-fab').style.display = 'block';
   }
 
-  async function createNewSession() {
-    sessionId = generateSessionId();
-    sessionDataPath = `sessions/${sessionId}`;
+  // --- USER SESSION ---
+   function initializeUserSession() {
+    const startBtn = document.getElementById('start-session-btn');
+    const joinBtn = document.getElementById('join-session-btn');
     
-    await setDoc(doc(db, sessionDataPath, "meta"), {
-      createdAt: new Date(),
-      createdBy: userId,
-      appId: appId
+    startBtn.addEventListener('click', () => {
+        const newSessionId = Math.floor(100000 + Math.random() * 900000).toString();
+        const currentUrl = new URL(window.location.origin + window.location.pathname);
+        currentUrl.searchParams.set('session', newSessionId);
+        currentUrl.searchParams.set('presenter', 'true');
+        window.location.href = currentUrl.href;
     });
-    
-    document.getElementById("session-id-display").textContent = sessionId;
-    document.getElementById("session-overlay").classList.add("hidden");
-    document.getElementById("name-entry-overlay").classList.remove("hidden");
-  }
 
-  async function joinSession() {
-    const inputSessionId = document.getElementById("session-input").value.trim().toUpperCase();
-    if (!inputSessionId) return alert("Please enter a session ID");
-    
-    const sessionDoc = await getDoc(doc(db, `sessions/${inputSessionId}`, "meta"));
-    if (!sessionDoc.exists()) {
-      return alert("Session not found. Please check the ID and try again.");
+    joinBtn.addEventListener('click', () => {
+        const sessionInput = document.getElementById('session-input');
+        const inputId = sessionInput.value.trim();
+        if (inputId) {
+            const currentUrl = new URL(window.location.origin + window.location.pathname);
+            currentUrl.searchParams.set('session', inputId);
+            window.location.href = currentUrl.href;
+        }
+    });
+
+    const nameInput = document.getElementById('name-input');
+    const joinNameBtn = document.getElementById('join-btn');
+    const anonBtn = document.getElementById('join-anonymously');
+
+    async function joinWithName(name) {
+        if (!name || !sessionId || !userId) return;
+        userName = name;
+        localStorage.setItem(`lesson_userName_${sessionId}`, name);
+        try {
+            const participantsRef = doc(db, `/artifacts/${appId}/public/data/sessions/${sessionId}/participants/${userId}`);
+            await setDoc(participantsRef, { name: userName, joinedAt: new Date() });
+        } catch (error) {
+            console.error("Error writing attendance:", error);
+        }
+        startApp();
+    };
+
+    joinNameBtn.addEventListener('click', () => { if (nameInput.value.trim()) { joinWithName(nameInput.value.trim()); } });
+    nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter' && nameInput.value.trim()) { joinWithName(nameInput.value.trim()); } });
+    anonBtn.addEventListener('click', (e) => { e.preventDefault(); joinWithName(`Student${Math.floor(1000 + Math.random() * 9000)}`); });
+  }
+  
+   function checkSessionState() {
+    const sessionOverlay = document.getElementById('session-overlay');
+    const nameOverlay = document.getElementById('name-entry-overlay');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    sessionId = urlParams.get('session');
+    isPresenter = urlParams.get('presenter') === 'true';
+
+    if (sessionId) {
+        sessionOverlay.classList.add('hidden');
+        document.getElementById('session-id-display').textContent = sessionId;
+        
+        const storedName = localStorage.getItem(`lesson_userName_${sessionId}`);
+        if (storedName) {
+            userName = storedName;
+            startApp();
+        } else {
+            nameOverlay.classList.remove('hidden');
+        }
+    } else {
+        sessionOverlay.classList.remove('hidden');
+    }
+}
+
+function startApp() {
+    if (!userId || !sessionId || !userName) {
+        console.error("Cannot start app, missing user, session, or name info", {userId, sessionId, userName});
+        return;
     }
     
-    sessionId = inputSessionId;
-    sessionDataPath = `sessions/${sessionId}`;
-    document.getElementById("session-id-display").textContent = sessionId;
-    document.getElementById("session-overlay").classList.add("hidden");
-    document.getElementById("name-entry-overlay").classList.remove("hidden");
-  }
+    render();
 
-  async function joinWithName() {
-    const nameInput = document.getElementById("name-input").value.trim();
-    if (!nameInput) return alert("Please enter your name");
+    document.getElementById('session-overlay').classList.add('hidden');
+    document.getElementById('name-entry-overlay').classList.add('hidden');
     
-    userName = nameInput;
-    await setDoc(doc(db, sessionDataPath, "users", userId), {
-      name: userName,
-      joinedAt: new Date()
-    });
-    
-    document.getElementById("name-entry-overlay").classList.add("hidden");
-    document.querySelector("header.top").style.display = "block";
-    document.getElementById("main-content").style.display = "block";
-    document.getElementById("qna-fab").style.display = "block";
-    
-    initSlides();
-    initQnaListener();
-    initLeaderboardListener();
-  }
+    showApp();
+    initializeInteractiveFeatures();
+}
 
-  async function joinAnonymously() {
-    userName = "Anonymous";
-    await setDoc(doc(db, sessionDataPath, "users", userId), {
-      name: userName,
-      joinedAt: new Date(),
-      anonymous: true
-    });
-    
-    document.getElementById("name-entry-overlay").classList.add("hidden");
-    document.querySelector("header.top").style.display = "block";
-    document.getElementById("main-content").style.display = "block";
-    document.getElementById("qna-fab").style.display = "block";
-    
-    initSlides();
-    initQnaListener();
-    initLeaderboardListener();
-  }
-
-  // --- SLIDE MANAGEMENT ---
-  function initSlides() {
-    const slidesContainer = document.getElementById("slides");
-    slidesContainer.innerHTML = "";
-    
-    SLIDES.forEach((slideData, index) => {
-      const slideEl = createSlideElement(slideData, index);
-      slidesContainer.appendChild(slideEl);
-    });
-    
-    slidesEls = document.querySelectorAll(".slide");
-    updateSlideMeter();
-    
-    // Set up keyboard navigation
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") nextSlide();
-      if (e.key === "ArrowLeft") prevSlide();
+  // --- INTERACTIVE FEATURES ---
+  function setupNavigationListener() {
+    const stateRef = doc(db, `${sessionDataPath}/sessionState/state`);
+    onSnapshot(stateRef, (docSnap) => {
+        const slideState = docSnap.exists() ? docSnap.data() : { currentSlide: 0 };
+        const newIndex = slideState.currentSlide ?? 0;
+        show(newIndex);
+    }, (error) => {
+        console.error("[Listener Error] Navigation listener failed:", error);
     });
   }
 
-  function createSlideElement(slideData, index) {
-    const slideEl = document.createElement("div");
-    slideEl.className = "slide";
-    slideEl.id = `slide-${slideData.id}`;
-    
-    const slideHead = document.createElement("div");
-    slideHead.className = "slide-head";
-    
-    const titleEl = document.createElement("h2");
-    titleEl.textContent = slideData.title;
-    
-    const meterEl = document.createElement("div");
-    meterEl.className = "meter";
-    meterEl.textContent = `${index + 1} of ${SLIDES.length}`;
-    
-    slideHead.appendChild(titleEl);
-    slideHead.appendChild(meterEl);
-    
-    const slideBody = document.createElement("div");
-    
-    if (slideData.headerImage) {
-      const headerImg = document.createElement("img");
-      headerImg.src = slideData.headerImage;
-      headerImg.alt = "";
-      headerImg.style = "width: 100%; border-radius: .4rem; margin-bottom: 1rem;";
-      slideBody.appendChild(headerImg);
+  function setupAttendanceListener() {
+    const attendanceRef = collection(db, `${sessionDataPath}/participants`);
+    const listEl = document.getElementById('attendance-list');
+    if (!listEl) return;
+
+    onSnapshot(query(attendanceRef, orderBy("joinedAt")), (snapshot) => {
+        listEl.innerHTML = '';
+        if (snapshot.empty) {
+            listEl.innerHTML = '<li>No one has joined yet.</li>';
+        } else {
+            snapshot.forEach(doc => {
+                const participant = doc.data();
+                const li = document.createElement('li');
+                li.textContent = participant.name;
+                listEl.appendChild(li);
+            });
+        }
+    });
+  }
+
+  // Polls
+  function setupPollListeners() {
+    document.querySelectorAll('.poll').forEach(pollEl => {
+        const pollId = pollEl.dataset.pollId;
+        if (pollId) {
+            const votesRef = collection(db, `${sessionDataPath}/polls/${pollId}/votes`);
+            onSnapshot(query(votesRef), (snapshot) => {
+                const votes = {}; let totalVotes = 0; let userVote = -1;
+                snapshot.forEach(doc => {
+                    const vote = doc.data().choice;
+                    votes[vote] = (votes[vote] || 0) + 1;
+                    totalVotes++;
+                    if (doc.id === userId) userVote = vote;
+                });
+                renderPollResults(pollId, votes, totalVotes, userVote);
+            });
+        }
+    });
+  }
+
+  function renderPollResults(pollId, votes, totalVotes, userVote) {
+    const pollEl = document.querySelector(`[data-poll-id="${pollId}"]`);
+    if (!pollEl) return;
+    pollEl.querySelectorAll('.poll-option').forEach((optionEl, index) => {
+        const voteCount = votes[index] || 0;
+        const percentage = totalVotes > 0 ? (voteCount / totalVotes) * 100 : 0;
+        optionEl.querySelector('.poll-bar').style.width = `${percentage}%`;
+        optionEl.querySelector('.poll-percent').textContent = `${Math.round(percentage)}%`;
+        const button = optionEl.querySelector('button');
+        button.disabled = false;
+        optionEl.classList.remove('voted-for');
+        if (userVote !== -1) {
+            button.disabled = true;
+            if (index === userVote) optionEl.classList.add('voted-for');
+        }
+    });
+  }
+
+  async function submitPollVote(pollId, choiceIndex) {
+      if (!userId) return;
+      const voteRef = doc(db, `${sessionDataPath}/polls/${pollId}/votes/${userId}`);
+      await setDoc(voteRef, { choice: choiceIndex });
+  };
+  
+  // Word Cloud
+  function setupWordCloudListener() {
+    const wordsRef = collection(db, `${sessionDataPath}/wordcloud`);
+    onSnapshot(query(wordsRef), (snapshot) => {
+        const words = {};
+        snapshot.forEach(doc => {
+            const word = doc.data().text.toLowerCase().trim();
+            words[word] = (words[word] || 0) + 1;
+        });
+        renderWordCloud(words);
+    });
+  }
+
+  function renderWordCloud(words) {
+    const display = document.getElementById('word-cloud-display');
+    if (!display) return;
+    display.innerHTML = '';
+    const maxFreq = Math.max(...Object.values(words), 1);
+    const sortedWords = Object.keys(words).sort((a,b) => words[b] - words[a]);
+    sortedWords.forEach(word => {
+        const freq = words[word];
+        const span = document.createElement('span');
+        span.textContent = word;
+        const size = 1 + (freq / maxFreq) * 2;
+        span.style.fontSize = `${size}em`;
+        span.style.opacity = 0.6 + (freq / maxFreq) * 0.4;
+        display.appendChild(span);
+    });
+  }
+
+  async function submitWord() {
+    const input = document.getElementById('word-cloud-input');
+    const text = input.value.trim();
+    if (text && userId) {
+        await addDoc(collection(db, `${sessionDataPath}/wordcloud`), { text, author: userId });
+        input.value = '';
     }
-    
-    if (slideData.bullets && slideData.bullets.length) {
-      const bulletsEl = document.createElement("ul");
-      bulletsEl.className = "bullets";
-      
-      slideData.bullets.forEach(bullet => {
-        const li = document.createElement("li");
-        li.innerHTML = bullet;
-        bulletsEl.appendChild(li);
+  };
+
+  // Q&A
+  function setupQnaListener() {
+    const qnaRef = collection(db, `${sessionDataPath}/qna`);
+    onSnapshot(query(qnaRef, orderBy("upvotes", "desc")), (snapshot) => {
+        const questions = [];
+        snapshot.forEach(doc => questions.push({ id: doc.id, ...doc.data() }));
+        renderQna(questions);
+    });
+  }
+
+  function renderQna(questions) {
+    const list = document.getElementById('qna-list');
+    if (!list) return;
+    list.innerHTML = questions.length ? '' : '<li>No questions yet. Be the first!</li>';
+    questions.forEach(q => {
+        const hasVoted = localUpvotes.has(q.id);
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <button class="upvote-btn ${hasVoted ? 'voted' : ''}" onclick="upvoteQuestion('${q.id}')" ${hasVoted ? 'disabled' : ''}>
+                <span>▲</span>
+                <span>${q.upvotes || 0}</span>
+            </button>
+            <div>
+                <p>${q.text}</p>
+                <small style="color:var(--muted)">asked by ${q.name || `...${q.author.slice(-4)}`}</small>
+            </div>
+        `;
+        list.appendChild(li);
+    });
+  }
+  
+  async function submitQuestion() {
+    const input = document.getElementById('qna-input');
+    const text = input.value.trim();
+    if (text && userId) {
+        await addDoc(collection(db, `${sessionDataPath}/qna`), { text, author: userId, upvotes: 0, name: userName || 'Anonymous' });
+        input.value = '';
+    }
+  };
+
+  async function upvoteQuestion(questionId) {
+    if (localUpvotes.has(questionId)) return;
+    localUpvotes.add(questionId);
+    const qRef = doc(db, `${sessionDataPath}/qna/${questionId}`);
+    await updateDoc(qRef, { upvotes: increment(1) });
+  };
+  
+  // Quiz Battle
+  const BATTLE_QUIZ = QUIZ.filter(q => !q.media || !q.media.includes('spotify.com'));
+  let localAnswers = {}; 
+
+  async function setupQuizBattleListener() {
+    const battleStateRef = doc(db, `${sessionDataPath}/quizState/battle`);
+    onSnapshot(battleStateRef, (docSnap) => {
+      const state = docSnap.exists() ? docSnap.data() : { status: 'waiting', currentQuestion: -1 };
+      renderQuizState(state);
+    });
+
+    const scoresRef = collection(db, `${sessionDataPath}/scores`);
+    onSnapshot(query(scoresRef), (snapshot) => {
+      const scores = [];
+      snapshot.forEach(doc => scores.push({ id: doc.id, ...doc.data() }));
+      scores.sort((a, b) => (b.timePoints || 0) - (a.timePoints || 0) || (b.correctAnswers || 0) - (a.correctAnswers || 0));
+      renderLeaderboard(scores);
+    });
+  }
+
+  function renderLeaderboard(scores) {
+      const list = document.getElementById('leaderboard-list');
+      if (!list) return;
+      list.innerHTML = scores.length ? '' : '<li>No scores yet!</li>';
+      scores.forEach(player => {
+          list.innerHTML += `<li><div><span class="player-name">${player.name || `Player ...${player.id.slice(-4)}`}</span><span class="correct-answers"> (${player.correctAnswers || 0}/${BATTLE_QUIZ.length})</span></div><span class="score">${player.timePoints || 0} pts</span></li>`;
       });
-      
-      slideBody.appendChild(bulletsEl);
-    }
-    
-    // Create body with optional aside layout
-    if (slideData.asideImage) {
-      const bodyWithAside = document.createElement("div");
-      bodyWithAside.className = "slide-body-with-aside";
-      
-      const mainContent = document.createElement("div");
-      mainContent.className = "slide-body-main";
-      
-      if (slideData.full) {
-        const fullEl = document.createElement("div");
-        fullEl.className = "full";
-        fullEl.innerHTML = slideData.full;
-        mainContent.appendChild(fullEl);
+  }
+
+  function renderQuizState(state) {
+    const questionArea = document.getElementById('quiz-question-area'), controlsArea = document.getElementById('quiz-controls'), feedbackArea = document.getElementById('quiz-feedback'), timerArea = document.getElementById('quiz-timer');
+    if (!questionArea || !controlsArea || !feedbackArea || !timerArea) return;
+    clearInterval(timerInterval);
+    clearTimeout(timerStartTimeout);
+
+    if (state.status === 'waiting' || state.currentQuestion === -1) {
+      questionArea.innerHTML = '<p>The quiz battle is about to begin!</p>';
+      feedbackArea.innerHTML = ''; 
+      timerArea.style.display = 'none';
+      if (isPresenter) {
+          controlsArea.innerHTML = `<button class="grade-btn" onclick="startOrAdvanceQuiz()">Start Quiz Battle</button>`;
+      } else {
+          controlsArea.innerHTML = `<p><i>Waiting for the presenter to start the quiz...</i></p>`;
+      }
+    } else if (state.status === 'finished') {
+      questionArea.innerHTML = '<h3>Quiz Battle Over!</h3><p>Check the final scores on the leaderboard.</p>';
+      feedbackArea.innerHTML = ''; 
+      timerArea.style.display = 'none';
+      if (isPresenter) {
+          controlsArea.innerHTML = `<button class="grade-btn" onclick="startOrAdvanceQuiz()">Play Again?</button>`;
+      } else {
+          controlsArea.innerHTML = `<p><i>The quiz has ended.</i></p>`;
+      }
+    } else { 
+      timerArea.style.display = 'block';
+      const qIndex = state.currentQuestion, question = BATTLE_QUIZ[qIndex];
+      const media = question.media ? `<p class="media"><a href="${question.media}" target="_blank" rel="noopener">Open media for question</a></p>` : '';
+      const choices = question.choices.map((opt, ci) => `<button id="choice-${ci}" class="choice-btn" onclick="submitQuizAnswer(${qIndex}, ${ci}, ${state.questionStartTime})">${opt}</button>`).join('');
+      questionArea.innerHTML = `<div class="q"><h4>Q${qIndex + 1}. ${question.q}</h4>${media}<div class="choices">${choices}</div></div>`;
+      feedbackArea.innerHTML = '';
+
+      if (isPresenter) {
+          controlsArea.innerHTML = `<button class="grade-btn" onclick="startOrAdvanceQuiz()">Next Question ▶</button>`;
+      } else {
+          controlsArea.innerHTML = `<p><i>Waiting for the presenter to advance to the next question...</i></p>`;
       }
       
-      const asideContent = document.createElement("div");
-      asideContent.className = "slide-body-aside";
+      const startTime = state.questionStartTime;
+      timerArea.textContent = 'Get Ready...';
       
-      const asideImg = document.createElement("img");
-      asideImg.src = slideData.asideImage;
-      asideImg.alt = "";
-      asideContent.appendChild(asideImg);
-      
-      bodyWithAside.appendChild(mainContent);
-      bodyWithAside.appendChild(asideContent);
-      
-      slideBody.appendChild(bodyWithAside);
-    } else if (slideData.full) {
-      const fullEl = document.createElement("div");
-      fullEl.className = "full";
-      fullEl.innerHTML = slideData.full;
-      slideBody.appendChild(fullEl);
+      if(localAnswers[qIndex] === undefined) { 
+        timerStartTimeout = setTimeout(() => {
+            timerInterval = setInterval(() => {
+                const elapsedSeconds = (new Date().getTime() - startTime) / 1000;
+                if (elapsedSeconds >= 20) { // Total time: 5s grace + 15s scoring
+                    timerArea.textContent = '0 points';
+                    clearInterval(timerInterval);
+                    if (localAnswers[qIndex] === undefined) {
+                        document.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
+                        const correctBtn = document.getElementById(`choice-${question.answer}`);
+                        if (correctBtn) correctBtn.classList.add('correct');
+                        if (feedbackArea) feedbackArea.textContent = "Time's up!";
+                    }
+                } else if (elapsedSeconds >= 5) { // Scoring period
+                    const scoringSeconds = elapsedSeconds - 5;
+                    const points = Math.round(1000 * (1 - (scoringSeconds / 15)));
+                    timerArea.textContent = `${points} points`;
+                }
+            }, 100);
+        }, 5000);
+      } else {
+        showAnswerFeedback(qIndex, localAnswers[qIndex]);
+      }
+    }
+  }
+
+  async function startOrAdvanceQuiz() {
+    if (!isPresenter || !userId || !userName) return;
+
+    const battleStateRef = doc(db, `${sessionDataPath}/quizState/battle`);
+    const docSnap = await getDoc(battleStateRef);
+    const currentState = docSnap.exists() ? docSnap.data() : { status: 'waiting', currentQuestion: -1 };
+    let nextQuestion = currentState.currentQuestion + 1;
+
+    if (currentState.status === 'finished' || currentState.status === 'waiting') {
+        localAnswers = {};
+        const scoresRef = doc(db, `${sessionDataPath}/scores/${userId}`);
+        await setDoc(scoresRef, { correctAnswers: 0, timePoints: 0, name: userName || 'Anonymous' });
+        nextQuestion = 0;
     }
     
-    // Add keywords if present
-    if (slideData.keywords) {
-      const keywordsSection = document.createElement("div");
-      keywordsSection.style.marginTop = "1.5rem";
-      keywordsSection.innerHTML = "<h3>Key Terms</h3>";
+    if (nextQuestion >= BATTLE_QUIZ.length) {
+        await setDoc(battleStateRef, { status: 'finished', currentQuestion: -1 });
+    } else {
+        await setDoc(battleStateRef, { status: 'in_progress', currentQuestion: nextQuestion, questionStartTime: new Date().getTime() });
+    }
+  };
+
+  async function submitQuizAnswer(qIndex, choiceIndex, questionStartTime) {
+      if (localAnswers[qIndex] !== undefined) return;
+      localAnswers[qIndex] = choiceIndex;
+      clearInterval(timerInterval);
+      clearTimeout(timerStartTimeout);
+
+      const question = BATTLE_QUIZ[qIndex], isCorrect = question.answer === choiceIndex;
+      const scoreRef = doc(db, `${sessionDataPath}/scores/${userId}`);
       
-      const
+      const elapsedSeconds = (new Date().getTime() - questionStartTime) / 1000;
+
+      if (isCorrect) {
+          let points = (elapsedSeconds >= 5 && elapsedSeconds < 20) ? Math.round(1000 * (1 - ((elapsedSeconds-5) / 15))) : 0;
+          await setDoc(scoreRef, { correctAnswers: increment(1), timePoints: increment(points) }, { merge: true });
+      } else {
+          await setDoc(scoreRef, { timePoints: increment(-250) }, { merge: true });
+      }
+      showAnswerFeedback(qIndex, choiceIndex);
+  };
+
+  function showAnswerFeedback(qIndex, choiceIndex) {
+      const question = BATTLE_QUIZ[qIndex], isCorrect = question.answer === choiceIndex, feedbackArea = document.getElementById('quiz-feedback');
+      document.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
+      const chosenBtn = document.getElementById(`choice-${choiceIndex}`), correctBtn = document.getElementById(`choice-${question.answer}`);
+      if (isCorrect) {
+          chosenBtn.classList.add('correct');
+          if (feedbackArea) { feedbackArea.textContent = 'Correct!'; feedbackArea.style.color = 'var(--brand)'; }
+      } else {
+          chosenBtn.classList.add('incorrect');
+          correctBtn.classList.add('correct');
+          if (feedbackArea) { feedbackArea.textContent = 'Incorrect! -250 points'; feedbackArea.style.color = 'rgb(239, 71, 111)';}
+      }
+  }
+  
+  // --- RENDERING & DOM MANIPULATION ---
+  function toggleProfile(elementId) {
+    const el = document.getElementById(elementId);
+    if (el) el.hidden = !el.hidden;
+  }
+  
+  function toggleFunFacts(id) {
+    const el = document.getElementById(id);
+    if (el) el.hidden = !el.hidden;
+  }
+
+  function deepListHTML(sectionIdx, deep){
+    if(!deep || !deep.length) return '';
+    const items = deep.map((d,di)=>{
+      const contentId = `profile-content-${sectionIdx}-${di}`;
+      const funFactsId = `fun-facts-${sectionIdx}-${di}`;
+      
+      const bulletsHTML = (d.bullets||[]).length > 0 ? `<h4>Key points</h4><ul>${(d.bullets||[]).map(b=>`<li>${b}</li>`).join('')}</ul>` : '';
+      
+      let mediaContent = (d.media||[]).map(m=> {
+          if (m.href) {
+              return `<li><a href="${m.href}" target="_blank" rel="noopener">${m.label}</a></li>`;
+          }
+          return '';
+      }).join('');
+      const mediaHTML = mediaContent ? `<h4>Media</h4><ul style="list-style-type: none; padding-left: 0;">${mediaContent}</ul>` : '';
+
+      const fullTextHTML = d.fullText ? `<p>${d.fullText}</p>`: '';
+      const funFactsHTML = (d.funFacts && d.funFacts.length > 0) ? `<button class="read-btn" style="margin-top:1rem;" onclick="toggleFunFacts('${funFactsId}')">Fun Facts</button><div id="${funFactsId}" class="full" hidden><ul>${d.funFacts.map(f => `<li>${f}</li>`).join('')}</ul></div>` : '';
+      
+      let fullContentHTML = '';
+      if (d.image) {
+          fullContentHTML = `
+              <div style="text-align: left;">
+                  <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
+                      <div style="flex: 1 1 250px; min-width: 200px;">
+                          <img alt="${d.altText || d.title}" src="${d.image}" style="width: 100%; height: auto; border-radius: .4rem;">
+                      </div>
+                      <div style="flex: 2 1 300px;">
+                          ${bulletsHTML}
+                          ${mediaHTML}
+                      </div>
+                  </div>
+                  <div>
+                      ${fullTextHTML}
+                      ${funFactsHTML}
+                  </div>
+              </div>`;
+      } else {
+          fullContentHTML = `<div style="text-align: left;">${bulletsHTML}${mediaHTML}${fullTextHTML}${funFactsHTML}</div>`;
+      }
+
+      return `
+        <li class="deep-item" style="flex-direction: column; gap: 0;">
+          <button type="button" class="profile-btn" onclick="toggleProfile('${contentId}')">${d.title}</button>
+          <div id="${contentId}" class="full" hidden style="max-width: 100%; box-sizing: border-box; padding: 1.2rem; background: #1a1d29; border-radius: 0 0 .55rem .55rem;">
+            ${fullContentHTML}
+          </div>
+        </li>`;
+    }).join('');
+    return `<ul class="deep-list">${items}</ul>`;
+  }
+  
+    function pollHTML(check, slideId) {
+        if (!check) return '';
+        const pollId = `poll-${slideId}`;
+        const choices = check.choices.map((opt, ci) => `
+            <div class="poll-option">
+                <div class="poll-bar"></div>
+                <span class="poll-percent">0%</span>
+                <button onclick="submitPollVote('${pollId}', ${ci})">${opt}</button>
+            </div>
+        `).join('');
+
+        const revealBtn = isPresenter ? `<button class="read-btn" style="margin-top:1rem;" onclick="revealPollAnswer('${pollId}', ${check.answer})">Reveal Answer</button>` : '';
+
+        return `
+            <div class="poll interactive-section" data-poll-id="${pollId}">
+                <h3>Test Your Knowledge</h3>
+                <p>${check.q}</p>
+                <div class="choices">${choices}</div>
+                ${revealBtn}
+            </div>
+        `;
+    }
+
+    function buildABandHTML(data, slideId) {
+      if (!data) return '';
+      const containerId = `dnd-container-${slideId}`;
+  
+      if (data.customDropzones && data.itemMap) {
+          const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
+          const instrumentHTML = instruments.map(id => `<div class="instrument" draggable="true" data-instrument-id="${id}">${data.itemMap[id]}</div>`).join('');
+          
+          const dropzoneHTML = data.customDropzones.map(zone => 
+              `<div class="band-area" data-accepts='${JSON.stringify(zone.accepts)}'><h4>${zone.title}</h4></div>`
+          ).join('');
+  
+          return `
+              <div id="${containerId}" class="interactive-section build-a-band-container">
+                  <h3>${data.bandAreaTitle || 'Build a Band'}</h3>
+                   <p>Drag each line from the pool on the left into the correct slot to build a blues verse.</p>
+                  <div class="build-a-band">
+                      <div class="instrument-pool" style="flex: 2;"><h4>${data.poolTitle || 'Items'}</h4>${instrumentHTML}</div>
+                      <div style="flex: 3; display: flex; flex-direction: column; gap: 1rem;">${dropzoneHTML}</div>
+                  </div>
+              </div>
+          `;
+      }
+      return '';
+    }
+
+  function wordCloudHTML(data) {
+    if (!data) return '';
+    const title = data.title || 'Final Thoughts?';
+    const prompt = data.prompt || 'What one word describes this topic to you? Add it to our word cloud!';
+    return `
+        <div class="interactive-section word-cloud-container">
+            <div class="word-cloud-input">
+                <h3>${title}</h3>
+                <p>${prompt}</p>
+                <div class="content-input-container">
+                    <input type="text" id="word-cloud-input" class="content-input" placeholder="e.g., Soulful, Rhythmic...">
+                    <button class="add-content-btn" onclick="submitWord()">Submit</button>
+                </div>
+            </div>
+            <div id="word-cloud-display" class="word-cloud-display"></div>
+        </div>
+    `;
+  }
+
+  function render(){
+    const host = document.getElementById('slides');
+    if (!host) return;
+    host.innerHTML = ''; 
+    
+    let slidesToRender = SLIDES;
+    let quizSlideIndex = slidesToRender.length;
+    let totalSlides = slidesToRender.length + 1; // +1 for Quiz
+    
+    if(isPresenter) {
+        const attendanceSlide = {
+            id: "10.99_attendance",
+            title: "Session Attendance",
+            presenterOnly: true,
+            headerImage: "https://i.imgur.com/UYkSNXp.png",
+            bullets: ["The following users have joined this session:"],
+            full: "<ul id='attendance-list'><li>Loading...</li></ul>"
+        };
+        slidesToRender = [...SLIDES, attendanceSlide];
+        quizSlideIndex = SLIDES.length; 
+        totalSlides = slidesToRender.length + 1;
+    }
+
+    slidesToRender.forEach((s,idx)=>{
+      if (s.presenterOnly && !isPresenter) return;
+      
+      const bullets = s.bullets.map(b=>`<li>${b}</li>`).join('');
+      const deep = deepListHTML(idx, s.deep);
+      const poll = pollHTML(s.poll, s.id);
+      const buildaband = buildABandHTML(s.buildaband, s.id);
+      const wordcloud = wordCloudHTML(s.wordcloud);
+      const headerImage = s.headerImage ? `<img src="${s.headerImage}" alt="" style="width: 100%; border-radius: .4rem; margin-bottom: 1rem;" />` : '';
+      const keywordsHTML = s.keywords ? `<ul class="keywords-list">${Object.entries(s.keywords).map(([term, def]) => `<li><b>${term}:</b> ${def}</li>`).join('')}</ul>` : '';
+      const asideImageHTML = s.asideImage ? `<div class="slide-body-aside"><img src="${s.asideImage}" alt=""></div>` : '';
+      const mainContentClass = s.asideImage ? 'slide-body-main' : '';
+      const fullContentHtml = s.full;
+
+
+      let footerHTML = '';
+      if (isPresenter) {
+          const prevBtn = idx > 0 ? `<button class="nav-btn" onclick="go(${idx-1})">◀ Previous</button>` : '<span></span>';
+          const nextBtn = (idx < slidesToRender.length) ? `<button class="nav-btn" onclick="go(${idx+1})">Next ▶</button>` : '<span></span>';
+          footerHTML = `<footer class="slide-nav">${prevBtn}<button class="home-btn" onclick="go(0)">Home</button>${nextBtn}</footer>`;
+      }
+      
+      const mainBody = s.id === '10.99_attendance' ? s.full : `
+        <div class="${mainContentClass}">
+            <ul class="bullets">${bullets}</ul>
+            <div class="slide-actions">
+                    ${fullContentHtml ? `<button class="read-btn" onclick="toggleFull(${idx})">Read Full Text</button>` : ''}
+                    ${s.keywords ? `<button class="read-btn" onclick="toggleKeywords(${idx})">Keywords</button>` : ''}
+            </div>
+            <article id="full-${idx}" class="full" hidden>${fullContentHtml}</article>
+            <article id="keywords-${idx}" class="full" hidden>${keywordsHTML}</article>
+        </div>
+        ${asideImageHTML}
+      `;
+
+      host.insertAdjacentHTML('beforeend', `
+        <section class="slide" id="slide-${idx}" data-ix="${idx}" aria-labelledby="h-${s.id}">
+          <header class="slide-head">
+            <h2 id="h-${s.id}">${s.title}</h2>
+            <div style="display: flex; align-items: center; gap: .5rem;">
+              <div class="meter">Slide ${idx+1} of ${totalSlides}</div>
+              <button class="read-aloud-btn" id="read-aloud-btn-${idx}" onclick="readSlideAloud(${idx})">🔊 Read Aloud</button>
+            </div>
+          </header>
+          ${headerImage}
+          <div class="${s.asideImage ? 'slide-body-with-aside' : ''}">${mainBody}</div>
+          ${deep}
+          ${poll}
+          ${buildaband}
+          ${wordcloud}
+          ${footerHTML}
+        </section>
+      `);
+    });
+
+    const qIndex = slidesToRender.length;
+    let quizFooterHTML = '';
+    if (isPresenter) {
+        quizFooterHTML = `<footer class="slide-nav"><button class="nav-btn" onclick="go(${qIndex-1})">◀ Previous</button><button class="home-btn" onclick="go(0)">Home</button><span></span></footer>`;
+    }
+
+    host.insertAdjacentHTML('beforeend', `
+      <section class="slide" id="slide-${qIndex}" data-ix="${qIndex}" aria-labelledby="h-quiz">
+        <header class="slide-head"><h2 id="h-quiz">Lesson Quiz Battle</h2><div class="meter">Slide ${qIndex + 1} of ${totalSlides}</div></header>
+        <div class="quiz-battle-container">
+          <div class="quiz-main">
+            <div id="quiz-timer">1000 points</div>
+            <div id="quiz-question-area"><p>Loading Quiz Battle...</p></div>
+            <div id="quiz-feedback"></div>
+            <div id="quiz-controls"></div>
+          </div>
+          <div class="leaderboard">
+            <h3>Leaderboard</h3>
+            <ul id="leaderboard-list">
+              <li>Loading...</li>
+            </ul>
+          </div>
+        </div>
+        ${quizFooterHTML}
+      </section>
+    `);
+    setupDragAndDrop();
+  }
+
+  let lastFocused = null;
+  function openProfile(sectionIdx, cardIdx){
+    const d = SLIDES[sectionIdx].deep[cardIdx];
+    const modal = document.getElementById('modal');
+    const mBody = document.getElementById('m-body');
+    const scrim = document.getElementById('scrim');
+    const title = d.modalTitle || d.title;
+    const baseBullets = (d.bullets||[]).map(b=>`<li>${b}</li>`).join('');
+    const media = (d.media||[]).map(m=>`<li><a href="${m.href}" target="_blank" rel="noopener">${m.label}</a></li>`).join('');
+    const extended = d.modalHTML || '';
+    const extra = EXTRA[d.title] || [];
+    const extraHTML = extra.length ? `<h4>Additional notes</h4><ul>${extra.map(x=>`<li>${x}</li>`).join('')}</ul>` : '';
+    const summaryHTML = d.summary?`<p>${d.summary}</p>`:'';
+    const bulletsHTML = baseBullets?`<h4>Key points</h4><ul>${baseBullets}</ul>`:'';
+    const mediaHTML = media?`<h4>Media</h4><ul class="media">${media}</ul>`:'';
+    document.getElementById('m-title').textContent = title;
+    if (d.image) {
+        mBody.className = 'modal-body split-layout';
+        mBody.innerHTML = `<div class="modal-image-container"><img alt="${d.altText || d.title}" src="${d.image}"></div><div class="modal-text-container">${summaryHTML}${bulletsHTML}${extraHTML}${mediaHTML}${extended}</div>`;
+    } else {
+        mBody.className = 'modal-body';
+        mBody.innerHTML = `${summaryHTML}${bulletsHTML}${extraHTML}${mediaHTML}${extended}`;
+    }
+    lastFocused = document.activeElement;
+    document.body.classList.add('modal-open');
+    scrim.classList.add('active');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden','false');
+    document.getElementById('modalClose').focus();
+  }
+  function hideModal(){
+    const modal = document.getElementById('modal');
+    const scrim = document.getElementById('scrim');
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden','true');
+    scrim.classList.remove('active');
+    document.body.classList.remove('modal-open');
+    if(lastFocused) lastFocused.focus();
+  }
+  
+  function show(i){ 
+    if(!slidesEls) slidesEls = document.getElementsByClassName('slide'); 
+    if(i<0||i>=slidesEls.length) return; 
+    Array.from(slidesEls).forEach(s=>s.style.display='none'); 
+    slidesEls[i].style.display='block'; 
+    ix=i; 
+    window.scrollTo(0,0); 
+  }
+
+  async function go(i){ 
+    if (!isPresenter) return;
+    
+    const totalSlides = document.getElementsByClassName('slide').length;
+    if (i < 0 || i >= totalSlides) return;
+    
+    try {
+        const stateRef = doc(db, `${sessionDataPath}/sessionState/state`);
+        await setDoc(stateRef, { currentSlide: i }, { merge: true });
+    } catch (error) {
+        console.error("[Firebase Write Error] Failed to update slide state:", error);
+    }
+  }
+
+  function toggleFull(i){ 
+    const el=document.getElementById('full-'+i); 
+    if(el) {
+        el.hidden=!el.hidden;
+        const button = el.parentElement.querySelector('.slide-actions button:nth-child(1)');
+        if(button) {
+            button.textContent = el.hidden ? 'Read Full Text' : 'Hide Full Text';
+        }
+    }
+  }
+
+  function toggleKeywords(i){ 
+    const el=document.getElementById('keywords-'+i); 
+    if(el) {
+        el.hidden=!el.hidden;
+        const button = el.parentElement.querySelector('.slide-actions button:nth-child(2)');
+        if(button) {
+            button.textContent = el.hidden ? 'Keywords' : 'Hide Keywords';
+        }
+    }
+  }
+  
+    function setupDragAndDrop() {
+        document.querySelectorAll('.build-a-band-container').forEach(container => {
+            const draggables = container.querySelectorAll('.instrument');
+            const dropzones = container.querySelectorAll('.band-area');
+            const pool = container.querySelector('.instrument-pool');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', e => {
+                    e.dataTransfer.setData('text/plain', e.target.dataset.instrumentId);
+                    setTimeout(() => draggable.classList.add('dragging'), 0);
+                });
+                draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
+            });
+            
+            const allDropzones = [...dropzones, pool];
+            allDropzones.forEach(zone => {
+                if (!zone) return;
+                zone.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+                zone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    const id = e.dataTransfer.getData('text/plain');
+                    const draggable = container.querySelector(`[data-instrument-id="${id}"]`);
+                    if (!draggable) return;
+
+                    if (zone.classList.contains('instrument-pool')) {
+                        pool.appendChild(draggable);
+                        draggable.classList.remove('correct', 'incorrect');
+                        draggable.draggable = true;
+                        return;
+                    }
+
+                    if (zone.dataset.accepts) {
+                        const acceptedTypes = JSON.parse(zone.dataset.accepts);
+                        if (acceptedTypes.includes(id) && zone.children.length < 2) { // Allow drop if zone is empty or only has a header
+                            zone.appendChild(draggable);
+                            draggable.classList.add('correct');
+                            draggable.draggable = false;
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+  
+  function toggleQnaPanel() {
+    const nameOverlay = document.getElementById('name-entry-overlay');
+    if(document.getElementById('session-overlay').classList.contains('hidden') && nameOverlay.classList.contains('hidden')){
+      document.getElementById('qna-panel').classList.toggle('active');
+      document.getElementById('scrim').classList.toggle('active');
+    }
+  }
+  
+  // --- ACCESSIBILITY & OTHER FUNCTIONS ---
+  function toggleHighContrast() {
+    document.body.classList.toggle('high-contrast-mode');
+    const isHighContrast = document.body.classList.contains('high-contrast-mode');
+    localStorage.setItem('highContrast', isHighContrast);
+  }
+
+  function readSlideAloud(slideIndex) {
+    const btn = document.getElementById(`read-aloud-btn-${slideIndex}`);
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+      if(btn) btn.textContent = '🔊 Read Aloud';
+      return;
+    }
+
+    const slideEl = document.getElementById(`slide-${slideIndex}`);
+    if (!slideEl) return;
+
+    let textToRead = [];
+    const title = slideEl.querySelector('h2');
+    if (title) textToRead.push(title.textContent);
+
+    const bullets = slideEl.querySelectorAll('.bullets li');
+    if (bullets.length > 0) {
+      textToRead.push("Bullet points:");
+      bullets.forEach(li => textToRead.push(li.textContent));
+    }
+    
+    const fullText = slideEl.querySelector('article.full');
+    if (fullText && !fullText.hidden) {
+       textToRead.push("Full text:");
+       textToRead.push(fullText.textContent);
+    }
+    
+    const images = slideEl.querySelectorAll('img');
+    if (images.length > 0) {
+      images.forEach((img, index) => {
+        if(img.alt) {
+          textToRead.push(`Image ${index + 1} description: ${img.alt}`);
+        }
+      });
+    }
+    
+    const fullSpeech = textToRead.join('. ');
+    const utterance = new SpeechSynthesisUtterance(fullSpeech);
+    
+    utterance.onstart = () => {
+        if(btn) btn.textContent = '■ Stop Reading';
+    };
+    
+    utterance.onend = () => {
+        if(btn) btn.textContent = '🔊 Read Aloud';
+    };
+
+    speechSynthesis.speak(utterance);
+  }
+
+  function revealPollAnswer(pollId, correctIndex) {
+    const pollEl = document.querySelector(`[data-poll-id="${pollId}"]`);
+    if (!pollEl) return;
+    const correctOption = pollEl.querySelectorAll('.poll-option')[correctIndex];
+    if(correctOption) {
+        correctOption.classList.add('correct-answer');
+    }
+  }
+
+  // --- GLOBAL EVENT LISTENERS ---
+  document.getElementById('modalClose').addEventListener('click', hideModal);
+  document.getElementById('contrast-toggle-btn').addEventListener('click', toggleHighContrast);
+  document.getElementById('scrim').addEventListener('click', ()=>{
+      hideModal();
+      if(document.getElementById('qna-panel').classList.contains('active')){
+          toggleQnaPanel();
+      }
+  });
+  document.addEventListener('keydown', (e)=>{ 
+    if(e.key==='Escape') {
+        hideModal();
+        if(document.getElementById('qna-panel').classList.contains('active')){
+          toggleQnaPanel();
+        }
+    }
+    else if(e.key==='ArrowRight') go(ix+1); 
+    else if(e.key==='ArrowLeft') go(ix-1); 
+    else if(e.key==='Home') go(0); 
+    else if(e.key==='End') go(document.getElementsByClassName('slide').length-1); 
+  });
+
+  document.addEventListener('DOMContentLoaded', ()=>{ 
+    if (localStorage.getItem('highContrast') === 'true') {
+      document.body.classList.add('high-contrast-mode');
+    }
+    initializeUserSession();
+  });
+  
+  // --- WINDOW-SCOPED FUNCTIONS FOR HTML ---
+  window.go = go;
+  window.toggleFull = toggleFull;
+  window.toggleKeywords = toggleKeywords;
+  window.toggleFunFacts = toggleFunFacts;
+  window.openProfile = openProfile;
+  window.toggleProfile = toggleProfile;
+  window.submitPollVote = submitPollVote;
+  window.submitWord = submitWord;
+  window.startOrAdvanceQuiz = startOrAdvanceQuiz;
+  window.submitQuizAnswer = submitQuizAnswer;
+  window.toggleQnaPanel = toggleQnaPanel;
+  window.submitQuestion = submitQuestion;
+  window.upvoteQuestion = upvoteQuestion;
+  window.readSlideAloud = readSlideAloud;
+  window.revealPollAnswer = revealPollAnswer;
+  
+</script>
+</body>
+</html>
