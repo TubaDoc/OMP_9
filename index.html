@@ -5,1347 +5,1345 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Lesson 10 — The Birth of Rock and Roll</title>
 <style>
-  :root{--bg:#0e0f12;--ink:#e8ebf0;--muted:#b6bdc9;--card:#161821;--line:#262a35;--brand:#59d0ff;--accent:#ffd166}
-  html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'Segoe UI',system-ui,Roboto,sans-serif}
-  a {color: var(--accent);}
-  body.modal-open{overflow:hidden}
-  /* Hide main content until the app is ready */
-  header.top, #main-content, #qna-fab {display: none;}
-  .app{max-width:980px;margin:0 auto;padding:1rem}
-
-  .slide{display:none;background:var(--card);border:1px solid var(--line);border-radius:.6rem;padding:1rem;margin:1rem 0}
-  .slide:first-of-type{display:block}
-  .slide-head{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;border-bottom:1px solid var(--line);padding-bottom:.4rem;margin-bottom:.6rem}
-  .slide h2{margin:.2rem 0;font-size:1.4rem}
-  .meter{color:var(--muted);font-size:.9rem}
-  .slide-body-with-aside { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start;}
-  .slide-body-main { flex: 3 1 400px; }
-  .slide-body-aside { flex: 1 1 200px; }
-  .slide-body-aside img { width: 100%; border-radius: .4rem; }
-  .bullets{margin:.6rem 0 1rem 1.1rem}
-  .bullets li{margin:.35rem 0}
-  .slide-actions{display:flex; gap:.5rem; flex-wrap:wrap;}
-  .read-btn,.nav-btn,.home-btn,.grade-btn{background:linear-gradient(90deg,var(--brand),#86e3ff);color:#08121f;border:0;font-weight:700;padding:.5rem .85rem;border-radius:.45rem;cursor:pointer}
-  .read-btn{background:#233046;color:var(--ink);border:1px solid var(--line)}
-  .full{margin:.75rem 0 .5rem 0;line-height:1.75;color:#d9e1ee}
-  .keywords-list {list-style-type: none; padding-left: 0;}
-  .keywords-list li { margin-bottom: .5rem; }
-
-  .deep-list{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin:1rem 0;list-style:none;padding:0}
-  .deep-item{width:100%;display:flex;justify-content:center}
-  .profile-btn{background:linear-gradient(90deg,var(--accent),#ffe08a);color:#08121f;border:0;font-weight:800;padding:.55rem 1rem;border-radius:.55rem;cursor:pointer;min-width:min(520px,90%);text-align:center}
-  .profile-btn:hover{filter:brightness(.97)}
-  .profile-btn:focus{outline:2px solid #ffd16666;outline-offset:2px}
-
-  .slide-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:1rem;gap:.5rem}
-  .home-btn{justify-self:center;background:#334055;color:var(--ink);border:1px solid var(--line)}
-
-  .quiz-battle-container{display:flex;flex-wrap: wrap;gap:1.5rem;align-items:flex-start}
-  .quiz-main{flex:1 1 60%; min-width: 300px;}
-  .leaderboard{flex:1 1 35%; min-width: 280px; background:#131622;border-radius:.45rem;padding:1rem;border:1px solid var(--line)}
-  .leaderboard-list li{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--line);align-items:center}
-  .leaderboard-list li:last-child{border-bottom:0}
-  .leaderboard-list .player-name{font-size:.9em;color:var(--muted)}
-  .leaderboard-list .correct-answers{font-size:.9em}
-  .leaderboard-list .score{font-weight:700;color:var(--brand);font-size:1.1em}
-  .quiz-question-area .q{padding:.6rem;border-bottom:1px dashed var(--line)}
-  .quiz-question-area .q:last-child{border-bottom:0}
-  .choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.35rem;margin-top:.35rem}
-  .choice-btn{display:flex;gap:.5rem;align-items:center;padding:.35rem .5rem;border-radius:.35rem;background:#131622;border:1px solid var(--line);color:var(--ink);font-size:1rem;width:100%;text-align:left;cursor:pointer}
-  .choice-btn.correct{border-color:rgba(6,214,160,.6);background:rgba(6,214,160,.08)}
-  .choice-btn.incorrect{border-color:rgba(239,71,111,.6);background:rgba(239,71,111,.07)}
-  .choice-btn:disabled{cursor:not-allowed;opacity:.7}
-  .quiz-controls button{margin-top:1rem}
-  #quiz-feedback{margin-top:1rem;font-weight:700}
-  #quiz-timer{font-size:1.8rem;font-weight:700;color:var(--accent);text-align:center;margin-bottom:1rem;padding:.5rem;background-color:rgba(255,209,102,.1);border-radius:.45rem}
-
-  #scrim{position:fixed;inset:0;display:none;background:rgba(0,0,0,.78);z-index:9998}
-  #scrim.active{display:block}
-  #modal{position:fixed;inset:0;display:none;place-items:center;z-index:9999;padding:1rem}
-  #modal.active{display:grid}
-  .modal-card{max-width:1100px;width:90%;background:#0f1420;border:1px solid var(--line);border-radius:.75rem;box-shadow:0 18px 60px rgba(0,0,0,.5);transform:scale(.97);opacity:0;transition:transform .2s ease,opacity .2s ease;max-height:85vh;display:flex;flex-direction:column}
-  #modal.active .modal-card{transform:scale(1);opacity:1}
-  .modal-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border-bottom:1px solid var(--line)}
-  .modal-head h3{margin:0;font-size:1.5rem}
-  .modal-body{padding:1.2rem;line-height:1.85;font-size:18px;overflow-y:auto}
-  .modal-body img{max-width:100%;height:auto;border-radius:.4rem;border:1px solid var(--line);margin:.6rem 0}
-  .modal-body.split-layout{display:flex;gap:1.5rem;align-items:flex-start}
-  .modal-body.split-layout > .modal-image-container{flex:0 0 300px;min-width:200px}
-  .modal-body.split-layout img{margin:0;width:100%}
-  .modal-body.split-layout > .modal-text-container{flex:1 1 auto}
-  .modal-body h4{margin:1rem 0 .4rem;font-size:1rem;color:#ffe08a}
-  .close{background:#2a3649;color:#e3eaf5;border:1px solid var(--line);padding:.4rem .8rem;border-radius:.45rem;cursor:pointer}
-
-  .interactive-section{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--line)}
-  .interactive-section h3{color:var(--accent);margin-bottom:1rem}
-
-  .poll-option{position:relative;margin-bottom:.5rem;background:#131622;border-radius:.35rem;border:1px solid var(--line);overflow:hidden}
-  .poll-option button{width:100%;text-align:left;padding:.5rem .8rem .5rem 1rem;background:0 0;border:0;color:var(--ink);cursor:pointer;position:relative;z-index:2;box-sizing:border-box;padding-right:4rem;}
-  .poll-option button:disabled{cursor:not-allowed}
-  .poll-option.voted-for button{font-weight:700}
-  .poll-option.correct-answer { background: rgba(6, 214, 160, .1) !important; border: 1px solid rgba(6, 214, 160, .7); }
-  .poll-option.incorrect-answer { background: rgba(239, 71, 111, .1) !important; border: 1px solid rgba(239, 71, 111, .7); }
-  .poll-bar{position:absolute;top:0;left:0;height:100%;background:var(--brand);opacity:.2;transition:width .3s ease;z-index:1}
-  .poll-percent{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);font-size:.9em;font-weight:700;color:var(--ink);z-index:2}
-
-  .build-a-band{display:flex;gap:1rem;flex-wrap:wrap}
-  .instrument-pool,.band-area{flex:1;min-width:250px;padding:1rem;border:2px dashed var(--line);border-radius:.6rem}
-  .band-area{background:rgba(89,208,255,.05)}
-  .instrument{padding:.5rem .8rem;background:var(--card);border:1px solid var(--line);border-radius:.4rem;cursor:grab;margin-bottom:.5rem;user-select:none}
-  .instrument.dragging { opacity: 0.5; }
-  .band-area.drag-over{border-color:var(--brand)}
-  .band-area .instrument.correct{border-left:4px solid #06d6a0}
-  .band-area .instrument.incorrect{border-left:4px solid #ef476f}
-
-  .word-cloud-container{display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start}
-  .word-cloud-input{flex:1;min-width:250px}
-  .word-cloud-display{flex:2;min-width:300px;min-height:200px;border:1px solid var(--line);border-radius:.6rem;padding:1rem;display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;justify-content:center}
-  .word-cloud-display span{padding:.1rem .3rem}
-  .content-input-container{display:flex;gap:.5rem;margin-bottom:1rem}
-  .content-input{flex-grow:1;background:#131622;border:1px solid var(--line);color:var(--ink);padding:.5rem .8rem;border-radius:.45rem;font-size:1rem}
-  .add-content-btn{background:linear-gradient(90deg,var(--accent),#ffe08a);color:#08121f;border:0;font-weight:700;padding:.5rem 1rem;border-radius:.45rem;cursor:pointer}
-  
-  #qna-fab{position:fixed;bottom:1rem;right:1rem;z-index:100}
-  #qna-panel{position:fixed;top:0;right:0;width:min(450px, 100%);height:100%;background:var(--card);border-left:1px solid var(--line);z-index:10001;transform:translateX(100%);transition:transform .3s ease}
-  #qna-panel.active{transform:translateX(0)}
-  .qna-head{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1rem;border-bottom:1px solid var(--line)}
-  .qna-body{padding:1rem;height:calc(100% - 120px);overflow-y:auto}
-  .qna-footer{padding:1rem;border-top:1px solid var(--line)}
-  .qna-list li{display:flex;gap:.8rem;align-items:flex-start;padding:.8rem 0;border-bottom:1px solid var(--line)}
-  .qna-list li:last-child{border-bottom:0}
-  .upvote-btn{display:flex;flex-direction:column;align-items:center;background:0 0;border:1px solid var(--line);color:var(--ink);border-radius:.4rem;padding:.3rem;cursor:pointer}
-  .upvote-btn.voted{background:var(--brand);color:#08121f}
-  .upvote-btn:disabled{cursor:not-allowed}
-
-  .overlay{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.85);z-index:10002;color:var(--ink)}
-  .overlay.hidden{display:none}
-  .overlay-card{background:var(--card);padding:2rem;border-radius:.75rem;width:min(400px, 90%);text-align:center}
-  .overlay-card h3{margin-top:0;font-size:1.5rem;color:var(--accent)}
-  .overlay-card input{width:100%;box-sizing:border-box;margin-bottom:1rem;text-align:center}
-  .overlay-card button{width:100%;margin-bottom:.5rem}
-  .overlay-card hr{border-color:var(--line);margin:1rem 0}
-
-  /* --- New 'Sparkle' Feature Styles --- */
-  .fun-facts { margin-top: 1rem; padding: 1rem; background: rgba(255, 209, 102, .05); border-left: 4px solid var(--accent); border-radius: .25rem; }
-  .fun-facts p { margin: .25rem 0; }
-  .fun-facts ul {padding-left: 1.2rem; margin: .5rem 0;}
-
-  .then-vs-now { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
-  .then-vs-now-card { flex: 1; min-width: 250px; background: #131622; border: 1px solid var(--line); padding: 1rem; border-radius: .45rem; }
-  .then-vs-now-card h4 { margin-top: 0; color: var(--ink); }
-  .then-vs-now-card audio { width: 100%; margin-top: .5rem; }
-  .lyrics-content { white-space: pre-wrap; background: #0e0f12; padding: 1rem; border-radius: .45rem; margin-top: .5rem; }
-
-  #build-a-verse-container { display: flex; flex-wrap: wrap; gap: 1rem; }
-  .bav-col { flex: 1; min-width: 280px; }
-  .bav-cloud { min-height: 150px; border: 1px solid var(--line); border-radius: .45rem; padding: .5rem; display:flex; flex-wrap:wrap; gap: .25rem .5rem; align-items:center; justify-content:center; }
-  .bav-cloud span { padding: .1rem .3rem; }
-  #bav-result { margin-top: 1rem; font-family: 'Courier New', Courier, monospace; background: #131622; padding: 1rem; border-radius: .45rem; white-space: pre-wrap; }
-  .audio-player-container button { margin-right: .5rem;}
-  
-  /* --- Accessibility Additions --- */
-  #accessibility-controls {
-    position: fixed;
-    top: .5rem;
-    right: .5rem;
-    z-index: 10003;
-  }
-  #contrast-toggle-btn {
-    background: #233046;
-    color: #e8ebf0;
-    border: 1px solid #262a35;
-    font-size: 1.2rem;
-    padding: .4rem .7rem;
-    border-radius: .45rem;
-    cursor: pointer;
-    line-height: 1;
-  }
-  .read-aloud-btn {
-    background: #233046;
-    color: #e8ebf0;
-    border: 1px solid var(--line);
-    padding: .3rem .6rem;
-    border-radius: .45rem;
-    cursor: pointer;
-    font-size: .8em;
-  }
-  
-  body.high-contrast-mode {
-    --bg: #000000;
-    --ink: #ffffff;
-    --muted: #dddddd;
-    --card: #000000;
-    --line: #ffffff;
-    --brand: #ffff00;
-    --accent: #ffff00;
-  }
-  body.high-contrast-mode .profile-btn,
-  body.high-contrast-mode .add-content-btn {
-    background: var(--accent);
-    color: #000;
-    text-shadow: none;
-  }
-   body.high-contrast-mode a {
-    color: var(--accent);
-   }
-   body.high-contrast-mode #contrast-toggle-btn {
-    background-color: var(--bg);
-    border-color: var(--line);
-    color: var(--ink);
-   }
+:root{--bg:#0e0f12;--ink:#e8ebf0;--muted:#b6bdc9;--card:#161821;--line:#262a35;--brand:#59d0ff;--accent:#ffd166}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'Segoe UI',system-ui,Roboto,sans-serif}
+a {color: var(--accent);}
+body.modal-open{overflow:hidden}
+/* Hide main content until the app is ready */
+header.top, #main-content, #qna-fab {display: none;}
+.app{max-width:980px;margin:0 auto;padding:1rem}
+.slide{display:none;background:var(--card);border:1px solid var(--line);border-radius:.6rem;padding:1rem;margin:1rem 0}
+.slide:first-of-type{display:block}
+.slide-head{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;border-bottom:1px solid var(--line);padding-bottom:.4rem;margin-bottom:.6rem}
+.slide h2{margin:.2rem 0;font-size:1.4rem}
+.meter{color:var(--muted);font-size:.9rem}
+.slide-body-with-aside { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start;}
+.slide-body-main { flex: 3 1 400px; }
+.slide-body-aside { flex: 1 1 200px; }
+.slide-body-aside img { width: 100%; border-radius: .4rem; }
+.bullets{margin:.6rem 0 1rem 1.1rem}
+.bullets li{margin:.35rem 0}
+.slide-actions{display:flex; gap:.5rem; flex-wrap:wrap;}
+.read-btn,.nav-btn,.home-btn,.grade-btn{background:linear-gradient(90deg,var(--brand),#86e3ff);color:#08121f;border:0;font-weight:700;padding:.5rem .85rem;border-radius:.45rem;cursor:pointer}
+.read-btn{background:#233046;color:var(--ink);border:1px solid var(--line)}
+.full{margin:.75rem 0 .5rem 0;line-height:1.75;color:#d9e1ee}
+.keywords-list {list-style-type: none; padding-left: 0;}
+.keywords-list li { margin-bottom: .5rem; }
+.deep-list{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin:1rem 0;list-style:none;padding:0}
+.deep-item{width:100%;display:flex;justify-content:center}
+.profile-btn{background:linear-gradient(90deg,var(--accent),#ffe08a);color:#08121f;border:0;font-weight:800;padding:.55rem 1rem;border-radius:.55rem;cursor:pointer;min-width:min(520px,90%);text-align:center}
+.profile-btn:hover{filter:brightness(.97)}
+.profile-btn:focus{outline:2px solid #ffd16666;outline-offset:2px}
+.slide-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:1rem;gap:.5rem}
+.home-btn{justify-self:center;background:#334055;color:var(--ink);border:1px solid var(--line)}
+.quiz-battle-container{display:flex;flex-wrap: wrap;gap:1.5rem;align-items:flex-start}
+.quiz-main{flex:1 1 60%; min-width: 300px;}
+.leaderboard{flex:1 1 35%; min-width: 280px; background:#131622;border-radius:.45rem;padding:1rem;border:1px solid var(--line)}
+.leaderboard-list li{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--line);align-items:center}
+.leaderboard-list li:last-child{border-bottom:0}
+.leaderboard-list .player-name{font-size:.9em;color:var(--muted)}
+.leaderboard-list .correct-answers{font-size:.9em}
+.leaderboard-list .score{font-weight:700;color:var(--brand);font-size:1.1em}
+.quiz-question-area .q{padding:.6rem;border-bottom:1px dashed var(--line)}
+.quiz-question-area .q:last-child{border-bottom:0}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.35rem;margin-top:.35rem}
+.choice-btn{display:flex;gap:.5rem;align-items:center;padding:.35rem .5rem;border-radius:.35rem;background:#131622;border:1px solid var(--line);color:var(--ink);font-size:1rem;width:100%;text-align:left;cursor:pointer}
+.choice-btn.correct{border-color:rgba(6,214,160,.6);background:rgba(6,214,160,.08)}
+.choice-btn.incorrect{border-color:rgba(239,71,111,.6);background:rgba(239,71,111,.07)}
+.choice-btn:disabled{cursor:not-allowed;opacity:.7}
+.quiz-controls button{margin-top:1rem}
+#quiz-feedback{margin-top:1rem;font-weight:700}
+#quiz-timer{font-size:1.8rem;font-weight:700;color:var(--accent);text-align:center;margin-bottom:1rem;padding:.5rem;background-color:rgba(255,209,102,.1);border-radius:.45rem}
+#scrim{position:fixed;inset:0;display:none;background:rgba(0,0,0,.78);z-index:9998}
+#scrim.active{display:block}
+#modal{position:fixed;inset:0;display:none;place-items:center;z-index:9999;padding:1rem}
+#modal.active{display:grid}
+.modal-card{max-width:1100px;width:90%;background:#0f1420;border:1px solid var(--line);border-radius:.75rem;box-shadow:0 18px 60px rgba(0,0,0,.5);transform:scale(.97);opacity:0;transition:transform .2s ease,opacity .2s ease;max-height:85vh;display:flex;flex-direction:column}
+#modal.active .modal-card{transform:scale(1);opacity:1}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border-bottom:1px solid var(--line)}
+.modal-head h3{margin:0;font-size:1.5rem}
+.modal-body{padding:1.2rem;line-height:1.85;font-size:18px;overflow-y:auto}
+.modal-body img{max-width:100%;height:auto;border-radius:.4rem;border:1px solid var(--line);margin:.6rem 0}
+.modal-body.split-layout{display:flex;gap:1.5rem;align-items:flex-start}
+.modal-body.split-layout > .modal-image-container{flex:0 0 300px;min-width:200px}
+.modal-body.split-layout img{margin:0;width:100%}
+.modal-body.split-layout > .modal-text-container{flex:1 1 auto}
+.modal-body h4{margin:1rem 0 .4rem;font-size:1rem;color:#ffe08a}
+.close{background:#2a3649;color:#e3eaf5;border:1px solid var(--line);padding:.4rem .8rem;border-radius:.45rem;cursor:pointer}
+.interactive-section{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+.interactive-section h3{color:var(--accent);margin-bottom:1rem}
+.poll-option{position:relative;margin-bottom:.5rem;background:#131622;border-radius:.35rem;border:1px solid var(--line);overflow:hidden}
+.poll-option button{width:100%;text-align:left;padding:.5rem .8rem .5rem 1rem;background:0 0;border:0;color:var(--ink);cursor:pointer;position:relative;z-index:2;box-sizing:border-box;padding-right:4rem;}
+.poll-option button:disabled{cursor:not-allowed}
+.poll-option.voted-for button{font-weight:700}
+.poll-option.correct-answer { background: rgba(6, 214, 160, .1) !important; border: 1px solid rgba(6, 214, 160, .7); }
+.poll-option.incorrect-answer { background: rgba(239, 71, 111, .1) !important; border: 1px solid rgba(239, 71, 111, .7); }
+.poll-bar{position:absolute;top:0;left:0;height:100%;background:var(--brand);opacity:.2;transition:width .3s ease;z-index:1}
+.poll-percent{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);font-size:.9em;font-weight:700;color:var(--ink);z-index:2}
+.build-a-band{display:flex;gap:1rem;flex-wrap:wrap}
+.instrument-pool,.band-area{flex:1;min-width:250px;padding:1rem;border:2px dashed var(--line);border-radius:.6rem}
+.band-area{background:rgba(89,208,255,.05)}
+.instrument{padding:.5rem .8rem;background:var(--card);border:1px solid var(--line);border-radius:.4rem;cursor:grab;margin-bottom:.5rem;user-select:none}
+.instrument.dragging { opacity: 0.5; }
+.band-area.drag-over{border-color:var(--brand)}
+.band-area .instrument.correct{border-left:4px solid #06d6a0}
+.band-area .instrument.incorrect{border-left:4px solid #ef476f}
+.word-cloud-container{display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start}
+.word-cloud-input{flex:1;min-width:250px}
+.word-cloud-display{flex:2;min-width:300px;min-height:200px;border:1px solid var(--line);border-radius:.6rem;padding:1rem;display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;justify-content:center}
+.word-cloud-display span{padding:.1rem .3rem}
+.content-input-container{display:flex;gap:.5rem;margin-bottom:1rem}
+.content-input{flex-grow:1;background:#131622;border:1px solid var(--line);color:var(--ink);padding:.5rem .8rem;border-radius:.45rem;font-size:1rem}
+.add-content-btn{background:linear-gradient(90deg,var(--accent),#ffe08a);color:#08121f;border:0;font-weight:700;padding:.5rem 1rem;border-radius:.45rem;cursor:pointer}
+#qna-fab{position:fixed;bottom:1rem;right:1rem;z-index:100}
+#qna-panel{position:fixed;top:0;right:0;width:min(450px, 100%);height:100%;background:var(--card);border-left:1px solid var(--line);z-index:10001;transform:translateX(100%);transition:transform .3s ease}
+#qna-panel.active{transform:translateX(0)}
+.qna-head{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1rem;border-bottom:1px solid var(--line)}
+.qna-body{padding:1rem;height:calc(100% - 120px);overflow-y:auto}
+.qna-footer{padding:1rem;border-top:1px solid var(--line)}
+.qna-list li{display:flex;gap:.8rem;align-items:flex-start;padding:.8rem 0;border-bottom:1px solid var(--line)}
+.qna-list li:last-child{border-bottom:0}
+.upvote-btn{display:flex;flex-direction:column;align-items:center;background:0 0;border:1px solid var(--line);color:var(--ink);border-radius:.4rem;padding:.3rem;cursor:pointer}
+.upvote-btn.voted{background:var(--brand);color:#08121f}
+.upvote-btn:disabled{cursor:not-allowed}
+.overlay{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.85);z-index:10002;color:var(--ink)}
+.overlay.hidden{display:none}
+.overlay-card{background:var(--card);padding:2rem;border-radius:.75rem;width:min(400px, 90%);text-align:center}
+.overlay-card h3{margin-top:0;font-size:1.5rem;color:var(--accent)}
+.overlay-card input{width:100%;box-sizing:border-box;margin-bottom:1rem;text-align:center}
+.overlay-card button{width:100%;margin-bottom:.5rem}
+.overlay-card hr{border-color:var(--line);margin:1rem 0}
+/* --- New 'Sparkle' Feature Styles --- */
+.fun-facts { margin-top: 1rem; padding: 1rem; background: rgba(255, 209, 102, .05); border-left: 4px solid var(--accent); border-radius: .25rem; }
+.fun-facts p { margin: .25rem 0; }
+.fun-facts ul {padding-left: 1.2rem; margin: .5rem 0;}
+.then-vs-now { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
+.then-vs-now-card { flex: 1; min-width: 250px; background: #131622; border: 1px solid var(--line); padding: 1rem; border-radius: .45rem; }
+.then-vs-now-card h4 { margin-top: 0; color: var(--ink); }
+.then-vs-now-card audio { width: 100%; margin-top: .5rem; }
+.lyrics-content { white-space: pre-wrap; background: #0e0f12; padding: 1rem; border-radius: .45rem; margin-top: .5rem; }
+#build-a-verse-container { display: flex; flex-wrap: wrap; gap: 1rem; }
+.bav-col { flex: 1; min-width: 280px; }
+.bav-cloud { min-height: 150px; border: 1px solid var(--line); border-radius: .45rem; padding: .5rem; display:flex; flex-wrap:wrap; gap: .25rem .5rem; align-items:center; justify-content:center; }
+.bav-cloud span { padding: .1rem .3rem; }
+#bav-result { margin-top: 1rem; font-family: 'Courier New', Courier, monospace; background: #131622; padding: 1rem; border-radius: .45rem; white-space: pre-wrap; }
+.audio-player-container button { margin-right: .5rem;}
+/* --- Accessibility Additions --- */
+#accessibility-controls {
+position: fixed;
+top: .5rem;
+right: .5rem;
+z-index: 10003;
+}
+#contrast-toggle-btn {
+background: #233046;
+color: #e8ebf0;
+border: 1px solid #262a35;
+font-size: 1.2rem;
+padding: .4rem .7rem;
+border-radius: .45rem;
+cursor: pointer;
+line-height: 1;
+}
+.read-aloud-btn {
+background: #233046;
+color: #e8ebf0;
+border: 1px solid var(--line);
+padding: .3rem .6rem;
+border-radius: .45rem;
+cursor: pointer;
+font-size: .8em;
+}
+body.high-contrast-mode {
+--bg: #000000;
+--ink: #ffffff;
+--muted: #dddddd;
+--card: #000000;
+--line: #ffffff;
+--brand: #ffff00;
+--accent: #ffff00;
+}
+body.high-contrast-mode .profile-btn,
+body.high-contrast-mode .add-content-btn {
+background: var(--accent);
+color: #000;
+text-shadow: none;
+}
+body.high-contrast-mode a {
+color: var(--accent);
+}
+body.high-contrast-mode #contrast-toggle-btn {
+background-color: var(--bg);
+border-color: var(--line);
+color: var(--ink);
+}
 </style>
 </head>
 <body>
-  <div id="accessibility-controls">
-    <button id="contrast-toggle-btn" title="Toggle High Contrast Mode">♿</button>
-  </div>
-
-  <header class="top" id="main-header">
-    <div class="app brand">
-      <h1>Lesson 10: The Birth of Rock and Roll</h1>
-      <small>Use Next/Previous or ← → keys. Session ID: <b id="session-id-display"></b></small>
-    </div>
-  </header>
-  <main class="app" id="main-content">
-    <div id="slides" class="slides" aria-live="polite"></div>
-  </main>
-
-  <div id="scrim" aria-hidden="true"></div>
-  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title" aria-hidden="true">
-    <div class="modal-card" role="document">
-      <div class="modal-head">
-        <h3 id="m-title"></h3>
-        <button class="close" id="modalClose">Close ✕</button>
-      </div>
-      <div id="m-body" class="modal-body"></div>
-    </div>
-  </div>
-  
-  <div id="session-overlay" class="overlay hidden">
-    <div class="overlay-card">
-      <h3>Join a Session</h3>
-      <input type="text" id="session-input" class="content-input" placeholder="ENTER SESSION ID">
-      <button id="join-session-btn" class="read-btn" style="background:var(--brand);color:#08121f">Join</button>
-      <hr>
-      <button id="start-session-btn" class="read-btn" style="background: #06d6a0; color:#08121f">Start a New Session</button>
-    </div>
-  </div>
-
-  <div id="name-entry-overlay" class="overlay hidden">
-    <div class="overlay-card">
-        <h3>Welcome!</h3>
-        <p>Please enter your name to join the session.</p>
-        <input type="text" id="name-input" class="content-input" placeholder="Your Name or Nickname" required>
-        <button id="join-btn" class="add-content-btn">Join</button>
-        <a href="#" id="join-anonymously" style="color: var(--muted); font-size: 0.9em; display:block; margin-top: .5rem">or join anonymously</a>
-    </div>
-  </div>
-
-  <button id="qna-fab" class="profile-btn" onclick="toggleQnaPanel()">? Questions?</button>
-  <div id="qna-panel">
-    <div class="qna-head">
-      <h3>Live Q&A</h3>
-      <button class="close" onclick="toggleQnaPanel()">✕</button>
-    </div>
-    <div class="qna-body">
-      <ul id="qna-list" class="qna-list" style="list-style: none; padding: 0;"><li>No questions yet.</li></ul>
-    </div>
-    <div class="qna-footer">
-      <div class="content-input-container">
-        <input type="text" id="qna-input" class="content-input" placeholder="Ask a question...">
-        <button class="add-content-btn" onclick="submitQuestion()">Ask</button>
-      </div>
-    </div>
-  </div>
-
+<div id="accessibility-controls">
+<button id="contrast-toggle-btn" title="Toggle High Contrast Mode">♿</button>
+</div>
+<header class="top" id="main-header">
+<div class="app brand">
+<h1>Lesson 10: The Birth of Rock and Roll</h1>
+<small>Use Next/Previous or ← → keys. Session ID: <b id="session-id-display"></b></small>
+</div>
+</header>
+<main class="app" id="main-content">
+<div id="slides" class="slides" aria-live="polite"></div>
+</main>
+<div id="scrim" aria-hidden="true"></div>
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title" aria-hidden="true">
+<div class="modal-card" role="document">
+<div class="modal-head">
+<h3 id="m-title"></h3>
+<button class="close" id="modalClose">Close ✕</button>
+</div>
+<div id="m-body" class="modal-body"></div>
+</div>
+</div>
+<div id="session-overlay" class="overlay hidden">
+<div class="overlay-card">
+<h3>Join a Session</h3>
+<input type="text" id="session-input" class="content-input" placeholder="ENTER SESSION ID">
+<button id="join-session-btn" class="read-btn" style="background:var(--brand);color:#08121f">Join</button>
+<hr>
+<button id="start-session-btn" class="read-btn" style="background: #06d6a0; color:#08121f">Start a New Session</button>
+</div>
+</div>
+<div id="name-entry-overlay" class="overlay hidden">
+<div class="overlay-card">
+<h3>Welcome!</h3>
+<p>Please enter your name to join the session.</p>
+<input type="text" id="name-input" class="content-input" placeholder="Your Name or Nickname" required>
+<button id="join-btn" class="add-content-btn">Join</button>
+<a href="#" id="join-anonymously" style="color: var(--muted); font-size: 0.9em; display:block; margin-top: .5rem">or join anonymously</a>
+</div>
+</div>
+<button id="qna-fab" class="profile-btn" onclick="toggleQnaPanel()">? Questions?</button>
+<div id="qna-panel">
+<div class="qna-head">
+<h3>Live Q&A</h3>
+<button class="close" onclick="toggleQnaPanel()">✕</button>
+</div>
+<div class="qna-body">
+<ul id="qna-list" class="qna-list" style="list-style: none; padding: 0;"><li>No questions yet.</li></ul>
+</div>
+<div class="qna-footer">
+<div class="content-input-container">
+<input type="text" id="qna-input" class="content-input" placeholder="Ask a question...">
+<button class="add-content-btn" onclick="submitQuestion()">Ask</button>
+</div>
+</div>
+</div>
 <script type="module">
-  // --- IMPORTS AND CONFIG ---
-  const firebaseConfig = {
-    apiKey: "AIzaSyDxpDj0axohHIFfRQ53NLWBQbf_yI2lJo0",
-    authDomain: "interactive-lecture-app.firebaseapp.com",
-    projectId: "interactive-lecture-app",
-    storageBucket: "interactive-lecture-app.firebasestorage.app",
-    messagingSenderId: "47230608512",
-    appId: "1:47230608512:web:ba649a4a9ba16cef1df265",
-    measurementId: "G-NDLP7MWFH9"
-  };
-  const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-  const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+// --- IMPORTS AND CONFIG ---
+const firebaseConfig = {
+apiKey: "AIzaSyDxpDj0axohHIFfRQ53NLWBQbf_yI2lJo0",
+authDomain: "interactive-lecture-app.firebaseapp.com",
+projectId: "interactive-lecture-app",
+storageBucket: "interactive-lecture-app.firebasestorage.app",
+messagingSenderId: "47230608512",
+appId: "1:47230608512:web:ba649a4a9ba16cef1df265",
+measurementId: "G-NDLP7MWFH9"
+};
+const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { setLogLevel } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  
-  // --- LOCAL STATE (Do not modify) ---
-  let userId = null;
-  let localUpvotes = new Set();
-  let userName = null;
-  let sessionId = null;
-  let sessionDataPath = null;
-  let isPresenter = false; 
-  let ix = 0; 
-  let slidesEls;
-  let timerInterval = null;
-  let timerStartTimeout = null;
-  let audioContext, mainGainNode, oscillator, isPlayingBlues = false;
-  
-  // ==================================================================
-  // --- LESSON CONTENT ---
-  // ==================================================================
-  
-  const SLIDES = [
-    {
-        "id": "10.00",
-        "title": "Lesson 10: The Birth of Rock and Roll",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": ["Watch this short video for an overview of this chapter's content."],
-        "full": `<div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem;'><iframe src='https://player.vimeo.com/video/762001582?h=37c83ffa80' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allow='fullscreen' allowfullscreen title='Chapter Synopsis Video'></iframe></div>`,
-        "deep": []
-    },
-    {
-        "id": "10.01",
-        "title": "10.01 Introduction",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": [
-            "In the early 1950s, multiple musical threads converged to create the earliest rock and roll.",
-            "Artists like Ray Charles, Chuck Berry, and Fats Domino wrote and recorded some of the first crossover hits.",
-            "White artists like Bill Haley and Pat Boone began covering black artists' songs, often achieving greater commercial success.",
-            "Technological changes, new musical forms, and shifts in consumption patterns reshaped American popular music."
-        ],
-        "full": "In the early 1950s, many different musical threads came together to create the earliest rock and roll. Artists such as Ray Charles, Chuck Berry, and Fats Domino wrote and recorded some of the earliest crossover hits. Soon, white artists such as Bill Haley and the Comets and Pat Boone began recording cover versions of black artists' songs, most of which were more commercially successful than their black counterparts. Changes in technology, new and hybrid musical forms, and shifts in music consumption patterns all contributed to a reworking of the American popular music landscape that would forever alter the history of popular music consumption in the United States.",
-        "deep": []
-    },
-    {
-        "id": "10.02",
-        "title": "10.02 New Technologies and Means of Consumption",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "asideImage": "https://omp.s3.amazonaws.com/img/img_omp10_02_WurlitzerJukebox.jpg",
-         "bullets": [
-            "The <b>magnetic tape recorder</b> revolutionized music recording, allowing for editing, duplication, and cheaper production.",
-            "<b>45 RPM records</b> became the standard for pop singles, with each side playing for about 3-4 minutes.",
-            "The <b>transistor radio</b> (developed by Bell Labs in 1947) and car radios made music more portable and accessible.",
-            "<b>Top 40 radio format</b> emerged, playing the same forty songs every 24 hours with the top ten receiving the most airplay."
-        ],
-        "full": "The magnetic recording process changed how music was recorded and distributed. Developed by the Germans to guide radio-controlled V-2 bombs, magnetic tape allowed for sound to be recorded, erased, and re-recorded on the same tape many times, allowed for recordings to be duplicated from tape to tape, allowed for recordings to be edited, and made recording much cheaper. Recording was no longer confined to gigantic and elaborate studios owned by the major companies in a few big cities. Tolerably decent recordings could now be made anywhere by untrained personnel who knew very little about engineering or acoustics. Around the same time, high fidelity 45 RPM technology exploded onto the scene. 45 RPMs were inexpensive to produce and to purchase. It was in the world of 45 RPM singles that rhythm and blues had its first great moment in pop music history. Music listening and consumption was also affected by the radio. The transistor radio, developed by Bell Laboratory in 1947, appeared on the market in the early 1950s. About the same time, the car radio became an affordable option in the automobile industry, and people began listening to the radio in their cars as well as in their homes. By the late 1940s and early 1950s, many popular talk, drama, and comedy radio programs had moved from radio to television, and radio programmers needed to find new material to fill the airtime. Several innovations in radio programming arose, the most important of which was the development of the Top 40 radio format. Top 40 became the new radio format. The same forty songs would be repeated every 24-hour radio cycle, and the top ten songs would receive more frequent play than the bottom thirty. Why forty tunes? Because the Wurlitzer jukeboxes, which flooded the industry at the time, contained forty recordings.",
-        "keywords": {
-            "Magnetic tape recorder": "Recording on magnetic tape allowed for sound to be recorded, erased, and re-recorded on the same tape many times, allowed for recordings to be duplicated from tape to tape, allowed for recordings to be edited, and made recording much cheaper.",
-            "45 RPM": "A record that plays at 45 revolutions per minute; had a limit of around three to four minutes per side.",
-            "Top 40": "A radio format where the same forty tunes were repeated every 24-hour radio cycle, and the top ten singles received the most airplay."
-        },
-        "deep": [],
-        "poll": {
-            "q": "Which technology allowed for music to be recorded, erased, and re-recorded on the same medium?",
-            "choices": ["Vinyl records", "Magnetic tape recorder", "Radio broadcasting", "CD technology"],
-            "answer": 1
-        }
-    },
-    {
-        "id": "10.03",
-        "title": "10.03 Alan Freed",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "asideImage": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
-        "bullets": [
-            "<b>Alan Freed</b> was the most influential disc jockey of early rock and roll, starting his career in Cleveland.",
-            "He transformed his classical program into <i>The Moondog Show</i>, featuring rhythm and blues by black artists.",
-            "Freed coined the term <b>rock and roll</b> (previously a euphemism for sex in African American music) to describe this music.",
-            "He organized massive rock and roll concerts, produced movies, and hosted TV shows before his career ended due to payola scandals."
-        ],
-        "full": "With the rise of radio and top 40 radio, the disc jockey emerged as one of popular music's most important promoters. The most important disc jockey of the era, and indeed, one of the most important figures in the promotion of early rock and roll, was Alan Freed. Freed was the most influential disc jockey of early rock and roll. He began his radio career in 1946 in Akron, Ohio before moving to Cleveland in 1951. He soon transformed his evening classical-music program into The Moondog Show, which featured rhythm and blues records by black artists. He dubbed the music 'rock and roll'—a term used in African American music since the 1930s as a euphemism for sex—and the name stuck. The new music was a hit for teenagers, and Freed soon gained an immense radio following. In addition to champion rock and roll on the radio, Freed also organized rock and roll concerts that drew large crowd of both black and white teenagers. His success in Cleveland prompted a move to a larger market, and he began his new show, The Rock and Roll Party, on WINS in New York in 1954. Freed eventually organized a traveling concert show featuring Jerry Lee Lewis and Buddy Holly called The Big Beat, produced several rock-and-roll themed movies (including Rock Around the Clock (1956) and Don't Knock the Rock (1957)), and hosted a television show called Dance Party. His career ended on a sour note when he was the target of a Congressional investigation over receiving bribes in return for playing particular records. He was found guilty of bribery, or 'payola,' in 1962 and he died of kidney failure in 1965.",
-        "keywords": {
-            "Rock and roll": "Term used by Alan Freed to describe the rhythm and blues music of African American artists that he played on the radio."
-        },
-        "deep": [
-            {
-                "title": "Alan Freed (1921-1965)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
-                "altText": "A photo of Alan Freed, the influential disc jockey who popularized rock and roll.",
-                "bullets": [
-                    "Began his radio career in 1946 in Akron, Ohio before moving to Cleveland in 1951.",
-                    "Transformed his classical program into The Moondog Show, featuring rhythm and blues records by black artists.",
-                    "Coined the term 'rock and roll' to describe African American popular music.",
-                    "Organized massive rock and roll concerts that drew crowds of both black and white teenagers.",
-                    "Produced rock-and-roll themed movies including Rock Around the Clock and Don't Knock the Rock.",
-                    "His career ended due to payola scandals, being found guilty of bribery in 1962."
-                ],
-                "funFacts": [
-                    "Freed's March 1953 concert sold 18,000 tickets for an auditorium with only 9,000 seats, leading to a riot.",
-                    "By 1954, Freed was making nearly a million dollars a year from his radio show and sponsors.",
-                    "He appeared in three movies: Don't Knock the Rock, Rock, Rock, Rock, and Rock Around the Clock.",
-                    "Freed was listed as co-author on Chuck Berry's 'Maybellene' in exchange for promoting the record."
-                ],
-                "media": [
-                    {"label": "Watch: Alan Freed Introduction", "href": "https://www.youtube.com/watch?v=6HblkQJ7D-c"},
-                    {"label": "Listen: Alan Freed Radio Show", "href": "https://www.youtube.com/watch?v=Q9b4aZ-1X_0"},
-                    {"label": "Read More: Alan Freed Biography", "href": "https://rockhall.com/inductees/alan-freed/"}
-                ]
-            }
-        ],
-        "poll": {
-            "q": "What term did Alan Freed use to describe rhythm and blues music to make it more appealing to white audiences?",
-            "choices": ["Pop music", "Race records", "Rock and roll", "Soul music"],
-            "answer": 2
-        }
-    },
-    {
-        "id": "10.04",
-        "title": "10.04 Cover Versions",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": [
-            "White artists began releasing <b>cover versions</b> of black artists' songs to make them more appropriate for white audiences.",
-            "Sexual references in original black versions were muted, modified, or deleted entirely in cover versions.",
-            "<b>Pat Boone</b> exemplified the sanitized cover approach with his versions of 'Ain't That a Shame,' 'Long Tall Sally,' and 'Tutti Frutti.'",
-            "<b>Bill Haley</b> was one of the first white artists to achieve commercial success with crossover versions of rhythm and blues songs."
-        ],
-        "full": "Teenagers may have loved rhythm and blues lyrics such as 'I got a girl named Sue, she knows just what to do' (from Little Richard's 'Tutti Frutti') and 'You're wearin those dresses, the sun comes shinin' through / I can't believe my eyes, all of this belongs to you' (from Big Joe Turner's 'Shake, Rattle, and Roll'), but parents, record companies, and radio stations were less than impressed. In response, white artists and record companies began releasing cover versions of black artists' songs. In general, a cover version refers to a song that is re-recorded by another artist. During the age of early rock and roll, however, these cover versions had a very specific purpose: to modify black artists' rhythm and blues songs in order to make them more appropriate for white audiences. The sexual references in the original black version were muted, modified, or deleted entirely. Recordings by the squeaky-clean white singer Pat Boone exemplify the goals of early cover versions. Boone's covers of 'Ain't That a Shame' (Fats Domino), 'Long Tall Sally' (Little Richard), and 'Tutti Frutti' (Little Richard) were all more commercially successful than the original black versions. Bill Haley was one of the first white artists to achieve commercial success with crossover versions of rhythm and blues songs. His version of 'Shake, Rattle, and Roll' (1954) was a sanitized version of Big Joe Turner's original, and his recording of 'Rock Around the Clock' (1955) was the first rock-and-roll recording to become a number one hit on the pop charts.",
-        "keywords": {
-            "Cover version": "A song that is re-recorded by another artist. In the 1950s, these were often sanitized versions of black artists' rhythm and blues songs made for white audiences."
-        },
-        "deep": [
-            {
-                "title": "Pat Boone (b. 1934)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_04_PatBoone.jpg",
-                "altText": "A photo of Pat Boone, the clean-cut singer known for his cover versions of rhythm and blues songs.",
-                "bullets": [
-                    "Born in Jacksonville, Florida, Boone was a clean-cut, white singer who became a teen idol in the 1950s.",
-                    "His cover versions of rhythm and blues songs were often more commercially successful than the original black versions.",
-                    "Notable covers include 'Ain't That a Shame' (Fats Domino), 'Long Tall Sally' (Little Richard), and 'Tutti Frutti' (Little Richard).",
-                    "Boone's versions typically removed or toned down sexual references and made the music more palatable for white audiences.",
-                    "He had 38 Top 40 hits between 1955 and 1962, making him one of the most successful artists of the era."
-                ],
-                "funFacts": [
-                    "Pat Boone sold over 45 million records, had 38 Top 40 hits, and appeared in more than 12 Hollywood movies.",
-                    "He was a descendant of American pioneer Daniel Boone.",
-                    "In 1957, he was the second biggest charting artist, behind only Elvis Presley.",
-                    "Boone's version of 'Tutti Frutti' sold over a million copies, while Little Richard's original sold around 500,000."
-                ]
-            },
-            {
-                "title": "Bill Haley (1925-1981)",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_04_BillHaley.jpg",
-                "altText": "A photo of Bill Haley, one of the first white artists to achieve commercial success with rock and roll.",
-                "bullets": [
-                    "Born in Highland Park, Michigan, Haley was a country and western singer before transitioning to rock and roll.",
-                    "His band, Bill Haley and His Comets, was one of the first rock and roll groups to achieve mainstream success.",
-                    "Haley's version of 'Shake, Rattle, and Roll' (1954) was a sanitized version of Big Joe Turner's original.",
-                    "His recording of 'Rock Around the Clock' (1955) was the first rock-and-roll recording to become a number one hit on the pop charts.",
-                    "The song gained even more popularity when featured in the 1955 film 'Blackboard Jungle'."
-                ],
-                "funFacts": [
-                    "'Rock Around the Clock' is often cited as the song that brought rock and roll into mainstream culture worldwide.",
-                    "Bill Haley was nearly 30 years old when he recorded 'Rock Around the Clock,' making him older than most rock and roll pioneers.",
-                    "He was one of the first musicians to be inducted into the Rock and Roll Hall of Fame in 1987.",
-                    "Haley's trademark was his distinctive spit-curl hairstyle, which became his visual signature."
-                ]
-            }
-        ],
-        "thenVsNow": {
-            "title": "Cover Versions: Then vs. Now",
-            "then": {
-                "title": "1950s Covers",
-                "description": "In the 1950s, cover versions were primarily used to sanitize black music for white audiences, removing sexual references and making the music more palatable to mainstream tastes.",
-                "examples": ["Pat Boone's 'Tutti Frutti'", "Bill Haley's 'Shake, Rattle, and Roll'", "The Crew-Cuts' 'Sh-Boom'"]
-            },
-            "now": {
-                "title": "Modern Covers",
-                "description": "Today, cover versions are often artistic reinterpretations or tributes to original works, sometimes completely transforming the song's genre or style.",
-                "examples": ["Johnny Cash's 'Hurt' (Nine Inch Nails cover)", "Jeff Buckley's 'Hallelujah' (Leonard Cohen cover)", "Whitney Houston's 'I Will Always Love You' (Dolly Parton cover)"]
-            }
-        },
-        "poll": {
-            "q": "What was the primary purpose of cover versions in the 1950s?",
-            "choices": ["To pay tribute to original artists", "To make songs more appropriate for white audiences", "To create new musical genres", "To make songs longer for radio play"],
-            "answer": 1
-        }
-    },
-    {
-        "id": "10.05",
-        "title": "10.05 The Rock and Roll Business",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": [
-            "The rise of rock and roll created new business opportunities and challenges for the music industry.",
-            "Independent record labels like <b>Chess</b>, <b>Sun</b>, and <b>Specialty</b> played a crucial role in discovering and promoting early rock and roll artists.",
-            "The <b>payola scandal</b> of the late 1950s involved disc jockeys accepting bribes to play certain records.",
-            "Congressional hearings on payola led to tighter regulations and the decline of many influential disc jockeys like Alan Freed."
-        ],
-        "full": "The rise of rock and roll created new business opportunities and challenges for the music industry. Independent record labels such as Chess, Sun, and Specialty played a crucial role in discovering and promoting early rock and roll artists. These labels were often more willing to take risks on new and unconventional artists than the major labels. The payola scandal of the late 1950s involved disc jockeys accepting bribes to play certain records. Congressional hearings on payola led to tighter regulations and the decline of many influential disc jockeys, including Alan Freed. Despite these challenges, rock and roll continued to grow in popularity, and by the end of the 1950s, it had become the dominant form of popular music in the United States.",
-        "keywords": {
-            "Payola": "The practice of paying radio stations to play particular songs without disclosing the payment to listeners."
-        },
-        "deep": [
-            {
-                "title": "Independent Record Labels",
-                "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_09_ChessRecords.jpg",
-                "altText": "The Chess Records building in Chicago, an important independent label for early rock and roll.",
-                "bullets": [
-                    "Chess Records (Chicago): Founded by Leonard and Phil Chess, specialized in blues and R&B. Artists: Chuck Berry, Bo Diddley, Muddy Waters.",
-                    "Sun Records (Memphis): Founded by Sam Phillips, known for rockabilly and early rock and roll. Artists: Elvis Presley, Jerry Lee Lewis, Carl Perkins, Johnny Cash.",
-                    "Specialty Records (Los Angeles): Founded by Art Rupe, focused on gospel, R&B, and rock and roll. Artists: Little Richard, Lloyd Price, Larry Williams.",
-                    "Atlantic Records (New York): Founded by Ahmet Ertegun and Herb Abramson, became a major force in R&B and soul. Artists: Ray Charles, The Coasters, The Drifters."
-                ],
-                "funFacts": [
-                    "Sam Phillips of Sun Records famously said: 'If I could find a white man who had the Negro sound and the Negro feel, I could make a billion dollars.' He found Elvis Presley.",
-                    "Chess Records was originally called Aristocrat Records before being renamed in 1950.",
-                    "Specialty Records owner Art Rupe was known for his keen ear for hit songs and carefully crafted the sound of his recordings.",
-                    "Atlantic Records began as a small independent label operating out of a hotel room before becoming one of the most successful labels in music history."
-                ]
-            }
-        ],
-        "poll": {
-            "q": "What was the name of the scandal involving disc jockeys accepting bribes to play certain records?",
-            "choices": ["Watergate scandal", "Payola scandal", "Teapot Dome scandal", "Credit Mobilier scandal"],
-            "answer": 1
-        }
-    },
-    {
-        "id": "10.06",
-        "title": "10.06 Quiz Battle: The Birth of Rock and Roll",
-        "headerImage": "https://i.imgur.com/UYkSNXp.png",
-        "bullets": [
-            "Test your knowledge of the birth of rock and roll with this 10-question quiz battle!",
-            "Compete against your classmates to see who can answer the most questions correctly in the shortest time.",
-            "Questions cover key artists, technologies, and historical developments from this chapter.",
-            "Good luck, and may the best rock historian win!"
-        ],
-        "full": "This quiz battle will test your knowledge of the birth of rock and roll. You'll answer 10 questions covering the key artists, technologies, and historical developments discussed in this chapter. The quiz is timed, so try to answer as quickly as possible while maintaining accuracy. Your score will be based on both correctness and speed. Compete against your classmates to see who can achieve the highest score!",
-        "quiz": [
-            {
-                "q": "Which technology allowed for sound to be recorded, erased, and re-recorded on the same medium?",
-                "choices": ["Vinyl records", "Magnetic tape recorder", "Radio broadcasting", "CD technology"],
-                "answer": 1
-            },
-            {
-                "q": "What term did Alan Freed use to describe rhythm and blues music to make it more appealing to white audiences?",
-                "choices": ["Pop music", "Race records", "Rock and roll", "Soul music"],
-                "answer": 2
-            },
-            {
-                "q": "What was the primary purpose of cover versions in the 1950s?",
-                "choices": ["To pay tribute to original artists", "To make songs more appropriate for white audiences", "To create new musical genres", "To make songs longer for radio play"],
-                "answer": 1
-            },
-            {
-                "q": "What was the name of the scandal involving disc jockeys accepting bribes to play certain records?",
-                "choices": ["Watergate scandal", "Payola scandal", "Teapot Dome scandal", "Credit Mobilier scandal"],
-                "answer": 1
-            },
-            {
-                "q": "Which radio format played the same forty songs every 24 hours with the top ten receiving the most airplay?",
-                "choices": ["Freeform radio", "Top 40", "Album-oriented rock", "Talk radio"],
-                "answer": 1
-            }
-        ],
-        "deep": []
-    }
-  ];
+setLogLevel('debug');
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-  // --- FIREBASE AUTHENTICATION ---
-  async function initAuth() {
-    try {
-      if (initialAuthToken) {
-        await signInWithCustomToken(auth, initialAuthToken);
-      } else {
-        await signInAnonymously(auth);
-      }
-    } catch (error) {
-      console.error("Auth error:", error);
-    }
-  }
+// --- LOCAL STATE (Do not modify) ---
+let userId = null;
+let localUpvotes = new Set();
+let userName = null;
+let sessionId = null;
+let sessionDataPath = null;
+let isPresenter = false;
+let ix = 0;
+let slidesEls;
+let timerInterval = null;
+let timerStartTimeout = null;
+let audioContext, mainGainNode, oscillator, isPlayingBlues = false;
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      userId = user.uid;
-      document.getElementById("session-overlay").classList.add("hidden");
-      document.getElementById("name-entry-overlay").classList.remove("hidden");
-    } else {
-      console.log("User signed out");
-    }
-  });
+// ==================================================================
+// --- LESSON CONTENT ---
+// ==================================================================
 
-  // --- SESSION MANAGEMENT ---
-  function generateSessionId() {
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
-  }
+const SLIDES = [
+{
+"id": "10.00",
+"title": "Lesson 10: The Birth of Rock and Roll",
+"headerImage": "https://i.imgur.com/UYkSNXp.png",
+"bullets": ["Watch this short video for an overview of this chapter's content."],
+"full": `<div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem;'><iframe src='https://player.vimeo.com/video/762001582?h=37c83ffa80' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allow='fullscreen' allowfullscreen title='Chapter Synopsis Video'></iframe></div>`,
+"deep": []
+},
+{
+"id": "10.01",
+"title": "10.01 Introduction",
+"headerImage": "https://i.imgur.com/UYkSNXp.png",
+"bullets": [
+"In the early 1950s, multiple musical threads converged to create the earliest rock and roll.",
+"Artists like Ray Charles, Chuck Berry, and Fats Domino wrote and recorded some of the first crossover hits.",
+"White artists like Bill Haley and Pat Boone began covering black artists' songs, often achieving greater commercial success.",
+"Technological changes, new musical forms, and shifts in consumption patterns reshaped American popular music."
+],
+"full": "In the early 1950s, many different musical threads came together to create the earliest rock and roll. Artists such as Ray Charles, Chuck Berry, and Fats Domino wrote and recorded some of the earliest crossover hits. Soon, white artists such as Bill Haley and the Comets and Pat Boone began recording cover versions of black artists' songs, most of which were more commercially successful than their black counterparts. Changes in technology, new and hybrid musical forms, and shifts in music consumption patterns all contributed to a reworking of the American popular music landscape that would forever alter the history of popular music consumption in the United States.",
+"deep": []
+},
+{
+"id": "10.02",
+"title": "10.02 New Technologies and Means of Consumption",
+"headerImage": "https://i.imgur.com/UYkSNXp.png",
+"asideImage": "https://omp.s3.amazonaws.com/img/img_omp10_02_WurlitzerJukebox.jpg",
+"bullets": [
+"The <b>magnetic tape recorder</b> revolutionized music recording, allowing for editing, duplication, and cheaper production.",
+"<b>45 RPM records</b> became the standard for pop singles, with each side playing for about 3-4 minutes.",
+"The <b>transistor radio</b> (developed by Bell Labs in 1947) and car radios made music more portable and accessible.",
+"<b>Top 40 radio format</b> emerged, playing the same forty songs every 24 hours with the top ten receiving the most airplay."
+],
+"full": "The magnetic recording process changed how music was recorded and distributed. Developed by the Germans to guide radio-controlled V-2 bombs, magnetic tape allowed for sound to be recorded, erased, and re-recorded on the same tape many times, allowed for recordings to be duplicated from tape to tape, allowed for recordings to be edited, and made recording much cheaper. Recording was no longer confined to gigantic and elaborate studios owned by the major companies in a few big cities. Tolerably decent recordings could now be made anywhere by untrained personnel who knew very little about engineering or acoustics. Around the same time, high fidelity 45 RPM technology exploded onto the scene. 45 RPMs were inexpensive to produce and to purchase. It was in the world of 45 RPM singles that rhythm and blues had its first great moment in pop music history. Music listening and consumption was also affected by the radio. The transistor radio, developed by Bell Laboratory in 1947, appeared on the market in the early 1950s. About the same time, the car radio became an affordable option in the automobile industry, and people began listening to the radio in their cars as well as in their homes. By the late 1940s and early 1950s, many popular talk, drama, and comedy radio programs had moved from radio to television, and radio programmers needed to find new material to fill the airtime. Several innovations in radio programming arose, the most important of which was the development of the Top 40 radio format. Top 40 became the new radio format. The same forty songs would be repeated every 24-hour radio cycle, and the top ten songs would receive more frequent play than the bottom thirty. Why forty tunes? Because the Wurlitzer jukeboxes, which flooded the industry at the time, contained forty recordings.",
+"keywords": {
+"Magnetic tape recorder": "Recording on magnetic tape allowed for sound to be recorded, erased, and re-recorded on the same tape many times, allowed for recordings to be duplicated from tape to tape, allowed for recordings to be edited, and made recording much cheaper.",
+"45 RPM": "A record that plays at 45 revolutions per minute; had a limit of around three to four minutes per side.",
+"Top 40": "A radio format where the same forty tunes were repeated every 24-hour radio cycle, and the top ten singles received the most airplay."
+},
+"deep": [],
+"poll": {
+"q": "Which technology allowed for music to be recorded, erased, and re-recorded on the same medium?",
+"choices": ["Vinyl records", "Magnetic tape recorder", "Radio broadcasting", "CD technology"],
+"answer": 1
+}
+},
+{
+"id": "10.03",
+"title": "10.03 Alan Freed",
+"headerImage": "https://i.imgur.com/UYkSNXp.png",
+"asideImage": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
+"bullets": [
+"<b>Alan Freed</b> was the most influential disc jockey of early rock and roll, starting his career in Cleveland.",
+"He transformed his classical program into <i>The Moondog Show</i>, featuring rhythm and blues by black artists.",
+"Freed coined the term <b>rock and roll</b> (previously a euphemism for sex in African American music) to describe this music.",
+"He organized massive rock and roll concerts, produced movies, and hosted TV shows before his career ended due to payola scandals."
+],
+"full": "With the rise of radio and top 40 radio, the disc jockey emerged as one of popular music's most important promoters. The most important disc jockey of the era, and indeed, one of the most important figures in the promotion of early rock and roll, was Alan Freed. Freed was the most influential disc jockey of early rock and roll. He began his radio career in 1946 in Akron, Ohio before moving to Cleveland in 1951. He soon transformed his evening classical-music program into The Moondog Show, which featured rhythm and blues records by black artists. He dubbed the music 'rock and roll'—a term used in African American music since the 1930s as a euphemism for sex—and the name stuck. The new music was a hit for teenagers, and Freed soon gained an immense radio following. In addition to champion rock and roll on the radio, Freed also organized rock and roll concerts that drew large crowd of both black and white teenagers. His success in Cleveland prompted a move to a larger market, and he began his new show, The Rock and Roll Party, on WINS in New York in 1954. Freed eventually organized a traveling concert show featuring Jerry Lee Lewis and Buddy Holly called The Big Beat, produced several rock-and-roll themed movies (including Rock Around the Clock (1956) and Don't Knock the Rock (1957)), and hosted a television show called Dance Party. His career ended on a sour note when he was the target of a Congressional investigation over receiving bribes in return for playing particular records. He was found guilty of bribery, or 'payola,' in 1962 and he died of kidney failure in 1965.",
+"keywords": {
+"Rock and roll": "Term used by Alan Freed to describe the rhythm and blues music of African American artists that he played on the radio."
+},
+"deep": [
+{
+"title": "Alan Freed (1921-1965)",
+"image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
+"altText": "A photo of Alan Freed, the influential disc jockey who popularized rock and roll.",
+"bullets": [
+"Began his radio career in 1946 in Akron, Ohio before moving to Cleveland in 1951.",
+"Transformed his classical program into The Moondog Show, featuring rhythm and blues records by black artists.",
+"Coined the term 'rock and roll' to describe African American popular music.",
+"Organized massive rock and roll concerts that drew crowds of both black and white teenagers.",
+"Produced rock-and-roll themed movies including Rock Around the Clock and Don't Knock the Rock.",
+"His career ended due to payola scandals, being found guilty of bribery in 1962."
+],
+"funFacts": [
+"Freed's March 1953 concert sold 18,000 tickets for an auditorium with only 9,000 seats, leading to a riot.",
+"By 1954, Freed was making nearly a million dollars a year from his radio show and sponsors.",
+"He appeared in three movies: Don't Knock the Rock, Rock, Rock, Rock, and Rock Around the Clock.",
+"Freed was listed as co-author on Chuck Berry's 'Maybellene' in exchange for promoting the record."
+],
+"media": [
+{"label": "Watch: Alan Freed Introduction", "href": "https://www.youtube.com/watch?v=6HblkQJ7D-c"},
+{"label": "Listen: Alan Freed Radio Show", "href": "https://www.youtube.com/watch?v=Q9b4aZ-1X_0"},
+{"label": "Read More: Alan Freed Biography", "href": "https://rockhall.com/inductees/alan-freed/"}
+]
+}
+],
+"poll": {
+"q": "What term did Alan Freed use to describe rhythm and blues music to make it more appealing to white audiences?",
+"choices": ["Pop music", "Race records", "Rock and roll", "Soul music"],
+"answer": 2
+}
+},
+{
+"id": "10.04",
+"title": "10.04 Cover Versions",
+"headerImage": "https://i.imgur.com/UYkSNXp.png",
+"bullets": [
+"White artists began releasing <b>cover versions</b> of black artists' songs to make them more appropriate for white audiences.",
+"Sexual references in original black versions were muted, modified, or deleted entirely in cover versions.",
+"<b>Pat Boone</b> exemplified the sanitized cover approach with his versions of 'Ain't That a Shame,' 'Long Tall Sally,' and 'Tutti Frutti.'",
+"<b>Bill Haley</b> was one of the first white artists to achieve commercial success with crossover versions of rhythm and blues songs."
+],
+"full": "Teenagers may have loved rhythm and blues lyrics such as 'I got a girl named Sue, she knows just what to do' (from Little Richard's 'Tutti Frutti') and 'You're wearin those dresses, the sun comes shinin' through / I can't believe my eyes, all of this belongs to you' (from Big Joe Turner's 'Shake, Rattle, and Roll'), but parents, record companies, and radio stations were less than impressed. In response, white artists and record companies began releasing cover versions of black artists' songs. In general, a cover version refers to a song that is re-recorded by another artist. During the age of early rock and roll, however, these cover versions had a very specific purpose: to modify black artists' rhythm and blues songs in order to make them more appropriate for white audiences. The sexual references in the original black version were muted, modified, or deleted entirely. Recordings by the squeaky-clean white singer Pat Boone exemplify the goals of early cover versions. Boone's covers of 'Ain't That a Shame' (Fats Domino), 'Long Tall Sally' (Little Richard), and 'Tutti Frutti' (Little Richard) were all more commercially successful than the original black versions. Bill Haley was one of the first white artists to achieve commercial success with crossover versions of rhythm and blues songs. His version of 'Shake, Rattle, and Roll' (1954) was a sanitized version of Big Joe Turner's original, and his recording of 'Rock Around the Clock' (1955) was the first rock-and-roll recording to become a number one hit on the pop charts.",
+"keywords": {
+"Cover version": "A song that is re-recorded by another artist. In the 1950s, these were often sanitized versions of black artists' rhythm and blues songs made for white audiences."
+},
+"deep": [
+{
+"title": "Pat Boone (b. 1934)",
+"image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_04_PatBoone.jpg",
+"altText": "A photo of Pat Boone, the clean-cut singer known for his cover versions of rhythm and blues songs.",
+"bullets": [
+"Born in Jacksonville, Florida, Boone was a clean-cut, white singer who became a teen idol in the 1950s.",
+"His cover versions of rhythm and blues songs were often more commercially successful than the original black versions.",
+"Notable covers include 'Ain't That a Shame' (Fats Domino), 'Long Tall Sally' (Little Richard), and 'Tutti Frutti' (Little Richard).",
+"Boone's versions typically removed or toned down sexual references and made the music more palatable for white audiences.",
+"He had 38 Top 40 hits between 1955 and 1962, making him one of the most successful artists of the era."
+],
+"funFacts": [
+"Pat Boone sold over 45 million records, had 38 Top 40 hits, and appeared in more than 12 Hollywood movies.",
+"He was a descendant of American pioneer Daniel Boone.",
+"In 1957, he was the second biggest charting artist, behind only Elvis Presley.",
+"Boone's version of 'Tutti Frutti' sold over a million copies, while Little Richard's original sold around 500,000."
+]
+},
+{
+"title": "Bill Haley (1925-1981)",
+"image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_04_BillHaley.jpg",
+"altText": "A photo of Bill Haley, one of the first white artists to achieve commercial success with rock and roll.",
+"bullets": [
+"Born in Highland Park, Michigan, Haley was a country and western singer before transitioning to rock and roll.",
+"His band, Bill Haley and His Comets, was one of the first rock and roll groups to achieve mainstream success.",
+"Haley's version of 'Shake, Rattle, and Roll' (1954) was a sanitized version of Big Joe Turner's original.",
+"His recording of 'Rock Around the Clock' (1955) was the first rock-and-roll recording to become a number one hit on the pop charts.",
+"The song gained even more popularity when featured in the 1955 film 'Blackboard Jungle'."
+],
+"funFacts": [
+"'Rock Around the Clock' is often cited as the song that brought rock and roll into mainstream culture worldwide.",
+"Bill Haley was nearly 30 years old when he recorded 'Rock Around the Clock,' making him older than most rock and roll pioneers.",
+"He was one of the first musicians to be inducted into the Rock and Roll Hall of Fame in 1987.",
+"Haley's trademark was his distinctive spit-curl hairstyle, which became his visual signature."
+]
+}
+],
+"thenVsNow": {
+"title": "Cover Versions: Then vs. Now",
+"then": {
+"title": "1950s Covers",
+"description": "In the 1950s, cover versions were primarily used to sanitize black music for white audiences, removing sexual references and making the music more palatable to mainstream tastes.",
+"examples": ["Pat Boone's 'Tutti Frutti'", "Bill Haley's 'Shake, Rattle, and Roll'", "The Crew-Cuts' 'Sh-Boom'"]
+},
+"now": {
+"title": "Modern Covers",
+"description": "Today, cover versions are often artistic reinterpretations or tributes to original works, sometimes completely transforming the song's genre or style.",
+"examples": ["Johnny Cash's 'Hurt' (Nine Inch Nails cover)", "Jeff Buckley's 'Hallelujah' (Leonard Cohen cover)", "Whitney Houston's 'I Will Always Love You' (Dolly Parton cover)"]
+}
+},
+"poll": {
+"q": "What was the primary purpose of cover versions in the 1950s?",
+"choices": ["To pay tribute to original artists", "To make songs more appropriate for white audiences", "To create new musical genres", "To make songs longer for radio play"],
+"answer": 1
+}
+},
+{
+"id": "10.05",
+"title": "10.05 The Rock and Roll Business",
+"headerImage": "https://i.imgur.com/UYkSNXp.png",
+"bullets": [
+"The rise of rock and roll created new business opportunities and challenges for the music industry.",
+"Independent record labels like <b>Chess</b>, <b>Sun</b>, and <b>Specialty</b> played a crucial role in discovering and promoting early rock and roll artists.",
+"The <b>payola scandal</b> of the late 1950s involved disc jockeys accepting bribes to play certain records.",
+"Congressional hearings on payola led to tighter regulations and the decline of many influential disc jockeys like Alan Freed."
+],
+"full": "The rise of rock and roll created new business opportunities and challenges for the music industry. Independent record labels such as Chess, Sun, and Specialty played a crucial role in discovering and promoting early rock and roll artists. These labels were often more willing to take risks on new and unconventional artists than the major labels. The payola scandal of the late 1950s involved disc jockeys accepting bribes to play certain records. Congressional hearings on payola led to tighter regulations and the decline of many influential disc jockeys, including Alan Freed. Despite these challenges, rock and roll continued to grow in popularity, and by the end of the 1950s, it had become the dominant form of popular music in the United States.",
+"keywords": {
+"Payola": "The practice of paying radio stations to play particular songs without disclosing the payment to listeners."
+},
+"deep": [
+{
+"title": "Independent Record Labels",
+"image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_09_ChessRecords.jpg",
+"altText": "The Chess Records building in Chicago, an important independent label for early rock and roll.",
+"bullets": [
+"Chess Records (Chicago): Founded by Leonard and Phil Chess, specialized in blues and R&B. Artists: Chuck Berry, Bo Diddley, Muddy Waters.",
+"Sun Records (Memphis): Founded by Sam Phillips, known for rockabilly and early rock and roll. Artists: Elvis Presley, Jerry Lee Lewis, Carl Perkins, Johnny Cash.",
+"Specialty Records (Los Angeles): Founded by Art Rupe, focused on gospel, R&B, and rock and roll. Artists: Little Richard, Lloyd Price, Larry Williams.",
+"Atlantic Records (New York): Founded by Ahmet Ertegun and Herb Abramson, became a major force in R&B and soul. Artists: Ray Charles, The Coasters, The Drifters."
+],
+"funFacts": [
+"Sam Phillips of Sun Records famously said: 'If I could find a white man who had the Negro sound and the Negro feel, I could make a billion dollars.' He found Elvis Presley.",
+"Chess Records was originally called Aristocrat Records before being renamed in 1950.",
+"Specialty Records owner Art Rupe was known for his keen ear for hit songs and carefully crafted the sound of his recordings.",
+"Atlantic Records began as a small independent label operating out of a hotel room before becoming one of the most successful labels in music history."
+]
+}
+],
+"poll": {
+"q": "What was the name of the scandal involving disc jockeys accepting bribes to play certain records?",
+"choices": ["Watergate scandal", "Payola scandal", "Teapot Dome scandal", "Credit Mobilier scandal"],
+"answer": 1
+}
+},
+{
+"id": "10.06",
+"title": "10.06 Quiz Battle: The Birth of Rock and Roll",
+"headerImage": "https://i.imgur.com/UYkSNXp.png",
+"bullets": [
+"Test your knowledge of the birth of rock and roll with this 10-question quiz battle!",
+"Compete against your classmates to see who can answer the most questions correctly in the shortest time.",
+"Questions cover key artists, technologies, and historical developments from this chapter.",
+"Good luck, and may the best rock historian win!"
+],
+"full": "This quiz battle will test your knowledge of the birth of rock and roll. You'll answer 10 questions covering the key artists, technologies, and historical developments discussed in this chapter. The quiz is timed, so try to answer as quickly as possible while maintaining accuracy. Your score will be based on both correctness and speed. Compete against your classmates to see who can achieve the highest score!",
+"quiz": [
+{
+"q": "Which technology allowed for sound to be recorded, erased, and re-recorded on the same medium?",
+"choices": ["Vinyl records", "Magnetic tape recorder", "Radio broadcasting", "CD technology"],
+"answer": 1
+},
+{
+"q": "What term did Alan Freed use to describe rhythm and blues music to make it more appealing to white audiences?",
+"choices": ["Pop music", "Race records", "Rock and roll", "Soul music"],
+"answer": 2
+},
+{
+"q": "What was the primary purpose of cover versions in the 1950s?",
+"choices": ["To pay tribute to original artists", "To make songs more appropriate for white audiences", "To create new musical genres", "To make songs longer for radio play"],
+"answer": 1
+},
+{
+"q": "What was the name of the scandal involving disc jockeys accepting bribes to play certain records?",
+"choices": ["Watergate scandal", "Payola scandal", "Teapot Dome scandal", "Credit Mobilier scandal"],
+"answer": 1
+},
+{
+"q": "Which radio format played the same forty songs every 24 hours with the top ten receiving the most airplay?",
+"choices": ["Freeform radio", "Top 40", "Album-oriented rock", "Talk radio"],
+"answer": 1
+}
+],
+"deep": []
+}
+];
 
-  async function createNewSession() {
-    sessionId = generateSessionId();
-    sessionDataPath = `sessions/${sessionId}`;
-    
-    await setDoc(doc(db, sessionDataPath, "meta"), {
-      createdAt: new Date(),
-      createdBy: userId,
-      appId: appId
-    });
-    
-    document.getElementById("session-id-display").textContent = sessionId;
-    document.getElementById("session-overlay").classList.add("hidden");
-    document.getElementById("name-entry-overlay").classList.remove("hidden");
-  }
+// --- FIREBASE AUTHENTICATION ---
+async function initAuth() {
+try {
+if (initialAuthToken) {
+await signInWithCustomToken(auth, initialAuthToken);
+} else {
+await signInAnonymously(auth);
+}
+} catch (error) {
+console.error("Auth error:", error);
+}
+}
 
-  async function joinSession() {
-    const inputSessionId = document.getElementById("session-input").value.trim().toUpperCase();
-    if (!inputSessionId) return alert("Please enter a session ID");
-    
-    const sessionDoc = await getDoc(doc(db, `sessions/${inputSessionId}`, "meta"));
-    if (!sessionDoc.exists()) {
-      return alert("Session not found. Please check the ID and try again.");
-    }
-    
-    sessionId = inputSessionId;
-    sessionDataPath = `sessions/${sessionId}`;
-    document.getElementById("session-id-display").textContent = sessionId;
-    document.getElementById("session-overlay").classList.add("hidden");
-    document.getElementById("name-entry-overlay").classList.remove("hidden");
-  }
+onAuthStateChanged(auth, (user) => {
+if (user) {
+userId = user.uid;
+document.getElementById("session-overlay").classList.add("hidden");
+document.getElementById("name-entry-overlay").classList.remove("hidden");
+} else {
+console.log("User signed out");
+}
+});
 
-  async function joinWithName() {
-    const nameInput = document.getElementById("name-input").value.trim();
-    if (!nameInput) return alert("Please enter your name");
-    
-    userName = nameInput;
-    await setDoc(doc(db, sessionDataPath, "users", userId), {
-      name: userName,
-      joinedAt: new Date()
-    });
-    
-    document.getElementById("name-entry-overlay").classList.add("hidden");
-    document.querySelector("header.top").style.display = "block";
-    document.getElementById("main-content").style.display = "block";
-    document.getElementById("qna-fab").style.display = "block";
-    
-    initSlides();
-    initQnaListener();
-    initLeaderboardListener();
-  }
+// --- SESSION MANAGEMENT ---
+function showErrorMessage(message) {
+const errorModal = document.createElement("div");
+errorModal.className = "overlay";
+errorModal.innerHTML = `
+<div class="overlay-card">
+<h3>Error</h3>
+<p>${message}</p>
+<button onclick="this.parentElement.parentElement.remove()" class="read-btn">OK</button>
+</div>
+`;
+document.body.appendChild(errorModal);
+}
 
-  async function joinAnonymously() {
-    userName = "Anonymous";
-    await setDoc(doc(db, sessionDataPath, "users", userId), {
-      name: userName,
-      joinedAt: new Date(),
-      anonymous: true
-    });
-    
-    document.getElementById("name-entry-overlay").classList.add("hidden");
-    document.querySelector("header.top").style.display = "block";
-    document.getElementById("main-content").style.display = "block";
-    document.getElementById("qna-fab").style.display = "block";
-    
-    initSlides();
-    initQnaListener();
-    initLeaderboardListener();
-  }
+function generateSessionId() {
+return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
 
-  // --- SLIDE MANAGEMENT ---
-  function initSlides() {
-    const slidesContainer = document.getElementById("slides");
-    slidesContainer.innerHTML = "";
-    
-    SLIDES.forEach((slideData, index) => {
-      const slideEl = createSlideElement(slideData, index);
-      slidesContainer.appendChild(slideEl);
-    });
-    
-    slidesEls = document.querySelectorAll(".slide");
-    updateSlideMeter();
-    
-    // Set up keyboard navigation
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") nextSlide();
-      if (e.key === "ArrowLeft") prevSlide();
-    });
-  }
+async function createNewSession() {
+sessionId = generateSessionId();
+sessionDataPath = `sessions/${sessionId}`;
 
-  function createSlideElement(slideData, index) {
-    const slideEl = document.createElement("div");
-    slideEl.className = "slide";
-    slideEl.id = `slide-${slideData.id}`;
-    
-    const slideHead = document.createElement("div");
-    slideHead.className = "slide-head";
-    
-    const titleEl = document.createElement("h2");
-    titleEl.textContent = slideData.title;
-    
-    const meterEl = document.createElement("div");
-    meterEl.className = "meter";
-    meterEl.textContent = `${index + 1} of ${SLIDES.length}`;
-    
-    slideHead.appendChild(titleEl);
-    slideHead.appendChild(meterEl);
-    
-    const slideBody = document.createElement("div");
-    
-    if (slideData.headerImage) {
-      const headerImg = document.createElement("img");
-      headerImg.src = slideData.headerImage;
-      headerImg.alt = "";
-      headerImg.style = "width: 100%; border-radius: .4rem; margin-bottom: 1rem;";
-      slideBody.appendChild(headerImg);
-    }
-    
-    if (slideData.bullets && slideData.bullets.length) {
-      const bulletsEl = document.createElement("ul");
-      bulletsEl.className = "bullets";
-      
-      slideData.bullets.forEach(bullet => {
-        const li = document.createElement("li");
-        li.innerHTML = bullet;
-        bulletsEl.appendChild(li);
-      });
-      
-      slideBody.appendChild(bulletsEl);
-    }
-    
-    // Create body with optional aside layout
-    if (slideData.asideImage) {
-      const bodyWithAside = document.createElement("div");
-      bodyWithAside.className = "slide-body-with-aside";
-      
-      const mainContent = document.createElement("div");
-      mainContent.className = "slide-body-main";
-      
-      if (slideData.full) {
-        const fullEl = document.createElement("div");
-        fullEl.className = "full";
-        fullEl.innerHTML = slideData.full;
-        mainContent.appendChild(fullEl);
-      }
-      
-      const asideContent = document.createElement("div");
-      asideContent.className = "slide-body-aside";
-      
-      const asideImg = document.createElement("img");
-      asideImg.src = slideData.asideImage;
-      asideImg.alt = "";
-      asideContent.appendChild(asideImg);
-      
-      bodyWithAside.appendChild(mainContent);
-      bodyWithAside.appendChild(asideContent);
-      
-      slideBody.appendChild(bodyWithAside);
-    } else if (slideData.full) {
-      const fullEl = document.createElement("div");
-      fullEl.className = "full";
-      fullEl.innerHTML = slideData.full;
-      slideBody.appendChild(fullEl);
-    }
-    
-    // Add keywords if present
-    if (slideData.keywords) {
-      const keywordsSection = document.createElement("div");
-      keywordsSection.style.marginTop = "1.5rem";
-      keywordsSection.innerHTML = "<h3>Key Terms</h3>";
-      
-      const keywordsList = document.createElement("ul");
-      keywordsList.className = "keywords-list";
-      
-      for (const [term, description] of Object.entries(slideData.keywords)) {
-        const li = document.createElement("li");
-        li.innerHTML = `<b>${term}:</b> ${description}`;
-        keywordsList.appendChild(li);
-      }
-      
-      keywordsSection.appendChild(keywordsList);
-      slideBody.appendChild(keywordsSection);
-    }
-    
-    // Add interactive sections
-    const interactiveSection = document.createElement("div");
-    interactiveSection.className = "interactive-section";
+await setDoc(doc(db, sessionDataPath, "meta"), {
+createdAt: new Date(),
+createdBy: userId,
+appId: appId
+});
 
-    // Polls
-    if (slideData.poll) {
-      const pollSection = document.createElement("div");
-      pollSection.className = "poll-section";
-      pollSection.id = `poll-${slideData.id}`;
-      pollSection.innerHTML = `<h3>Poll: ${slideData.poll.q}</h3>`;
-      const choicesContainer = document.createElement("div");
-      choicesContainer.className = "poll-choices";
-      
-      slideData.poll.choices.forEach((choice, choiceIndex) => {
-        const pollOption = document.createElement("div");
-        pollOption.className = "poll-option";
-        const choiceBtn = document.createElement("button");
-        choiceBtn.textContent = choice;
-        choiceBtn.onclick = () => submitPoll(slideData.id, choiceIndex);
-        pollOption.appendChild(choiceBtn);
-        pollOption.appendChild(document.createElement("div")).className = "poll-bar";
-        pollOption.appendChild(document.createElement("span")).className = "poll-percent";
-        choicesContainer.appendChild(pollOption);
-      });
-      
-      pollSection.appendChild(choicesContainer);
-      interactiveSection.appendChild(pollSection);
-    }
-    
-    // Then vs Now
-    if (slideData.thenVsNow) {
-      const thenVsNowEl = document.createElement("div");
-      thenVsNowEl.className = "then-vs-now";
-      thenVsNowEl.innerHTML = `<h3>${slideData.thenVsNow.title}</h3>`;
-      
-      const thenCard = document.createElement("div");
-      thenCard.className = "then-vs-now-card";
-      thenCard.innerHTML = `<h4>${slideData.thenVsNow.then.title}</h4><p>${slideData.thenVsNow.then.description}</p>`;
-      const thenList = document.createElement("ul");
-      slideData.thenVsNow.then.examples.forEach(ex => {
-        const li = document.createElement("li");
-        li.textContent = ex;
-        thenList.appendChild(li);
-      });
-      thenCard.appendChild(thenList);
-      
-      const nowCard = document.createElement("div");
-      nowCard.className = "then-vs-now-card";
-      nowCard.innerHTML = `<h4>${slideData.thenVsNow.now.title}</h4><p>${slideData.thenVsNow.now.description}</p>`;
-      const nowList = document.createElement("ul");
-      nowList.className = "keywords-list"; // re-using class to remove bullets
-      slideData.thenVsNow.now.examples.forEach(ex => {
-        const li = document.createElement("li");
-        li.textContent = ex;
-        nowList.appendChild(li);
-      });
-      nowCard.appendChild(nowList);
-      
-      thenVsNowEl.appendChild(thenCard);
-      thenVsNowEl.appendChild(nowCard);
-      
-      interactiveSection.appendChild(thenVsNowEl);
-    }
+document.getElementById("session-id-display").textContent = sessionId;
+document.getElementById("session-overlay").classList.add("hidden");
+document.getElementById("name-entry-overlay").classList.remove("hidden");
+}
 
-    // Quiz Battle
-    if (slideData.quiz) {
-      const quizSection = document.createElement("div");
-      quizSection.className = "quiz-battle-container";
-      quizSection.innerHTML = `
-        <div class="quiz-main">
-          <h3>Quiz Battle</h3>
-          <p>Get ready for a timed quiz! Your score is based on correctness and speed.</p>
-          <button class="nav-btn" id="start-quiz-btn">Start Quiz</button>
-          <div id="quiz-area" style="display:none;">
-            <div id="quiz-timer"></div>
-            <div id="quiz-question-area"></div>
-            <div class="quiz-controls">
-              <button class="nav-btn" id="next-q-btn" style="display:none;">Next Question</button>
-            </div>
-          </div>
-          <div id="quiz-feedback"></div>
-        </div>
-        <div class="leaderboard">
-          <h4>Leaderboard</h4>
-          <ul id="leaderboard-list" class="leaderboard-list"></ul>
-        </div>
-      `;
-      interactiveSection.appendChild(quizSection);
-    }
-    
-    slideBody.appendChild(interactiveSection);
+async function joinSession() {
+const inputSessionId = document.getElementById("session-input").value.trim().toUpperCase();
+if (!inputSessionId) return showErrorMessage("Please enter a session ID");
 
-    // Deep dive button
-    if (slideData.deep && slideData.deep.length > 0) {
-      const deepDiveButton = document.createElement("button");
-      deepDiveButton.className = "read-btn";
-      deepDiveButton.textContent = "Read More...";
-      deepDiveButton.onclick = () => openDeepDive(slideData.id);
-      slideBody.appendChild(deepDiveButton);
-    }
-    
-    slideEl.appendChild(slideHead);
-    slideEl.appendChild(slideBody);
-    
-    const slideNav = document.createElement("div");
-    slideNav.className = "slide-nav";
-    
-    const prevBtn = document.createElement("button");
-    prevBtn.className = "nav-btn";
-    prevBtn.textContent = "Previous";
-    prevBtn.onclick = prevSlide;
-    
-    const nextBtn = document.createElement("button");
-    nextBtn.className = "nav-btn";
-    nextBtn.textContent = "Next";
-    nextBtn.onclick = nextSlide;
-    
-    const homeBtn = document.createElement("button");
-    homeBtn.className = "home-btn";
-    homeBtn.textContent = "Home";
-    homeBtn.onclick = () => showSlide(0);
-    
-    slideNav.appendChild(prevBtn);
-    slideNav.appendChild(homeBtn);
-    slideNav.appendChild(nextBtn);
-    
-    slideEl.appendChild(slideNav);
-    
-    return slideEl;
-  }
-  
-  function updateSlideMeter() {
-    slidesEls.forEach((slide, index) => {
-      const meterEl = slide.querySelector(".meter");
-      if (meterEl) {
-        meterEl.textContent = `${index + 1} of ${SLIDES.length}`;
-      }
-    });
-  }
+const sessionDoc = await getDoc(doc(db, `sessions/${inputSessionId}`, "meta"));
+if (!sessionDoc.exists()) {
+return showErrorMessage("Session not found. Please check the ID and try again.");
+}
 
-  function showSlide(index) {
-    if (index < 0 || index >= SLIDES.length) return;
-    
-    // Hide all slides
-    slidesEls.forEach(slide => slide.style.display = "none");
-    
-    // Show the target slide
-    slidesEls[index].style.display = "block";
-    ix = index;
-    
-    // Handle specific slide logic
-    if (SLIDES[ix].quiz) {
-      initQuiz();
-    }
-  }
+sessionId = inputSessionId;
+sessionDataPath = `sessions/${sessionId}`;
+document.getElementById("session-id-display").textContent = sessionId;
+document.getElementById("session-overlay").classList.add("hidden");
+document.getElementById("name-entry-overlay").classList.remove("hidden");
+}
 
-  function nextSlide() {
-    showSlide(ix + 1);
-  }
+async function joinWithName() {
+const nameInput = document.getElementById("name-input").value.trim();
+if (!nameInput) return showErrorMessage("Please enter your name");
 
-  function prevSlide() {
-    showSlide(ix - 1);
-  }
+userName = nameInput;
+await setDoc(doc(db, sessionDataPath, "users", userId), {
+name: userName,
+joinedAt: new Date()
+});
 
-  // --- MODAL AND DEEP DIVE ---
-  const modal = document.getElementById("modal");
-  const modalClose = document.getElementById("modalClose");
-  const modalTitle = document.getElementById("m-title");
-  const modalBody = document.getElementById("m-body");
-  const scrim = document.getElementById("scrim");
+document.getElementById("name-entry-overlay").classList.add("hidden");
+document.querySelector("header.top").style.display = "block";
+document.getElementById("main-content").style.display = "block";
+document.getElementById("qna-fab").style.display = "block";
 
-  function openModal() {
-    modal.classList.add("active");
-    scrim.classList.add("active");
-    document.body.classList.add("modal-open");
-  }
+initSlides();
+initQnaListener();
+initLeaderboardListener();
+}
 
-  function closeModal() {
-    modal.classList.remove("active");
-    scrim.classList.remove("active");
-    document.body.classList.remove("modal-open");
-    modalBody.innerHTML = "";
-    modalTitle.textContent = "";
-  }
-  
-  modalClose.onclick = closeModal;
-  scrim.onclick = closeModal;
-  
-  async function openDeepDive(slideId) {
-    const slideData = SLIDES.find(s => s.id === slideId);
-    if (!slideData || !slideData.deep || slideData.deep.length === 0) return;
-    
-    const deepData = slideData.deep[0]; // Assuming only one deep dive per slide for now
-    
-    modalTitle.textContent = deepData.title;
-    modalBody.innerHTML = "";
-    modalBody.className = "modal-body split-layout";
-    
-    const imageContainer = document.createElement("div");
-    imageContainer.className = "modal-image-container";
-    const imgEl = document.createElement("img");
-    imgEl.src = deepData.image;
-    imgEl.alt = deepData.altText || "Image related to the topic";
-    imageContainer.appendChild(imgEl);
-    modalBody.appendChild(imageContainer);
-    
-    const textContainer = document.createElement("div");
-    textContainer.className = "modal-text-container";
-    
-    const bulletsList = document.createElement("ul");
-    bulletsList.style.listStyle = "disc";
-    deepData.bullets.forEach(bullet => {
-      const li = document.createElement("li");
-      li.textContent = bullet;
-      bulletsList.appendChild(li);
-    });
-    textContainer.appendChild(bulletsList);
-    
-    if (deepData.funFacts && deepData.funFacts.length > 0) {
-      const funFactsEl = document.createElement("div");
-      funFactsEl.className = "fun-facts";
-      funFactsEl.innerHTML = "<h4>Fun Facts</h4>";
-      const factsList = document.createElement("ul");
-      deepData.funFacts.forEach(fact => {
-        const li = document.createElement("li");
-        li.textContent = fact;
-        factsList.appendChild(li);
-      });
-      funFactsEl.appendChild(factsList);
-      textContainer.appendChild(funFactsEl);
-    }
-    
-    if (deepData.media && deepData.media.length > 0) {
-      const mediaSection = document.createElement("div");
-      mediaSection.innerHTML = "<h4>Media & Further Reading</h4>";
-      const mediaList = document.createElement("ul");
-      mediaList.style.listStyle = "none";
-      mediaList.style.padding = "0";
-      deepData.media.forEach(mediaItem => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = mediaItem.href;
-        a.textContent = mediaItem.label;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        li.appendChild(a);
-        mediaList.appendChild(li);
-      });
-      mediaSection.appendChild(mediaList);
-      textContainer.appendChild(mediaSection);
-    }
-    
-    modalBody.appendChild(textContainer);
-    
-    openModal();
-  }
+async function joinAnonymously() {
+userName = "Anonymous";
+await setDoc(doc(db, sessionDataPath, "users", userId), {
+name: userName,
+joinedAt: new Date(),
+anonymous: true
+});
 
-  // --- Q&A Panel ---
-  const qnaPanel = document.getElementById("qna-panel");
-  const qnaList = document.getElementById("qna-list");
+document.getElementById("name-entry-overlay").classList.add("hidden");
+document.querySelector("header.top").style.display = "block";
+document.getElementById("main-content").style.display = "block";
+document.getElementById("qna-fab").style.display = "block";
 
-  function toggleQnaPanel() {
-    qnaPanel.classList.toggle("active");
-  }
+initSlides();
+initQnaListener();
+initLeaderboardListener();
+}
 
-  async function submitQuestion() {
-    const qnaInput = document.getElementById("qna-input");
-    const question = qnaInput.value.trim();
-    if (!question) return;
+// --- SLIDE MANAGEMENT ---
+function initSlides() {
+const slidesContainer = document.getElementById("slides");
+slidesContainer.innerHTML = "";
 
-    try {
-      await addDoc(collection(db, sessionDataPath, "qna"), {
-        question: question,
-        userId: userId,
-        userName: userName,
-        upvotes: 0,
-        createdAt: new Date()
-      });
-      qnaInput.value = "";
-    } catch (e) {
-      console.error("Error adding question: ", e);
-    }
-  }
+SLIDES.forEach((slideData, index) => {
+const slideEl = createSlideElement(slideData, index);
+slidesContainer.appendChild(slideEl);
+});
 
-  function initQnaListener() {
-    const q = query(collection(db, sessionDataPath, "qna"), orderBy("upvotes", "desc"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (querySnapshot) => {
-      qnaList.innerHTML = "";
-      if (querySnapshot.empty) {
-        const li = document.createElement("li");
-        li.textContent = "No questions yet.";
-        qnaList.appendChild(li);
-        return;
-      }
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <div style="flex:1;">
-            <strong>${data.userName}:</strong> ${data.question}
-          </div>
-          <button class="upvote-btn ${localUpvotes.has(doc.id) ? 'voted' : ''}" data-id="${doc.id}">
-            ▲
-            <span>${data.upvotes}</span>
-          </button>
-        `;
-        qnaList.appendChild(li);
-      });
-      
-      qnaList.querySelectorAll(".upvote-btn").forEach(btn => {
-        btn.onclick = (e) => upvoteQuestion(e.currentTarget.dataset.id);
-      });
-    });
-  }
+slidesEls = document.querySelectorAll(".slide");
+updateSlideMeter();
 
-  async function upvoteQuestion(docId) {
-    if (localUpvotes.has(docId)) {
-      console.log("Already upvoted this question.");
-      return;
-    }
-    
-    localUpvotes.add(docId);
-    
-    try {
-      await updateDoc(doc(db, sessionDataPath, "qna", docId), {
-        upvotes: increment(1)
-      });
-    } catch (e) {
-      console.error("Error upvoting question: ", e);
-      localUpvotes.delete(docId);
-    }
-  }
+// Set up keyboard navigation
+document.addEventListener("keydown", (e) => {
+if (e.key === "ArrowRight") nextSlide();
+if (e.key === "ArrowLeft") prevSlide();
+});
+}
 
-  // --- QUIZ BATTLE ---
-  let quizData = [];
-  let currentQuestionIndex = 0;
-  let quizStartTime = 0;
-  let quizActive = false;
-  let correctAnswers = 0;
-  let currentQuizDocId = null;
+function createSlideElement(slideData, index) {
+const slideEl = document.createElement("div");
+slideEl.className = "slide";
+slideEl.id = `slide-${slideData.id}`;
 
-  async function initQuiz() {
-    const slideData = SLIDES[ix];
-    if (!slideData.quiz) return;
-    
-    quizData = slideData.quiz;
-    currentQuestionIndex = 0;
-    correctAnswers = 0;
-    
-    const startBtn = document.getElementById("start-quiz-btn");
-    const nextBtn = document.getElementById("next-q-btn");
-    const quizArea = document.getElementById("quiz-area");
-    const feedbackEl = document.getElementById("quiz-feedback");
-    
-    if (startBtn) {
-      startBtn.onclick = startQuiz;
-      startBtn.style.display = "block";
-    }
-    quizArea.style.display = "none";
-    nextBtn.style.display = "none";
-    feedbackEl.textContent = "";
-  }
+const slideHead = document.createElement("div");
+slideHead.className = "slide-head";
 
-  async function startQuiz() {
-    const quizDocRef = doc(collection(db, sessionDataPath, "quizzes"));
-    currentQuizDocId = quizDocRef.id;
-    
-    await setDoc(quizDocRef, {
-      userId: userId,
-      userName: userName,
-      startedAt: new Date(),
-      score: 0,
-      answers: {}
-    });
-    
-    document.getElementById("start-quiz-btn").style.display = "none";
-    document.getElementById("quiz-area").style.display = "block";
-    
-    quizActive = true;
-    quizStartTime = Date.now();
-    startQuizTimer();
-    showQuestion();
-  }
+const titleEl = document.createElement("h2");
+titleEl.textContent = slideData.title;
 
-  function startQuizTimer() {
-    const timerEl = document.getElementById("quiz-timer");
-    timerEl.textContent = "00:00";
-    
-    timerInterval = setInterval(() => {
-      const elapsed = Math.floor((Date.now() - quizStartTime) / 1000);
-      const minutes = String(Math.floor(elapsed / 60)).padStart(2, '0');
-      const seconds = String(elapsed % 60).padStart(2, '0');
-      timerEl.textContent = `${minutes}:${seconds}`;
-    }, 1000);
-  }
+const meterEl = document.createElement("div");
+meterEl.className = "meter";
+meterEl.textContent = `${index + 1} of ${SLIDES.length}`;
 
-  function showQuestion() {
-    const qArea = document.getElementById("quiz-question-area");
-    const nextBtn = document.getElementById("next-q-btn");
-    const feedbackEl = document.getElementById("quiz-feedback");
-    
-    qArea.innerHTML = "";
-    feedbackEl.textContent = "";
-    nextBtn.style.display = "none";
-    
-    if (currentQuestionIndex >= quizData.length) {
-      endQuiz();
-      return;
-    }
-    
-    const qData = quizData[currentQuestionIndex];
-    
-    const qEl = document.createElement("div");
-    qEl.className = "q";
-    qEl.innerHTML = `<h4>${currentQuestionIndex + 1}. ${qData.q}</h4>`;
-    
-    const choicesEl = document.createElement("div");
-    choicesEl.className = "choices";
-    
-    qData.choices.forEach((choice, index) => {
-      const choiceBtn = document.createElement("button");
-      choiceBtn.className = "choice-btn";
-      choiceBtn.textContent = choice;
-      choiceBtn.onclick = () => submitAnswer(index);
-      choicesEl.appendChild(choiceBtn);
-    });
-    
-    qEl.appendChild(choicesEl);
-    qArea.appendChild(qEl);
-  }
+slideHead.appendChild(titleEl);
+slideHead.appendChild(meterEl);
 
-  async function submitAnswer(userChoice) {
-    if (!quizActive) return;
-    
-    const qData = quizData[currentQuestionIndex];
-    const isCorrect = userChoice === qData.answer;
-    
-    if (isCorrect) {
-      correctAnswers++;
-    }
-    
-    const choiceButtons = document.querySelectorAll("#quiz-question-area .choice-btn");
-    choiceButtons.forEach((btn, index) => {
-      btn.disabled = true;
-      if (index === qData.answer) {
-        btn.classList.add("correct");
-      } else if (index === userChoice) {
-        btn.classList.add("incorrect");
-      }
-    });
-    
-    const feedbackEl = document.getElementById("quiz-feedback");
-    feedbackEl.textContent = isCorrect ? "Correct!" : "Incorrect!";
-    feedbackEl.style.color = isCorrect ? "#06d6a0" : "#ef476f";
-    
-    // Update Firestore with the answer
-    const answerPath = `answers.q${currentQuestionIndex}`;
-    await updateDoc(doc(db, sessionDataPath, "quizzes", currentQuizDocId), {
-      score: increment(isCorrect ? 1 : 0),
-      [answerPath]: {
-        question: qData.q,
-        userChoice: qData.choices[userChoice],
-        correctAnswer: qData.choices[qData.answer],
-        isCorrect: isCorrect
-      }
-    });
+const slideBody = document.createElement("div");
 
-    // Move to next question after a delay
-    setTimeout(() => {
-      currentQuestionIndex++;
-      showQuestion();
-    }, 1500);
-  }
+if (slideData.headerImage) {
+const headerImg = document.createElement("img");
+headerImg.src = slideData.headerImage;
+headerImg.alt = "";
+headerImg.style = "width: 100%; border-radius: .4rem; margin-bottom: 1rem;";
+slideBody.appendChild(headerImg);
+}
 
-  async function endQuiz() {
-    quizActive = false;
-    clearInterval(timerInterval);
-    
-    const qArea = document.getElementById("quiz-question-area");
-    const feedbackEl = document.getElementById("quiz-feedback");
-    const timerEl = document.getElementById("quiz-timer");
-    
-    qArea.innerHTML = "";
-    feedbackEl.textContent = `Quiz Finished! You got ${correctAnswers} out of ${quizData.length} correct.`;
-    
-    await updateDoc(doc(db, sessionDataPath, "quizzes", currentQuizDocId), {
-      totalScore: correctAnswers,
-      finishedAt: new Date()
-    });
-  }
-  
-  function initLeaderboardListener() {
-    const q = query(collection(db, sessionDataPath, "quizzes"), orderBy("score", "desc"), orderBy("finishedAt"));
-    onSnapshot(q, (querySnapshot) => {
-      const leaderboardList = document.getElementById("leaderboard-list");
-      leaderboardList.innerHTML = "";
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <span class="player-name">${data.userName}</span>
-          <span class="score">${data.score || 0}</span>
-        `;
-        leaderboardList.appendChild(li);
-      });
-    });
-  }
+if (slideData.bullets && slideData.bullets.length) {
+const bulletsEl = document.createElement("ul");
+bulletsEl.className = "bullets";
 
-  // --- POLLS ---
-  async function submitPoll(slideId, choiceIndex) {
-    const pollId = `poll-${slideId}`;
-    const pollRef = doc(db, sessionDataPath, "polls", pollId);
-    
-    const choicePath = `choices.c${choiceIndex}`;
-    
-    try {
-      const pollDoc = await getDoc(pollRef);
-      if (pollDoc.exists()) {
-        const data = pollDoc.data();
-        if (data.voters && data.voters[userId]) {
-          console.log("User already voted on this poll.");
-          return;
-        }
-      }
-      
-      const updateData = {
-        [choicePath]: increment(1),
-        [`voters.${userId}`]: true
-      };
-      
-      await setDoc(pollRef, updateData, { merge: true });
-      
-    } catch (e) {
-      console.error("Error submitting poll vote: ", e);
-    }
-  }
+slideData.bullets.forEach(bullet => {
+const li = document.createElement("li");
+li.innerHTML = bullet;
+bulletsEl.appendChild(li);
+});
 
-  function initPollListener() {
-    SLIDES.forEach(slide => {
-      if (slide.poll) {
-        const pollId = `poll-${slide.id}`;
-        const pollRef = doc(db, sessionDataPath, "polls", pollId);
-        onSnapshot(pollRef, (docSnap) => {
-          if (!docSnap.exists()) return;
-          
-          const data = docSnap.data();
-          const totalVotes = Object.values(data.choices || {}).reduce((a, b) => a + b, 0);
-          const pollContainer = document.getElementById(pollId);
-          if (!pollContainer) return;
+slideBody.appendChild(bulletsEl);
+}
 
-          const pollOptions = pollContainer.querySelectorAll(".poll-option");
-          
-          pollOptions.forEach((option, index) => {
-            const votes = data.choices && data.choices[`c${index}`] ? data.choices[`c${index}`] : 0;
-            const percent = totalVotes > 0 ? (votes / totalVotes) * 100 : 0;
-            
-            const bar = option.querySelector(".poll-bar");
-            bar.style.width = `${percent}%`;
-            
-            const percentageText = option.querySelector(".poll-percent");
-            percentageText.textContent = `${Math.round(percent)}%`;
+// Create body with optional aside layout
+if (slideData.asideImage) {
+const bodyWithAside = document.createElement("div");
+bodyWithAside.className = "slide-body-with-aside";
 
-            const button = option.querySelector("button");
-            
-            if (data.voters && data.voters[userId]) {
-              button.disabled = true;
-              if (index === slide.poll.answer) {
-                  option.classList.add("correct-answer");
-              } else if (data.votedFor && data.votedFor[userId] === index) {
-                  option.classList.add("incorrect-answer");
-              }
-            }
-          });
-        });
-      }
-    });
-  }
-  
-  // --- ACCESSIBILITY ---
-  const contrastBtn = document.getElementById("contrast-toggle-btn");
-  contrastBtn.onclick = () => {
-    document.body.classList.toggle("high-contrast-mode");
-  };
+const mainContent = document.createElement("div");
+mainContent.className = "slide-body-main";
 
-  // --- STARTUP ---
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("join-session-btn").onclick = joinSession;
-    document.getElementById("start-session-btn").onclick = createNewSession;
-    document.getElementById("join-btn").onclick = joinWithName;
-    document.getElementById("join-anonymously").onclick = joinAnonymously;
-    
-    initAuth();
-  });
+if (slideData.full) {
+const fullEl = document.createElement("div");
+fullEl.className = "full";
+fullEl.innerHTML = slideData.full;
+mainContent.appendChild(fullEl);
+}
+
+const asideContent = document.createElement("div");
+asideContent.className = "slide-body-aside";
+
+const asideImg = document.createElement("img");
+asideImg.src = slideData.asideImage;
+asideImg.alt = "";
+asideContent.appendChild(asideImg);
+
+bodyWithAside.appendChild(mainContent);
+bodyWithAside.appendChild(asideContent);
+
+slideBody.appendChild(bodyWithAside);
+} else if (slideData.full) {
+const fullEl = document.createElement("div");
+fullEl.className = "full";
+fullEl.innerHTML = slideData.full;
+slideBody.appendChild(fullEl);
+}
+
+// Add keywords if present
+if (slideData.keywords) {
+const keywordsSection = document.createElement("div");
+keywordsSection.style.marginTop = "1.5rem";
+keywordsSection.innerHTML = "<h3>Key Terms</h3>";
+
+const keywordsList = document.createElement("ul");
+keywordsList.className = "keywords-list";
+
+for (const [term, description] of Object.entries(slideData.keywords)) {
+const li = document.createElement("li");
+li.innerHTML = `<b>${term}:</b> ${description}`;
+keywordsList.appendChild(li);
+}
+
+keywordsSection.appendChild(keywordsList);
+slideBody.appendChild(keywordsSection);
+}
+
+// Add interactive sections
+const interactiveSection = document.createElement("div");
+interactiveSection.className = "interactive-section";
+
+// Polls
+if (slideData.poll) {
+const pollSection = document.createElement("div");
+pollSection.className = "poll-section";
+pollSection.id = `poll-${slideData.id}`;
+pollSection.innerHTML = `<h3>Poll: ${slideData.poll.q}</h3>`;
+const choicesContainer = document.createElement("div");
+choicesContainer.className = "poll-choices";
+
+slideData.poll.choices.forEach((choice, choiceIndex) => {
+const pollOption = document.createElement("div");
+pollOption.className = "poll-option";
+const choiceBtn = document.createElement("button");
+choiceBtn.textContent = choice;
+choiceBtn.onclick = () => submitPoll(slideData.id, choiceIndex);
+pollOption.appendChild(choiceBtn);
+pollOption.appendChild(document.createElement("div")).className = "poll-bar";
+pollOption.appendChild(document.createElement("span")).className = "poll-percent";
+choicesContainer.appendChild(pollOption);
+});
+
+pollSection.appendChild(choicesContainer);
+interactiveSection.appendChild(pollSection);
+}
+
+// Then vs Now
+if (slideData.thenVsNow) {
+const thenVsNowEl = document.createElement("div");
+thenVsNowEl.className = "then-vs-now";
+thenVsNowEl.innerHTML = `<h3>${slideData.thenVsNow.title}</h3>`;
+
+const thenCard = document.createElement("div");
+thenCard.className = "then-vs-now-card";
+thenCard.innerHTML = `<h4>${slideData.thenVsNow.then.title}</h4><p>${slideData.thenVsNow.then.description}</p>`;
+const thenList = document.createElement("ul");
+slideData.thenVsNow.then.examples.forEach(ex => {
+const li = document.createElement("li");
+li.textContent = ex;
+thenList.appendChild(li);
+});
+thenCard.appendChild(thenList);
+
+const nowCard = document.createElement("div");
+nowCard.className = "then-vs-now-card";
+nowCard.innerHTML = `<h4>${slideData.thenVsNow.now.title}</h4><p>${slideData.thenVsNow.now.description}</p>`;
+const nowList = document.createElement("ul");
+nowList.className = "keywords-list"; // re-using class to remove bullets
+slideData.thenVsNow.now.examples.forEach(ex => {
+const li = document.createElement("li");
+li.textContent = ex;
+nowList.appendChild(li);
+});
+nowCard.appendChild(nowList);
+
+thenVsNowEl.appendChild(thenCard);
+thenVsNowEl.appendChild(nowCard);
+
+interactiveSection.appendChild(thenVsNowEl);
+}
+
+// Quiz Battle
+if (slideData.quiz) {
+const quizSection = document.createElement("div");
+quizSection.className = "quiz-battle-container";
+quizSection.innerHTML = `
+<div class="quiz-main">
+<h3>Quiz Battle</h3>
+<p>Get ready for a timed quiz! Your score is based on correctness and speed.</p>
+<button class="nav-btn" id="start-quiz-btn">Start Quiz</button>
+<div id="quiz-area" style="display:none;">
+<div id="quiz-timer"></div>
+<div id="quiz-question-area"></div>
+<div class="quiz-controls">
+<button class="nav-btn" id="next-q-btn" style="display:none;">Next Question</button>
+</div>
+</div>
+<div id="quiz-feedback"></div>
+</div>
+<div class="leaderboard">
+<h4>Leaderboard</h4>
+<ul id="leaderboard-list" class="leaderboard-list"></ul>
+</div>
+`;
+interactiveSection.appendChild(quizSection);
+}
+
+slideBody.appendChild(interactiveSection);
+
+// Deep dive button
+if (slideData.deep && slideData.deep.length > 0) {
+const deepDiveButton = document.createElement("button");
+deepDiveButton.className = "read-btn";
+deepDiveButton.textContent = "Read More...";
+deepDiveButton.onclick = () => openDeepDive(slideData.id);
+slideBody.appendChild(deepDiveButton);
+}
+
+slideEl.appendChild(slideHead);
+slideEl.appendChild(slideBody);
+
+const slideNav = document.createElement("div");
+slideNav.className = "slide-nav";
+
+const prevBtn = document.createElement("button");
+prevBtn.className = "nav-btn";
+prevBtn.textContent = "Previous";
+prevBtn.onclick = prevSlide;
+
+const nextBtn = document.createElement("button");
+nextBtn.className = "nav-btn";
+nextBtn.textContent = "Next";
+nextBtn.onclick = nextSlide;
+
+const homeBtn = document.createElement("button");
+homeBtn.className = "home-btn";
+homeBtn.textContent = "Home";
+homeBtn.onclick = () => showSlide(0);
+
+slideNav.appendChild(prevBtn);
+slideNav.appendChild(homeBtn);
+slideNav.appendChild(nextBtn);
+
+slideEl.appendChild(slideNav);
+
+return slideEl;
+}
+
+function updateSlideMeter() {
+slidesEls.forEach((slide, index) => {
+const meterEl = slide.querySelector(".meter");
+if (meterEl) {
+meterEl.textContent = `${index + 1} of ${SLIDES.length}`;
+}
+});
+}
+
+function showSlide(index) {
+if (index < 0 || index >= SLIDES.length) return;
+
+// Hide all slides
+slidesEls.forEach(slide => slide.style.display = "none");
+
+// Show the target slide
+slidesEls[index].style.display = "block";
+ix = index;
+
+// Handle specific slide logic
+if (SLIDES[ix].quiz) {
+initQuiz();
+}
+}
+
+function nextSlide() {
+showSlide(ix + 1);
+}
+
+function prevSlide() {
+showSlide(ix - 1);
+}
+
+// --- MODAL AND DEEP DIVE ---
+const modal = document.getElementById("modal");
+const modalClose = document.getElementById("modalClose");
+const modalTitle = document.getElementById("m-title");
+const modalBody = document.getElementById("m-body");
+const scrim = document.getElementById("scrim");
+
+function openModal() {
+modal.classList.add("active");
+scrim.classList.add("active");
+document.body.classList.add("modal-open");
+}
+
+function closeModal() {
+modal.classList.remove("active");
+scrim.classList.remove("active");
+document.body.classList.remove("modal-open");
+modalBody.innerHTML = "";
+modalTitle.textContent = "";
+}
+
+modalClose.onclick = closeModal;
+scrim.onclick = closeModal;
+
+async function openDeepDive(slideId) {
+const slideData = SLIDES.find(s => s.id === slideId);
+if (!slideData || !slideData.deep || slideData.deep.length === 0) return;
+
+const deepData = slideData.deep[0]; // Assuming only one deep dive per slide for now
+
+modalTitle.textContent = deepData.title;
+modalBody.innerHTML = "";
+modalBody.className = "modal-body split-layout";
+
+const imageContainer = document.createElement("div");
+imageContainer.className = "modal-image-container";
+const imgEl = document.createElement("img");
+imgEl.src = deepData.image;
+imgEl.alt = deepData.altText || "Image related to the topic";
+imageContainer.appendChild(imgEl);
+modalBody.appendChild(imageContainer);
+
+const textContainer = document.createElement("div");
+textContainer.className = "modal-text-container";
+
+const bulletsList = document.createElement("ul");
+bulletsList.style.listStyle = "disc";
+deepData.bullets.forEach(bullet => {
+const li = document.createElement("li");
+li.textContent = bullet;
+bulletsList.appendChild(li);
+});
+textContainer.appendChild(bulletsList);
+
+if (deepData.funFacts && deepData.funFacts.length > 0) {
+const funFactsEl = document.createElement("div");
+funFactsEl.className = "fun-facts";
+funFactsEl.innerHTML = "<h4>Fun Facts</h4>";
+const factsList = document.createElement("ul");
+deepData.funFacts.forEach(fact => {
+const li = document.createElement("li");
+li.textContent = fact;
+factsList.appendChild(li);
+});
+funFactsEl.appendChild(factsList);
+textContainer.appendChild(funFactsEl);
+}
+
+if (deepData.media && deepData.media.length > 0) {
+const mediaSection = document.createElement("div");
+mediaSection.innerHTML = "<h4>Media & Further Reading</h4>";
+const mediaList = document.createElement("ul");
+mediaList.style.listStyle = "none";
+mediaList.style.padding = "0";
+deepData.media.forEach(mediaItem => {
+const li = document.createElement("li");
+const a = document.createElement("a");
+a.href = mediaItem.href;
+a.textContent = mediaItem.label;
+a.target = "_blank";
+a.rel = "noopener noreferrer";
+li.appendChild(a);
+mediaList.appendChild(li);
+});
+mediaSection.appendChild(mediaList);
+textContainer.appendChild(mediaSection);
+}
+
+modalBody.appendChild(textContainer);
+
+openModal();
+}
+
+// --- Q&A Panel ---
+const qnaPanel = document.getElementById("qna-panel");
+const qnaList = document.getElementById("qna-list");
+
+function toggleQnaPanel() {
+qnaPanel.classList.toggle("active");
+}
+
+async function submitQuestion() {
+const qnaInput = document.getElementById("qna-input");
+const question = qnaInput.value.trim();
+if (!question) return;
+
+try {
+await addDoc(collection(db, sessionDataPath, "qna"), {
+question: question,
+userId: userId,
+userName: userName,
+upvotes: 0,
+createdAt: new Date()
+});
+qnaInput.value = "";
+} catch (e) {
+console.error("Error adding question: ", e);
+}
+}
+
+function initQnaListener() {
+const q = query(collection(db, sessionDataPath, "qna"), orderBy("upvotes", "desc"), orderBy("createdAt", "desc"));
+onSnapshot(q, (querySnapshot) => {
+qnaList.innerHTML = "";
+if (querySnapshot.empty) {
+const li = document.createElement("li");
+li.textContent = "No questions yet.";
+qnaList.appendChild(li);
+return;
+}
+querySnapshot.forEach((doc) => {
+const data = doc.data();
+const li = document.createElement("li");
+li.innerHTML = `
+<div style="flex:1;">
+<strong>${data.userName}:</strong> ${data.question}
+</div>
+<button class="upvote-btn ${localUpvotes.has(doc.id) ? 'voted' : ''}" data-id="${doc.id}">
+▲
+<span>${data.upvotes}</span>
+</button>
+`;
+qnaList.appendChild(li);
+});
+
+qnaList.querySelectorAll(".upvote-btn").forEach(btn => {
+btn.onclick = (e) => upvoteQuestion(e.currentTarget.dataset.id);
+});
+});
+}
+
+async function upvoteQuestion(docId) {
+if (localUpvotes.has(docId)) {
+console.log("Already upvoted this question.");
+return;
+}
+
+localUpvotes.add(docId);
+
+try {
+await updateDoc(doc(db, sessionDataPath, "qna", docId), {
+upvotes: increment(1)
+});
+} catch (e) {
+console.error("Error upvoting question: ", e);
+localUpvotes.delete(docId);
+}
+}
+
+// --- QUIZ BATTLE ---
+let quizData = [];
+let currentQuestionIndex = 0;
+let quizStartTime = 0;
+let quizActive = false;
+let correctAnswers = 0;
+let currentQuizDocId = null;
+
+async function initQuiz() {
+const slideData = SLIDES[ix];
+if (!slideData.quiz) return;
+
+quizData = slideData.quiz;
+currentQuestionIndex = 0;
+correctAnswers = 0;
+
+const startBtn = document.getElementById("start-quiz-btn");
+const nextBtn = document.getElementById("next-q-btn");
+const quizArea = document.getElementById("quiz-area");
+const feedbackEl = document.getElementById("quiz-feedback");
+
+if (startBtn) {
+startBtn.onclick = startQuiz;
+startBtn.style.display = "block";
+}
+quizArea.style.display = "none";
+nextBtn.style.display = "none";
+feedbackEl.textContent = "";
+}
+
+async function startQuiz() {
+if (!sessionDataPath) {
+return showErrorMessage("Please join a session before starting the quiz.");
+}
+const quizDocRef = doc(collection(db, sessionDataPath, "quizzes"));
+currentQuizDocId = quizDocRef.id;
+
+await setDoc(quizDocRef, {
+userId: userId,
+userName: userName,
+startedAt: new Date(),
+score: 0,
+answers: {}
+});
+
+document.getElementById("start-quiz-btn").style.display = "none";
+document.getElementById("quiz-area").style.display = "block";
+
+quizActive = true;
+quizStartTime = Date.now();
+startQuizTimer();
+showQuestion();
+}
+
+function startQuizTimer() {
+const timerEl = document.getElementById("quiz-timer");
+timerEl.textContent = "00:00";
+
+timerInterval = setInterval(() => {
+const elapsed = Math.floor((Date.now() - quizStartTime) / 1000);
+const minutes = String(Math.floor(elapsed / 60)).padStart(2, '0');
+const seconds = String(elapsed % 60).padStart(2, '0');
+timerEl.textContent = `${minutes}:${seconds}`;
+}, 1000);
+}
+
+function showQuestion() {
+const qArea = document.getElementById("quiz-question-area");
+const nextBtn = document.getElementById("next-q-btn");
+const feedbackEl = document.getElementById("quiz-feedback");
+
+qArea.innerHTML = "";
+feedbackEl.textContent = "";
+nextBtn.style.display = "none";
+
+if (currentQuestionIndex >= quizData.length) {
+endQuiz();
+return;
+}
+
+const qData = quizData[currentQuestionIndex];
+
+const qEl = document.createElement("div");
+qEl.className = "q";
+qEl.innerHTML = `<h4>${currentQuestionIndex + 1}. ${qData.q}</h4>`;
+
+const choicesEl = document.createElement("div");
+choicesEl.className = "choices";
+
+qData.choices.forEach((choice, index) => {
+const choiceBtn = document.createElement("button");
+choiceBtn.className = "choice-btn";
+choiceBtn.textContent = choice;
+choiceBtn.onclick = () => submitAnswer(index);
+choicesEl.appendChild(choiceBtn);
+});
+
+qEl.appendChild(choicesEl);
+qArea.appendChild(qEl);
+}
+
+async function submitAnswer(userChoice) {
+if (!quizActive) return;
+
+const qData = quizData[currentQuestionIndex];
+const isCorrect = userChoice === qData.answer;
+
+if (isCorrect) {
+correctAnswers++;
+}
+
+const choiceButtons = document.querySelectorAll("#quiz-question-area .choice-btn");
+choiceButtons.forEach((btn, index) => {
+btn.disabled = true;
+if (index === qData.answer) {
+btn.classList.add("correct");
+} else if (index === userChoice) {
+btn.classList.add("incorrect");
+}
+});
+
+const feedbackEl = document.getElementById("quiz-feedback");
+feedbackEl.textContent = isCorrect ? "Correct!" : "Incorrect!";
+feedbackEl.style.color = isCorrect ? "#06d6a0" : "#ef476f";
+
+// Update Firestore with the answer
+const answerPath = `answers.q${currentQuestionIndex}`;
+await updateDoc(doc(db, sessionDataPath, "quizzes", currentQuizDocId), {
+score: increment(isCorrect ? 1 : 0),
+[answerPath]: {
+question: qData.q,
+userChoice: qData.choices[userChoice],
+correctAnswer: qData.choices[qData.answer],
+isCorrect: isCorrect
+}
+});
+
+// Move to next question after a delay
+setTimeout(() => {
+currentQuestionIndex++;
+showQuestion();
+}, 1500);
+}
+
+async function endQuiz() {
+quizActive = false;
+clearInterval(timerInterval);
+
+const qArea = document.getElementById("quiz-question-area");
+const feedbackEl = document.getElementById("quiz-feedback");
+const timerEl = document.getElementById("quiz-timer");
+
+qArea.innerHTML = "";
+feedbackEl.textContent = `Quiz Finished! You got ${correctAnswers} out of ${quizData.length} correct.`;
+
+await updateDoc(doc(db, sessionDataPath, "quizzes", currentQuizDocId), {
+totalScore: correctAnswers,
+finishedAt: new Date()
+});
+}
+
+function initLeaderboardListener() {
+if (!sessionDataPath) return; // Prevent listener from running if no session is active
+const q = query(collection(db, sessionDataPath, "quizzes"), orderBy("score", "desc"), orderBy("finishedAt"));
+onSnapshot(q, (querySnapshot) => {
+const leaderboardList = document.getElementById("leaderboard-list");
+leaderboardList.innerHTML = "";
+querySnapshot.forEach((doc) => {
+const data = doc.data();
+const li = document.createElement("li");
+li.innerHTML = `
+<span class="player-name">${data.userName}</span>
+<span class="score">${data.score || 0}</span>
+`;
+leaderboardList.appendChild(li);
+});
+});
+}
+
+// --- POLLS ---
+async function submitPoll(slideId, choiceIndex) {
+const pollId = `poll-${slideId}`;
+const pollRef = doc(db, sessionDataPath, "polls", pollId);
+
+const choicePath = `choices.c${choiceIndex}`;
+
+try {
+const pollDoc = await getDoc(pollRef);
+if (pollDoc.exists()) {
+const data = pollDoc.data();
+if (data.voters && data.voters[userId]) {
+console.log("User already voted on this poll.");
+return;
+}
+}
+
+const updateData = {
+[choicePath]: increment(1),
+[`voters.${userId}`]: true
+};
+
+await setDoc(pollRef, updateData, { merge: true });
+
+} catch (e) {
+console.error("Error submitting poll vote: ", e);
+}
+}
+
+function initPollListener() {
+if (!sessionDataPath) return; // Prevent listener from running if no session is active
+SLIDES.forEach(slide => {
+if (slide.poll) {
+const pollId = `poll-${slide.id}`;
+const pollRef = doc(db, sessionDataPath, "polls", pollId);
+onSnapshot(pollRef, (docSnap) => {
+if (!docSnap.exists()) return;
+
+const data = docSnap.data();
+const totalVotes = Object.values(data.choices || {}).reduce((a, b) => a + b, 0);
+const pollContainer = document.getElementById(pollId);
+if (!pollContainer) return;
+
+const pollOptions = pollContainer.querySelectorAll(".poll-option");
+
+pollOptions.forEach((option, index) => {
+const votes = data.choices && data.choices[`c${index}`] ? data.choices[`c${index}`] : 0;
+const percent = totalVotes > 0 ? (votes / totalVotes) * 100 : 0;
+
+const bar = option.querySelector(".poll-bar");
+bar.style.width = `${percent}%`;
+
+const percentageText = option.querySelector(".poll-percent");
+percentageText.textContent = `${Math.round(percent)}%`;
+
+const button = option.querySelector("button");
+
+if (data.voters && data.voters[userId]) {
+button.disabled = true;
+if (index === slide.poll.answer) {
+option.classList.add("correct-answer");
+} else if (data.votedFor && data.votedFor[userId] === index) {
+option.classList.add("incorrect-answer");
+}
+}
+});
+});
+}
+});
+}
+
+// --- ACCESSIBILITY ---
+const contrastBtn = document.getElementById("contrast-toggle-btn");
+contrastBtn.onclick = () => {
+document.body.classList.toggle("high-contrast-mode");
+};
+
+// --- STARTUP ---
+document.addEventListener("DOMContentLoaded", () => {
+document.getElementById("join-session-btn").onclick = joinSession;
+document.getElementById("start-session-btn").onclick = createNewSession;
+document.getElementById("join-btn").onclick = joinWithName;
+document.getElementById("join-anonymously").onclick = joinAnonymously;
+
+initAuth();
+});
 </script>
 </body>
 </html>
