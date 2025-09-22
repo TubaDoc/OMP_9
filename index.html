@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Lesson 9 — Doo-Wop and Rhythm and Blues</title>
+<title>Lesson 10: Early Rock and Roll</title>
 <style>
   :root{--bg:#0e0f12;--ink:#e8ebf0;--muted:#b6bdc9;--card:#161821;--line:#262a35;--brand:#59d0ff;--accent:#ffd166}
   html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'Segoe UI',system-ui,Roboto,sans-serif}
@@ -124,6 +124,24 @@
   .overlay-card button{width:100%;margin-bottom:.5rem}
   .overlay-card hr{border-color:var(--line);margin:1rem 0}
 
+  /* --- New 'Sparkle' Feature Styles --- */
+  .fun-facts { margin-top: 1rem; padding: 1rem; background: rgba(255, 209, 102, .05); border-left: 4px solid var(--accent); border-radius: .25rem; }
+  .fun-facts p { margin: .25rem 0; }
+  .fun-facts ul {padding-left: 1.2rem; margin: .5rem 0;}
+
+  .then-vs-now { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
+  .then-vs-now-card { flex: 1; min-width: 250px; background: #131622; border: 1px solid var(--line); padding: 1rem; border-radius: .45rem; }
+  .then-vs-now-card h4 { margin-top: 0; color: var(--ink); }
+  .then-vs-now-card audio { width: 100%; margin-top: .5rem; }
+  .lyrics-content { white-space: pre-wrap; background: #0e0f12; padding: 1rem; border-radius: .45rem; margin-top: .5rem; }
+
+  #build-a-verse-container { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .bav-col { flex: 1; min-width: 280px; }
+  .bav-cloud { min-height: 150px; border: 1px solid var(--line); border-radius: .45rem; padding: .5rem; display:flex; flex-wrap:wrap; gap: .25rem .5rem; align-items:center; justify-content:center; }
+  .bav-cloud span { padding: .1rem .3rem; }
+  #bav-result { margin-top: 1rem; font-family: 'Courier New', Courier, monospace; background: #131622; padding: 1rem; border-radius: .45rem; white-space: pre-wrap; }
+  .audio-player-container button { margin-right: .5rem;}
+  
   /* --- Accessibility Additions --- */
   #accessibility-controls {
     position: fixed;
@@ -144,7 +162,7 @@
   .read-aloud-btn {
     background: #233046;
     color: #e8ebf0;
-    border: 1px solid #262a35;
+    border: 1px solid var(--line);
     padding: .3rem .6rem;
     border-radius: .45rem;
     cursor: pointer;
@@ -183,7 +201,7 @@
 
   <header class="top" id="main-header">
     <div class="app brand">
-      <h1>Lesson 9: Doo-Wop and Rhythm and Blues</h1>
+      <h1>Lesson 10: Early Rock and Roll</h1>
       <small>Use Next/Previous or ← → keys. Session ID: <b id="session-id-display"></b></small>
     </div>
   </header>
@@ -241,14 +259,15 @@
 
 <script type="module">
   // --- IMPORTS AND CONFIG ---
+  // You must replace these with your actual Firebase project configuration.
   const firebaseConfig = {
-    apiKey: "AIzaSyDxpDj0axohHIFfRQ53NLWBQbf_yI2lJo0",
-    authDomain: "interactive-lecture-app.firebaseapp.com",
-    projectId: "interactive-lecture-app",
-    storageBucket: "interactive-lecture-app.firebasestorage.app",
-    messagingSenderId: "47230608512",
-    appId: "1:47230608512:web:ba649a4a9ba16cef1df265",
-    measurementId: "G-NDLP7MWFH9"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+    // measurementId: "YOUR_MEASUREMENT_ID" // Optional
   };
   const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
   const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
@@ -272,6 +291,7 @@
   let slidesEls;
   let timerInterval = null;
   let timerStartTimeout = null;
+  let audioContext, mainGainNode, oscillator, isPlayingBlues = false;
   
   // ==================================================================
   // --- LESSON CONTENT ---
@@ -279,348 +299,297 @@
   
   const SLIDES = [
     {
-        "id": "9.00",
-        "title": "Lesson 9: Doo-Wop and Rhythm and Blues",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "bullets": [],
-        "full": `<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;"><iframe title="vimeo-player" src="https://player.vimeo.com/video/762001491?h=fe0c5db381" width="100%" height="100%" frameborder="0" style="position: absolute; top: 0; left: 0;" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>`,
-        "deep": []
+      "id": "10.00",
+      "title": "Lesson 10: Early Rock and Roll",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "bullets": [
+        "In the early 1950s, various musical genres merged to create rock and roll.",
+        "Artists like Ray Charles, Chuck Berry, and Fats Domino had some of the first crossover hits.",
+        "New technology, hybrid musical forms, and changes in music consumption patterns all contributed to a permanent shift in American popular music."
+      ],
+      "full": `
+        <div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem;'>
+          <iframe title='vimeo-player' src='https://player.vimeo.com/video/762001582?h=37c83ffa80' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allow='autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share' allowfullscreen></iframe>
+        </div>
+        <p>In the early 1950s, many different musical threads came together to create the earliest rock and roll. Soon, white artists such as Bill Haley and the Comets and Pat Boone began recording cover versions of black artists’ songs, most of which were more commercially successful than their black counterparts. Changes in technology, new and hybrid musical forms, and shifts in music consumption patterns all contributed to a reworking of the American popular music landscape that would forever alter the history of popular music consumption in the United States.</p>
+      `,
+      "deep": []
     },
     {
-        "id": "9.01",
-        "title": "9.01 Introduction",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "bullets": [
-            "In the 1940s and 1950s, while mainstream white audiences listened to traditional pop, Black audiences enjoyed gospel, doo-wop, and rhythm and blues.",
-            "These genres, rooted in blues and jazz, were categorized by record companies as 'race records' and later as 'rhythm and blues'.",
-            "This music began reaching white audiences due to technological advances like radio, which had no 'color lines'."
-        ],
-        "full": "While white audiences were listening to the sounds of Frank Sinatra, Patti Page, and Perry Como in the 1940s and 1950s, black listeners were consuming gospel music, doo-wop, and rhythm and blues. Although all of these genres are related to earlier styles of African American music, such as the blues, ragtime, and jazz, they all have specific features that make them unique. These sacred and secular genres were lumped together by record companies, first on race records and then on rhythm and blues, which was the new industry label for music that was created by and marketed to blacks. Technological advances in recording and broadcasting made it easier and easier to access music. As we will see, there were no color lines on the radio, which meant that white listeners began listening to rhythm and blues.",
-        "deep": []
-    },
-    {
-        "id": "9.02",
-        "title": "9.02 Gospel Music",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "asideImage": "https://i.imgur.com/pzOs3KD.jpeg",
-         "bullets": [
-            "During the <b>Great Migration</b>, churches became essential community centers for African Americans moving to the urban North.",
-            "<b>Gospel Music</b>, the soundtrack for these churches, featured instrumental accompaniment, improvisation, and call and response.",
-            "It was influenced by the <b>Holiness-Pentecostal Movement</b>, which encouraged enthusiastic congregational participation.",
-            "Gospel singing often features <b>melisma</b>, a technique where a singer performs many different pitches on a single syllable of text."
-        ],
-        "full": "During the Great Migration, many African Americans moved from the rural South to the urban North. As people sought new community, churches became essential centers, and their soundtrack was gospel music. Gospel was almost always performed with instrumental accompaniment like piano or organ, and later guitars and drums. It borrowed from popular music forms and was influenced by religious movements like the Holiness-Pentecostal movement, which encouraged enthusiastic congregational participation and expression. A common vocal feature is the melisma, where a single syllable of text is sung over many different pitches. The father of traditional gospel is Thomas A. Dorsey, who blended blues and jazz idioms with sacred lyrics. His music was initially rejected by some churches for its secular sound but became so popular that new gospel songs were often called 'Dorseys'. He and singer Mahalia Jackson promoted his music on street corners, and his song 'Precious Lord, Take My Hand' became an anthem of the Civil Rights Movement.",
-        "keywords": {
-            "Great Migration": "A period during the early twentieth century when many African Americans moved from the rural South to the urban North in search of better work and quality of life.",
-            "Gospel Music": "Black sacred music that included instrumental accompaniment, borrowed from popular music and hymns, and contained melodies intended for improvisation.",
-            "Holiness-Pentecostal movement": "A movement in American Christianity that encouraged congregational participation and expression and eschewed polished performance styles.",
-            "Melisma": "Many notes sung to a single syllable of text."
-        },
-        "deep": [
-              {
-                "title": "Thomas A. Dorsey (1899-1993)",
-                "image": "https://i.imgur.com/smPGy0i.jpeg",
-                "altText": "A black and white photo of Thomas A. Dorsey, the father of black gospel music, sitting at a piano.",
-                "bullets": [
-                    "Began his career as a blues pianist known as “Georgia Tom.”",
-                    "Combined the energy of blues/jazz with sacred lyrics and an ecstatic singing style.",
-                    "His style was initially rejected by churches for its secular sound, being called 'the devil’s music'.",
-                    "Promoted his music with singer Mahalia Jackson by performing on street corners and selling sheet music directly to passersby.",
-                    "His compositions, like 'Precious Lord, Take My Hand,' became so popular they were simply called 'Dorseys'."
-                ],
-                "funFacts": [
-                    "Dorsey's song 'Precious Lord, Take My Hand' was sung by Mahalia Jackson at Martin Luther King, Jr.'s funeral, and by Aretha Franklin at Mahalia Jackson's funeral."
-                ],
-                "media": [
-                    {"label": "Listen: 'We Will Understand It Better By and By'", "href": "https://open.spotify.com/track/3kPghuMY3en8upeIw5nspC?si=c6e3cd1cd6ba4eb1"},
-                    {"label": "Listen: 'Stand By Me'", "href": "https://open.spotify.com/track/5XzYTufFqh58dqF8GiveRE?si=29daf8b910824f03"},
-                    {"label": "Watch: 'Stand By Me' (Video)", "href": "https://youtu.be/9kn7E-OauJI?si=y-L1-Ym-AY6Wyol1"},
-                    {"label": "Watch: Example of Melisma", "href": "https://youtu.be/PRS2grauL4I?si=SMd3mR_qPnvN4dOu"},
-                    {"label": "Listen: 'Precious Lord, Take My Hand'", "href": "https://open.spotify.com/track/2BPMz5V0g0uw9phgqjY7se?si=c7249f9f9d5a4c83"},
-                    {"label": "Listen: 'Must Jesus Bear the Cross Alone'", "href": "https://open.spotify.com/track/3IU2IYHaP4NVPNZ9jbKsPG?si=b8012ef1aff746ff"},
-                    {"label": "Watch: Aretha Franklin at Mahalia Jackson's funeral", "href": "https://youtu.be/aiFlfAs4Ifg?si=CPxFNV4WZfkMZCr-"},
-                    {"label": "Read More: About Thomas Dorsey", "href": "https://www.pbs.org/thisfarbyfaith/people/thomas_dorsey.html"}
-                ]
-              }
-        ],
-        "poll": {
-            "q": "How did Thomas Dorsey first promote his gospel music?",
-            "choices": ["He and Mahalia Jackson would perform on a street corner.", "He asked Louis Jordan’s band to perform it.", "He recorded it with Atlantic Records.", "He asked a university choir to sing it."],
-            "answer": 0
-        }
-    },
-    {
-        "id": "9.03",
-        "title": "9.03 Vocal Harmony Groups (Doo-Wop)",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "bullets": [
-            "<b>Doo-wop</b> groups, often called 'street corner groups,' were popular after WWII, typically featuring four male singers.",
-            "The name comes from their use of <b>vocables</b>—non-semantic syllables like 'doo-doo-wop'—that provided a rhythmic background.",
-            "A common technique was <b>blow harmony</b>, where a singer would blow into the mic while singing 'ooh-wee' to create a percussive sound.",
-            "Early groups like The Ink Spots had crossover appeal, recording for major labels and performing in major venues."
-        ],
-        "full": "Vocal harmony groups were popular both before and after World War II, singing a mixture of popular music, folk songs, and religious music. After WWII, these groups were often called 'street corner groups' as their style was common in urban African American neighborhoods. They came to be known as <b>Doo-wop</b> groups because they frequently used <b>vocables</b>, or non-semantic syllables like 'doo-doo-wop', to create rhythmic drive. Another technique was <b>blow harmony</b>, which was the result of a singer simultaneously blowing into the microphone and singing 'ooh-wee, ooh-wee.' These two features are the most recognizable characteristics of doo-wop music. The song 'Sh-Boom' by The Chords is a classic example of the up-tempo doo-wop style.",
-        "keywords": {
-            "Doo-wop": "A style of vocal harmony music that emerged from 'street corner groups' in urban African American neighborhoods after WWII, incorporating harmonies from jazz and blues.",
-            "Vocables": "Non-semantic syllables (e.g., 'doo-doo-wop') added to songs that provided a sense of rhythmic drive and a standard phrase for background singers.",
-            "Blow harmony": "A common doo-wop gesture where a singer would simultaneously blow into the microphone and sing 'ooh-wee, ooh-wee'."
-        },
-        "deep": [
-            {
-                "title": "The Ink Spots",
-                "image": "https://i.imgur.com/FBDjnuG.jpeg",
-                "altText": "A photo of the four members of The Ink Spots vocal group in matching suits.",
-                 "bullets": [
-                    "Pioneered a 'Top and Bottom' style with a high tenor lead and a spoken bass part.",
-                    "Their 1939 hit 'If I Didn't Care' sold over 19 million copies and is one of the best-selling singles of all time.",
-                    "Their musical formula and smooth harmonies were a major influence on the development of doo-wop, R&B, and early rock and roll.",
-                    "Featured a signature guitar introduction in many of their songs, a simple arpeggio that made their music instantly recognizable."
-                ],
-                "fullText": "The Ink Spots were one of the most influential vocal groups of all time. Formed in the early 1930s, their unique sound, often called the 'Top and Bottom' style, was defined by Bill Kenny's floating high tenor lead vocals contrasted with Hoppy Jones's deep, spoken bass interludes, known as a 'talking chorus.' This formula, along with their signature muted guitar intro, made their music instantly identifiable and was copied by countless groups that followed. Their 1939 recording of 'If I Didn't Care' became a massive hit and solidified their place in music history, influencing the birth of doo-wop and the evolution of soul music."
-            },
-            {
-                "title": "The Chords",
-                "image": "https://i.imgur.com/S0Chlya.jpeg",
-                "altText": "A photo of the five members of The Chords doo-wop group.",
-                "bullets": [
-                    "An R&B and doo-wop group from The Bronx, New York.",
-                    "Their 1954 hit 'Sh-Boom' is often cited as one of the first rock and roll songs.",
-                    "The song featured a standard doo-wop progression, a catchy sax solo, and an infectious, upbeat energy that crossed over to white audiences.",
-                    "While their version was a #3 R&B hit, a more polished cover version by the white Canadian group The Crew-Cuts went to #1 on the pop charts."
-                ],
-                "fullText": "The Chords were a doo-wop group from the Bronx best known for their groundbreaking 1954 hit 'Sh-Boom'. The song was revolutionary for its time, blending an upbeat swing with doo-wop harmonies and an exuberant saxophone solo. It is widely considered one of the very first rock and roll records. 'Sh-Boom' became a major R&B hit, but its crossover to the pop charts was largely achieved through a more 'sanitized' cover version by The Crew-Cuts. This pattern of white artists covering Black R&B songs would become a common, and often controversial, practice in the early days of rock and roll.",
-                "media": [{"label": "Listen: 'Sh-Boom (Life Could Be A Dream)'", "href": "https://open.spotify.com/track/0mWb7GqTPkzCkNsZ1XLOgw?si=b5526cb41ffb4cf4"}]
-            }
-        ],
-        "poll": {
-            "q": "During a final chorus, it was common for doo-wop groups to:",
-            "choices": ["Sing the same melody in unison", "Stop singing and let instruments take over", "Sing intricate and complex harmonies", "Switch to speaking their lines"],
-            "answer": 2
-        }
-    },
-    {
-        "id": "9.04",
-        "title": "9.04 Early Rhythm and Blues",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "bullets": [
-            "In 1949, Billboard renamed its 'race records' chart to 'rhythm and blues,' a catchall term for various Black music genres.",
-            "As large swing orchestras declined after WWII, smaller combos playing <b>jump blues</b> became popular.",
-            "<b>Jump blues</b> featured a 12-bar blues form, boogie-woogie bass lines, strong backbeats, and <b>shuffle rhythms</b>.",
-            "Louis Jordan and his Tympany Five were pioneers of this style, scoring crossover hits that appealed to both black and white audiences."
-        ],
-        "full": "The term 'race records' was officially replaced by 'rhythm and blues' on the Billboard charts in 1949. This was a catchall term for African American music. After WWII, large swing orchestras declined in popularity, and smaller combos rose. One of the first to capitalize on this was Louis Jordan, whose band The Tympany Five played in a style called <b>jump blues</b>. This style featured a 12-bar blues form, boogie woogie bass, strong backbeats, and <b>shuffle rhythms</b>. Jordan’s upbeat, humorous, and high-energy songs had crossover appeal to both black and white audiences and served as an important precursor to rock and roll.",
-        "keywords": {
-            "Jump blues": "A style of African American music that featured a 12-bar blues form, boogie woogie bass, strong back beats, shuffle rhythms, and group singing during the choruses.",
-            "Shuffle rhythms": "A rhythm common in early rhythm and blues that consisted of a triplet quarter note followed by a triplet eighth note."
-        },
-        "deep": [
-            {
-                "title": "Louis Jordan (1908-1975)",
-                "image": "https://i.imgur.com/N1ugU9q.jpeg",
-                "altText": "A charismatic photo of Louis Jordan playing the saxophone.",
-                "bullets": [
-                    "Founded the Tympani Five, a popular 'jump blues' band.",
-                    "His records consistently occupied the race records charts throughout the 1940s.",
-                    "His music had crossover appeal, reaching both pop and R&B charts.",
-                    "His style heavily influenced the first generation of rock and roll artists."
-                ],
-                 "funFacts": [
-                    "Jordan learned clarinet and saxophone at an early age from his father, a local bandleader in Arkansas.",
-                    "He briefly performed with jazz legend Fats Waller.",
-                    "His 1944 million-seller 'Is You Is, Or Is You Ain't Ma Baby?' became a national catchphrase."
-                ],
-                "media": [
-                    {"label": "Listen: 'Is You Is, Or Is You Ain't Ma Baby?'", "href": "https://open.spotify.com/track/09rSNL11dDpPjZEAIQVPka?si=dca8e15a705d4a4e"},
-                    {"label": "Listen: 'Saturday Night Fish Fry'", "href": "https://open.spotify.com/track/0LHfPA0hWcu40eP3O3pb8N?si=953c01c179434124"},
-                    {"label": "Listen: 'Let the Good Times Roll'", "href": "https://open.spotify.com/track/50y6y3iwBlKKev2U4a6GK5?si=264b998eaf8e432c"},
-                    {"label": "Listen: 'Choo Choo Ch'Boogie'", "href": "https://open.spotify.com/track/4vPJK1gKyygRS2mep7iyDq?si=813209c5ebb343ca"},
-                    {"label": "Listen: 'Ain't Nobody Here But Us Chickens'", "href": "https://open.spotify.com/track/25F0nPXUD6si9DalVWNp6m?si=4203bfa84f8d4cde"},
-                    {"label": "Watch: 'Saturday Night Fish Fry'", "href": "https://youtu.be/FCkFrff__QE?si=7iRTMvpIu1EsHK6U"},
-                    {"label": "Watch: Bio Documentary", "href": "https://www.youtube.com/watch?v=iReE7xx1nxc&t=487s"}
-                ]
-            }
-        ],
-        "poll": {
-            "q": "In 1949, what term did the Billboard charts use to replace 'race records'?",
-            "choices": ["Sepia Records", "Rhythm and Blues", "Rock and Roll", "Blues"],
-            "answer": 1
-        }
-    },
-    {
-        "id": "9.05",
-        "title": "9.05 From Gospel to Rhythm and Blues",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "bullets": [
-            "Ray Charles was a pivotal artist who masterfully blended gospel music with secular R&B lyrics.",
-            "Losing his sight at age seven, he learned to read and write music in Braille.",
-            "He controversially adapted gospel songs into R&B hits: 'I Got a Savior' became 'I Got a Woman.'",
-            "Charles was an innovator, being among the first to use the Fender Rhodes electric piano and forming the Raelets, a model for later girl groups."
-        ],
-        "full": "One of the first artists to move freely between gospel music and rhythm and blues and achieve commercial success was Ray Charles. Wrapping the sounds and rhythms of black gospel music around traditional secular lyrics made him one of the most influential musicians of the twentieth century. In 1952, Charles signed with Atlantic and began recording songs that freely blended gospel with rhythm and blues. Although some listeners were shocked at his combination of sacred and secular genres, he saw no reason to separate them, famously stating, 'I’d been singing spirituals since I was three, and I’d been hearing the blues for just as long. So, what could be more natural than to combine them?'. His combinations often took the form of adapting the melodies and lyrics of gospel songs into electrifying R&B numbers, such as turning 'I Got a Savior' into 'I Got a Woman'.",
-        "deep": [
-            {
-                "title": "Ray Charles (1930-2004)",
-                "image": "https://i.imgur.com/Wvbi6AU.jpeg",
-                "altText": "A classic photo of Ray Charles at the piano, wearing his signature sunglasses.",
-                "bullets": [
-                    "Lost his sight due to glaucoma at age 6.",
-                    "Signed with Atlantic Records in 1952, where he began blending gospel and R&B.",
-                    "His 1954 hit 'I Got A Woman' helped pioneer the genre of soul music.",
-                    "His call-and-response with his backup singers, the Raelets, became a signature part of his sound."
-                ],
-                "funFacts": [
-                    "To avoid confusion with boxer Sugar Ray Robinson, he changed his name from Ray Charles Robinson to simply Ray Charles.",
-                    "He was among the first musicians to use the Fender Rhodes electric piano.",
-                    "He briefly joined a hillbilly band and learned how to yodel."
-                ],
-                "media": [
-                    {"label": "Listen: 'Talkin' Bout You'", "href": "https://open.spotify.com/track/4NQE7UxYtLIw0d8Id38jds?si=636d7f75a3fd40c6"},
-                    {"label": "Listen: 'I Got a Woman'", "href": "https://open.spotify.com/track/2xar08Fq5xra2KKZs5Bw9j?si=6284a2faf7c04c66"},
-                    {"label": "Listen: 'This Little Girl of Mine'", "href": "https://open.spotify.com/track/3QoFJiEWJ0LnDwch93MdZf?si=ca688cde425d4d85"},
-                    {"label": "Listen: 'Must Be Jesus' (Source for 'I Got a Woman')", "href": "https://open.spotify.com/track/7M99tD8uA2EyeArWWGvoP8?si=bd7627a24b5e49cd"},
-                    {"label": "Listen: 'What'd I Say'", "href": "https://open.spotify.com/track/5yQ9iMZXGcr5rlO4hoLsP4?si=81aa1f6106a24add"},
-                    {"label": "Watch: 'I Got a Woman' (Live)", "href": "https://youtu.be/lp246rpr2ck?si=yq1qb3idn1CUGLKR"},
-                    {"label": "Watch: Bio Documentary", "href": "https://youtu.be/0XtF8zI3WMg?si=EKN-ox_9QflGNuir"}
-                ]
-            }
-        ]
-    },
-    {
-        "id": "9.06",
-        "title": "9.06 Rhythm and Blues Crosses Over",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "bullets": [
-            "A <b>crossover</b> hit is a song that charts on at least two of the three main charts: pop, R&B, and country.",
-            "Chuck Berry, a father of rock and roll, created a crossover style by blending R&B with a country and western vocal delivery.",
-            "Berry's lyrics focused on teen culture (cars, school, romance), making them relatable to both black and white audiences.",
-            "His guitar style and 'duck walk' stage move became iconic and influenced generations of musicians."
-        ],
-        "full": "While artists like Ray Charles were stitching gospel and R&B together, others like Chuck Berry were taking gestures from jump blues, adding electrified instruments, and borrowing from country and western. This led to a new style of R&B that would soon be called rock and roll. A <b>crossover</b> refers to a song that holds a prominent place on at least two of the three types of charts: pop, rhythm and blues, and country. Berry's music frequently crossed over, as his lyrics about teen life and vocal style influenced by country singers appealed to a wide audience. Other major crossover artists included Fats Domino and Little Richard.",
-        "keywords": {
-            "Crossover": "A song that holds a prominent place on at least two of the three types of charts: pop, rhythm and blues, and country."
-        },
-        "deep": [
-            {
-                "title": "Chuck Berry (1926-2017)",
-                "image": "https://i.imgur.com/cMgydDS.jpeg",
-                "altText": "A classic photo of Chuck Berry mid-performance, playing his electric guitar and doing his famous 'duck walk'.",
-                "bullets": [
-                    "Considered the single most important guitarist in early rock and roll.",
-                    "His first hit, 'Maybellene' (1955), was a reworking of the country song 'Ida Red'.",
-                    "Wrote lyrics about teen culture: cars, girl-boy problems, school, and music.",
-                    "His song 'Johnny B. Goode' was included on the golden record aboard the Voyager spacecraft."
-                ],
-                "funFacts": [
-                    "His famous 'duck walk' became an iconic part of his performances.",
-                    "His vocal delivery was so influenced by country singers that many listeners were surprised to learn he was Black.",
-                    "He famously said: 'Curiosity provoked me to lay a lot of our country stuff on our predominantly black audience... some of our black audience began whispering, “who is that black hillbilly at the Cosmo?”'"
-                ],
-                "media": [
-                    {"label": "Listen: 'Ida Red' (Source for 'Maybellene')", "href": "https://open.spotify.com/track/6Va6Mpqj9prgmYwUHdxj4z?si=9af3af97b4d54cc8"},
-                    {"label": "Listen: 'Maybellene'", "href": "https://open.spotify.com/track/3SQhmctWreNM0X6Zkm2K5R?si=cad1544a67bf4f10"},
-                    {"label": "Listen: 'School Day'", "href": "https://open.spotify.com/track/3RYwxAkUbHCzCmX8M0C0Zd?si=4d0afcc8b0064f31"},
-                    {"label": "Listen: 'Sweet Little Sixteen'", "href": "https://open.spotify.com/track/4GWHrdyVTC0AWwuRgoWzE7?si=8cf645bdd3694f38"},
-                    {"label": "Listen: 'Johnny B. Goode'", "href": "https://open.spotify.com/track/2QfiRTz5Yc8DdShCxG1tB2?si=6d4ad5d0c03d45e6"},
-                    {"label": "Listen: 'Roll Over Beethoven'", "href": "https://open.spotify.com/track/6C7aTTCUWRK7dD379yUT3W?si=d2761b0cdcbd490d"},
-                    {"label": "Read More: Rock & Roll Hall of Fame Bio", "href": "https://rockhall.com/inductees/chuck-berry/"}
-                ]
-            },
-            {
-                "title": "Fats Domino (1928-2017)",
-                "image": "https://i.imgur.com/f1gm0A6.jpeg",
-                "altText": "A photo of Fats Domino smiling and playing the piano.",
-                "bullets": [
-                    "A New Orleans-based pianist and singer-songwriter.",
-                    "His relaxed, boogie-woogie piano style and warm voice made him one of rock's earliest and most successful stars.",
-                    "Achieved major crossover success with hits like 'Ain't That a Shame' and his cover of 'Blueberry Hill'."
-                ],
-                "media": [
-                     {"label": "Listen: 'Blueberry Hill'", "href": "https://open.spotify.com/track/2NkAoxQOr6MGdMB5JDTU81?si=c9daf36cd4014b62"},
-                     {"label": "Listen: 'Ain't That a Shame'", "href": "https://open.spotify.com/track/7I7lZjnuj3npLFCWodA5Xk?si=b67f3bb695c542cf"}
-                ]
-            },
-            {
-                "title": "Little Richard (1932-2020)",
-                "image": "https://i.imgur.com/bQ4y02z.jpeg",
-                "altText": "A flamboyant photo of Little Richard at the piano with a dramatic expression.",
-                "bullets": [
-                    "Known as one of the 'Architects of Rock and Roll' for his explosive energy and charismatic showmanship.",
-                    "His music was defined by pounding piano, a powerful, raspy voice, and often suggestive lyrics.",
-                    "Scored major crossover hits with songs like 'Long Tall Sally' and 'Good Golly Miss Molly'."
-                ],
-                 "media": [
-                     {"label": "Listen: 'Long Tall Sally'", "href": "https://open.spotify.com/track/507IFqPuG8mBQoKebfGG9t?si=f0467f2132914f18"},
-                     {"label": "Listen: 'Good Golly Miss Molly'", "href": "https://open.spotify.com/track/7ojv5P29GWTw89c7w6drV9?si=f29d997f2edd44eb"},
-                     {"label": "Watch: 'Good Golly Miss Molly' (Live)", "href": "https://youtu.be/AK_jm3Hz1Wk?si=c94vKBgSnx6QmzNm&t=48"}
-                ]
-            }
-        ]
-    },
-    {
-      "id": "9.06b",
-      "title": "Interactive Activity: Build a Blues Verse",
-      "headerImage": "https://i.imgur.com/4uodWhO.png",
-      "bullets": ["Drag the lines from the pool on the left to construct a classic AAB blues verse."],
-      "full": "",
+      "id": "10.01",
+      "title": "10.01: New Technologies and Means of Consumption",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "asideImage": "https://omp.s3.amazonaws.com/img/img_omp10_02_WurlitzerJukebox.jpg",
+      "bullets": [
+        "The <b>magnetic tape recorder</b>, developed by the Germans, allowed for sound to be recorded, erased, and re-recorded cheaply and easily.",
+        "This technology liberated recording from large, expensive studios and allowed for recordings to be made anywhere by untrained personnel.",
+        "The <b>45 RPM</b> record, invented by RCA, was inexpensive to produce and purchase, leading to a huge jump in the popularity of pop singles.",
+        "The <b>transistor radio</b>, developed by Bell Laboratory in 1947, and affordable car radios made music more portable and accessible.",
+        "The decline of radio drama led to the development of the <b>Top 40</b> radio format, which repeated the same forty tunes every 24 hours based on the number of records in Wurlitzer jukeboxes."
+      ],
+      "full": "The magnetic recording process changed how music was recorded and distributed. Developed by the Germans to guide radio-controlled V-2 bombs, the magnetic tape recorder revolutionized the music industry. Recording was no longer confined to gigantic and elaborate studios owned by major companies in a few big cities, and tolerably decent recordings could now be made anywhere by untrained personnel who knew very little about engineering or acoustics. Around the same time, high fidelity 45 RPM technology exploded onto the scene. Peter Goldmark, the head of CBS labs for many years, invented high fidelity ('hi-fi') and the 33-1/3 RPM process in the 1930s. After the war, when CBS made its move to 33-1/3 RPMs, RCA countered with a 45 RPM record, and it immediately invented a little economical 45 RPM playback unit. CBS then caught up by making a three-speed turntable with an adapter for the 45 RPM option. The result of this corporate warfare was a huge jump in pop singles. 45 RPMs were inexpensive to produce and to purchase. It was in the world of 45 RPM singles (two sides, the favored one called the A side, and the throwaway gesture called the B side) that rhythm and blues had its first great moment in pop music history. Music listening and consumption was also affected by the radio. The transistor radio, developed by Bell Laboratory in 1947, appeared on the market in the early 1950s. About the same time, the car radio became an affordable option in the automobile industry, and people began listening to the radio in their cars as well as in their homes. By the late 1940s and early 1950s, many popular talk, drama, and comedy radio programs had moved from radio to television, and radio programmers needed to find new material to fill the airtime. Several innovations in radio programming arose, the most important of which was the development of the Top 40 radio format. The same forty songs would be repeated every 24-hour radio cycle, and the top ten songs would receive more frequent play than the bottom thirty. In addition, Top 40 radio integrated short new spots, contests, promotional gimmicks, and frequent station identification spots by talkative disc jockeys speaking the language of the teenage listening market. Why forty tunes? Because the Wurlitzer jukeboxes, which flooded the industry at the time, contained forty recordings.",
+      "keywords": {
+        "magnetic tape recorder": "A recording technology that allowed for sound to be recorded, erased, and re-recorded on the same tape many times, allowed for recordings to be duplicated from tape to tape, allowed for recordings to be edited, and made recording much cheaper.",
+        "45 RPM": "A record that plays at 45 revolutions per minute; had a limit of around three to four minutes per side.",
+        "Top 40": "A radio format where the same forty tunes were repeated every 24-hour radio cycle, and the top ten singles received the most airplay."
+      },
       "deep": [],
-      "buildaband": {
-          "correct": [ "line-a1", "line-a2", "line-b" ],
-          "distractors": [ "distractor-1", "distractor-2", "distractor-3" ],
-          "itemMap": {
-            "line-a1": "Woke up this mornin', feelin' sad and blue.",
-            "line-a2": "I said, I woke up this mornin', feelin' sad and blue.",
-            "line-b": "My baby left me, now I don't know what to do.",
-            "distractor-1": "The sun is shining bright today.",
-            "distractor-2": "I think I'll go out for a walk.",
-            "distractor-3": "She said she'd call me yesterday."
-          },
-          "bandAreaTitle": "Your Blues Verse",
-          "poolTitle": "Lyrical Lines",
-          "customDropzones": [
-              {"title": "Line 1 (A)", "accepts": ["line-a1"]},
-              {"title": "Line 2 (A - Repeat)", "accepts": ["line-a2"]},
-              {"title": "Line 3 (B - Rhyme/Response)", "accepts": ["line-b"]}
-          ]
+      "poll": {
+        "q": "The transistor radio was developed by:",
+        "choices": ["General Electric", "Bell Laboratory", "Nikola Tesla", "Thomas Edison"],
+        "answer": 1
       }
     },
     {
-        "id": "9.07",
-        "title": "9.07 Conclusion",
-        "headerImage": "https://i.imgur.com/4uodWhO.png",
-        "bullets": [
-            "Gospel, doo-wop, and rhythm and blues were distinct but related genres of African American music popular in the 1940s and 50s.",
-            "Initially marketed as 'race records,' this music began to cross over to white audiences via radio.",
-            "This cultural crossover set the stage for the transformation of rhythm and blues into the new genre of rock and roll."
-        ],
-        "full": "Many different types of African American music were popular in the 1940s and 1950s, including gospel, doo-wop, and rhythm and blues. Although record labels kept this music confined first to the 'race' label and then to the 'rhythm and blues' label, white audiences eventually began hearing and consuming rhythm and blues. As we will see in the next lesson, rhythm and blues underwent a number of musical and racial changes as it was transformed into rock and roll.",
-        "deep": [],
-        "wordcloud": {
-            "title": "Final Thoughts?",
-            "prompt": "What one word describes the music from this chapter? Add it to our word cloud!"
+      "id": "10.02",
+      "title": "10.02: Alan Freed",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "asideImage": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
+      "bullets": [
+        "The disc jockey (DJ) emerged as a key promoter of popular music with the rise of radio.",
+        "Alan Freed, a Cleveland DJ, began playing rhythm and blues music on his show and dubbed it 'rock and roll' to appeal to white audiences.",
+        "Freed organized interracial rock and roll concerts that drew massive crowds and appeared in films and on TV.",
+        "His career was ended by a Congressional investigation into 'payola' (receiving bribes for playing records)."
+      ],
+      "full": "With the rise of radio and Top 40 radio, the disc jockey emerged as one of popular music’s most important promoters. The most important disc jockey of the era, and indeed, one of the most important figures in the promotion of early rock and roll, was Alan Freed. Freed was quite successful with his early evening classical music program. But, as he saw the musical and commercial appeal of African American popular music, he decided to promote this music to his listeners. Freed obtained permission from the station owner to follow his classical program with a program of rhythm and blues music. Because he thought the term 'rhythm and blues' might drive away his white audience, Freed used the phrase 'rock and roll' to describe the African American popular music that he was playing. It is still not known whether or not Freed knew that the term 'rock and roll' was used as a slang term in the African American community as a euphemism for sex. Regardless, 'rock and roll' is typically used to describe rhythm and blues music from the 1950s that was geared to an audience of teenaged radio listeners, black or white. Freed became a celebrity of the highest order, and he used his celebrity to promote black musicians despite the racism that was still rampant in American society. He sponsored concerts which featured Charles Brown, the Orioles, the Moonglows, the Dominoes, and many other rhythm and blues acts. In March of 1953, he sold eighteen thousand tickets for an auditorium that had only nine thousand seats. When eighteen thousand screaming teenagers appeared, he had to cancel the show, and police vans hauled away the rioting youngsters to cool them off in jail for a few hours. In 1954, at age 33, Freed went to WINS in New York and was soon making nearly a millions dollars a year—not only playing, but selling records over the air, along with dozens of other teenage commodities made by his sponsors. He became a spokesman for the new teenage subculture, and soon he appeared in three movies, Don’t Knock the Rock, Rock, Rock, Rock, and Rock Around the Clock. Freed used many different tactics to promote recordings on-air, and not all of them were exactly legal or even ethical. He accepted bribes from record companies to play their recordings. He struck deals with singers and songwriters in exchange for top spots on his programs. For example, in return for being listed as co-author on Chuck Berry’s 'Maybellene,' Freed promoted the record on his Cleveland radio show, and it rose to number 1 in the rhythm and blues charts and number 5 in the pop charts. Freed eventually was summoned before Congress and indicted for accepting bribes from record companies to push their recordings, which we will discuss in greater detail in later lessons. Regardless of the tactics he used to promote this new popular music, Freed was one of the driving forces behind the popularity of this new rock and roll music.",
+      "keywords": {
+        "rock and roll": "Term used by Alan Freed to describe the rhythm and blues music of African American artists that he played on the radio."
+      },
+      "deep": [
+        {
+          "title": "Alan Freed (1921-1965)",
+          "image": "https://omp.s3.amazonaws.com/blackboard/images/img_orm05_03_AlanFreed.jpg",
+          "altText": "A black and white photo of Alan Freed, the influential disc jockey.",
+          "bullets": [
+            "Began his career in Akron, Ohio, before moving to Cleveland in 1951.",
+            "Dubbed rhythm and blues music 'rock and roll', a term that stuck and defined the genre.",
+            "His radio show 'The Moondog Show' and later 'The Rock and Roll Party' were immensely popular with teenagers.",
+            "Organized pioneering interracial concerts that brought black and white teenagers together.",
+            "Career ended due to a Congressional investigation into 'payola' (bribery)."
+          ],
+          "fullText": "Alan Freed was the most influential disc jockey of early rock and roll. He began his radio career in 1946 in Akron, Ohio before moving to Cleveland in 1951. He soon transformed his evening classical-music program into The Moondog Show, which featured rhythm and blues records by black artists. He dubbed the music “rock and roll”—a term used in African American music since the 1930s as a euphemism for sex—and the name stuck. The new music was a hit for teenagers, and Freed soon gained an immense radio following. In addition to champion rock and roll on the radio, Freed also organized rock and roll concerts that drew large crowd of both black and white teenagers. His success in Cleveland prompted a move to a larger market, and he began his new show, The Rock and Roll Party, on WINS in New York in 1954. Freed eventually organized a traveling concert show featuring Jerry Lee Lewis and Buddy Holly called The Big Beat, produced several rock-and-roll themed movies (including Rock Around the Clock (1956) and Don’t Know the Rock (1957)), and hosted a television show called Dance Party. His career ended on a sour note when he was the target of a Congressional investigation over receiving bribes in return for playing particular records. He was found guilty of bribery, or “payola,” in 1962 and he died of kidney failure in 1965."
         }
+      ],
+      "poll": {
+        "q": "Alan Freed used the phrase 'rock and roll' to describe the African American popular music that he was playing.",
+        "choices": ["True", "False"],
+        "answer": 0
+      }
+    },
+    {
+      "id": "10.03",
+      "title": "10.03: Cover Versions",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "bullets": [
+        "A <b>cover version</b> is a song that is re-recorded by another artist, often with changes to the lyrics and style.",
+        "White artists like Pat Boone and Bill Haley recorded 'sanitized' covers of Black artists' R&B songs.",
+        "These covers often removed or toned down the suggestive lyrics to make them palatable to white, mainstream audiences.",
+        "Boone's covers of songs like 'Tutti Frutti' and 'Ain't That a Shame' were commercially more successful than the originals."
+      ],
+      "full": `Teenagers may have loved rhythm and blues lyrics such as "I got a girl named Sue, she knows just what to do" (from Little Richard’s "Tutti Frutti") and "You’re wearin those dresses, the sun comes shinin’ through / I can’t believe my eyes, all of this belongs to you" (from Big Joe Turner’s "Shake, Rattle, and Roll"), but parents, record companies, and radio stations were less than impressed. In response, white artists and record companies began releasing cover versions of black artists’ songs. In general, a cover version refers to a song that is re-recorded by another artist. During the age of early rock and roll, however, these cover versions had a very specific purpose: to modify black artists’ rhythm and blues songs in order to make them more appropriate for white audiences. The sexual references in the original black version were muted, modified, or deleted entirely. The black artists delivered all those sexual innuendoes in jest, with whimsical good humor. Double entendres and playful, metaphoric lyrics were common in rhythm and blues, but white record executives interpreted them as devious, overtly sexual, and thus unfit for white audiences’ consumption. Recordings by the squeaky-clean white singer Pat Boone exemplify the goals of early cover versions. Boone’s covers of "Ain't That a Shame," "Long Tall Sally," and "Tutti Frutti" were highly sanitized versions of the black rhythm and blues originals, but during the 1950s, they achieved far more commercial success than the original songs that Boone was covering. Another success story among cover artists was Bill Haley. Bill Haley often claimed to have invented rock and roll, but this claim is hardly reputable. Haley was, however, one of the first artists to achieve commercial success with crossover versions of rhythm and blues songs. During his musical career, Haley was first a country yodeler, then disc jockey, then leader of The Four Aces of Western Swing, later called The Saddlemen. They played country and western music. In 1951, Haley did a cover of Jackie Brenston’s blues release, "Rocket 88," and though the recording sold only a few copies, Haley’s live performances of the tune drove his white teenage dancers wild. In response, he renamed his group Bill Haley and The Comets, and he set out to create a new rhythm and blues image for his band. He signed with Decca Records in 1954, and his band promptly covered Sunny Dae’s 1952 "Rock Around the Clock" and Big Joe Turner’s 1954 "Shake, Rattle, and Roll." "Rock Around the Clock" was of only modest interest until it appeared in the movie The Blackboard Jungle; after its appearance in the film, it spent forty weeks in the top ten. Comparing the cover version of "Shake, Rattle, and Roll" by Bill Haley and His Comets (1954) with the original version by Big Joe Turner (also 1954) reveals how white rock and roll cover versions of black songs worked. In the cover version, suggestive lyrics such as "you’re wearin’ those dresses, the sun comes shinin’ through" are scrubbed into "wearin’ those dresses, your hair done up so nice." Despite this modification of the lyrics, Haley consciously modeled his musical style on that of black musicians, Louis Jordan in particular. According to Haley’s producer, Milt Gabler, "We’d begin with Jordan’s shuffle rhythm. You know, dotted eighth notes and sixteenths, and we’d build on it. They got a sound that had the drive of the Tympany Five and the color of country and western." The 12-bar blues verses of "Shake, Rattle, and Roll" combined with the country and western background of Bill Haley’s band led to a unique sound for these early crossover hits.`,
+      "keywords": {
+        "cover version": "A song that is re-recorded by another artist, often with changes to the lyrics and style."
+      },
+      "deep": [
+        {
+          "title": "Little Richard's 'Tutti Frutti'",
+          "image": "https://i.imgur.com/eP6z3kE.jpeg",
+          "altText": "Little Richard looking exuberant, playing piano",
+          "bullets": [
+            "Little Richard's original 1955 version was a wild, energetic R&B hit with a sexually suggestive lyric: 'Tutti Frutti, good booty.'",
+            "Pat Boone's 1956 cover changed the lyric to a more innocuous 'Tutti Frutti, good a wop bop a loo bop a lop bam boom.'",
+            "Boone's version was a huge commercial success, reaching number 12 on the pop charts, while Little Richard's original peaked at number 17."
+          ],
+          "fullText": "Little Richard's original 'Tutti Frutti' was a high-energy R&B track with suggestive lyrics. The opening line was 'Tutti Frutti, good booty.' This was deemed too risqué for mainstream radio. Pat Boone's cover version, released a year later, famously changed this lyric to the nonsensical 'Tutti Frutti, good a wop bop a loo bop a lop bam boom.' This sanitized version was much more palatable to white, mainstream audiences and became a bigger commercial hit. The comparison between the two highlights the common practice of white artists covering Black artists' music in the 1950s to make it more commercially viable for a broader audience.",
+          "media": [
+            { "label": "Listen: Little Richard's 'Tutti Frutti'", "href": "https://open.spotify.com/embed/track/2iXcvnD3d1gfLBum0cE5Eg?utm_source=generator" },
+            { "label": "Listen: Pat Boone's 'Tutti Frutti'", "href": "https://open.spotify.com/embed/track/5GWHzvmJIrGQ5F4m7MUtfN?utm_source=generator" }
+          ]
+        },
+        {
+          "title": "Big Joe Turner vs. Bill Haley: 'Shake, Rattle, and Roll'",
+          "image": "https://i.imgur.com/U1pM710.jpeg",
+          "altText": "Big Joe Turner and Bill Haley photos side by side",
+          "bullets": [
+            "Big Joe Turner's original was a swaggering R&B song with sexually suggestive lyrics.",
+            "Bill Haley's version, released the same year, removed the suggestive lyrics.",
+            "Turner's version featured a boogie-woogie piano and a strong backbeat, while Haley's version was more of a country-rock hybrid.",
+            "Both songs were successful, but Haley's cover became a major crossover hit, reaching #7 on the pop chart."
+          ],
+          "fullText": "Big Joe Turner's original 'Shake, Rattle, and Roll' was a rhythm and blues hit with a powerful vocal performance and a driving beat. Its lyrics were rife with sexual innuendo. The most notable difference in Bill Haley's cover version was the sanitization of these lyrics, changing lines like 'you’re wearin’ those dresses, the sun comes shinin’ through' to the more innocent 'wearin’ those dresses, your hair done up so nice.' This change was a deliberate attempt to make the song more acceptable to a wider, white audience, and it proved successful, with Haley's version becoming a major pop hit.",
+          "media": [
+            { "label": "Listen: Big Joe Turner's 'Shake, Rattle, and Roll'", "href": "https://open.spotify.com/embed/track/7aLoa1F3EoM8AeC6Ao1RKz?utm_source=generator" },
+            { "label": "Listen: Bill Haley's 'Shake, Rattle, and Roll'", "href": "https://open.spotify.com/embed/track/2NGx9gXQatPYK6DY9XAwSy?utm_source=generator" }
+          ]
+        },
+        {
+          "title": "Bill Haley (1925-1981)",
+          "image": "https://s3.amazonaws.com/ompv2/images/artist_profile/BillHaley.jpg",
+          "altText": "A black and white portrait of Bill Haley.",
+          "bullets": [
+            "Began his career in country music with The Saddlemen.",
+            "Covered Jackie Brenston's 'Rocket 88,' considered the first rock and roll recording by a white artist.",
+            "His biggest hit, 'Rock Around the Clock,' was not popular until featured in the 1955 film 'Blackboard Jungle'."
+          ],
+          "fullText": "Often viewed as the first star of rock and roll, Bill Haley began his career playing country music, most notably with The Saddlemen. Haley was interested in blending other styles with country, and in 1951 Haley and The Saddlemen recorded a cover of Jackie Brenston’s “Rockett 88.” Brenston’s original song has been cited as the first rock and roll record, and The Saddlemen’s cover the first rock and roll recording by a white artist. In 1953, The Saddlemen changed their name to Bill Haley and His Comets and recorded the rock and roll hit “Crazy, Man, Crazy.” Their biggest success—and the song that began the rock and roll craze—was “Rock Around the Clock.” Although recorded in 1954, the song did not achieve popularity until it was featured in the film Blackboard Jungle in 1955. The film, about delinquency in high school, struck a chord with 1950s youth and “Rock Around the Clock” became the new teenage anthem. Although popular throughout the 1950s, Haley never repeated the success of “Rock Around the Clock.” In the 1960s he moved away from rock and roll and returned to playing country music, only occasionally revisiting his rock hits in revival concerts later in his life.",
+          "media": [
+            { "label": "Listen: Bill Haley's 'Rock Around the Clock'", "href": "https://open.spotify.com/embed/track/2XBsQSZqHPPAtZpRG6TvIm?utm_source=generator" }
+          ]
+        }
+      ],
+      "poll": {
+        "q": "What prompted the success of Bill Haley's version of 'Rock Around the Clock?'",
+        "choices": ["They began a national tour to promote the song", "The group appeared in the film Blackboard Jungle", "The group appeared on Alan Freed's show", "They were promoted by Chuck Berry"],
+        "answer": 1
+      }
+    },
+    {
+      "id": "10.04",
+      "title": "10.04: Elvis’s Cover Versions",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "asideImage": "https://omp.s3.amazonaws.com/img/img_omp10_05_Hounddog.jpg",
+      "bullets": [
+        "Elvis Presley was a singer, not a songwriter, and all of his songs were either covers or written by teams.",
+        "His iconic hit 'Hound Dog' was a cover of a song originally recorded by R&B singer Big Mama Thornton in 1953.",
+        "Elvis's version, like other white covers, had sanitized, nonsensical lyrics compared to Thornton's raw and suggestive original.",
+        "Elvis's manager, Colonel Tom Parker, was instrumental in building his career through strategic marketing and TV appearances."
+      ],
+      "full": `Elvis Presley was a singer, not a songwriter. He never wrote any original material. Although he could play the guitar reasonably well, he did not know how to read or write music, and he learned all of his material by rote. As a result, all of his songs were either the products of cover versions or of songwriting teams, or sometimes both, as was the case of "Hound Dog." Written by the songwriting duo of Jerry Leiber and Mike Stoller, "Hound Dog" was first recorded by the rhythm and blues artist Big Mama Thornton in 1953. Big Mama Thornton’s version of the song is raw, gritty, and far more suggestive than Presley’s cover. While Big Mama Thornton’s lyrics have a clearly sexual undertone, the lyrics of Presley’s cover version become almost nonsensical. As we saw in the previous lesson, white rock and roll covers of black artists’ rhythm and blues songs frequently edited the lyrics almost to the point of incomprehensibility in order to negate any possible references to sex or sexuality. "Hound Dog" was a runaway success for Presley, spending eleven weeks at number one on the pop charts in 1956.`,
+      "deep": [
+        {
+          "title": "Elvis Presley (1935-1977)",
+          "image": "https://s3.amazonaws.com/ompv2/images/artist_profile/Elvis.jpg",
+          "altText": "A black and white photo of Elvis Presley smiling and posing.",
+          "bullets": [
+            "Known as 'The King of Rock and Roll', a cultural icon who blended country, blues, and gospel.",
+            "His career launched after meeting Sam Phillips at Sun Records.",
+            "His scandalous performances on 'The Milton Berle Show' and 'The Ed Sullivan Show' made him a national sensation.",
+            "Managed by Colonel Tom Parker, who helped him achieve massive commercial success."
+          ],
+          "fullText": "Elvis Presley’s unique blend of many different styles and genres made him one of the most legendary rock and roll performers of all time. He grew up immersed in the music of the Pentecostal church, country and western, and the rural blues. In 1953, he met Sam Phillips and began recording for Sun Records, producing ten recordings (including “That’s All Right” (1954) “Blue Moon of Kentucky” (1954) and “Mystery Train” (1955)) before his contract was sold to RCA-Victor in 1955. It was during this time that Elvis rose to superstardom, recording a string of hits including “Heartbreak Hotel”, “Hound Dog,” and “Don’t Be Cruel” (all from 1956). His infamous performances on The Milton Berle Show and The Ed Sullivan Show came in that same year, and soon his fame had risen to the point where he was starring in his own Hollywood films. In 1958, Elvis began a stint in the United States Army, and when he returned to recording in 1960, his career was never the same. Struggles with his manager Colonel Parker, the death of his mother, a grueling filmmaking schedule, a growing dependence on amphetamines and prescription drugs, and a long courtship with, marriage to, and eventual divorce from Priscilla Beaulieu all complicated his life. He never returned to the same sex symbol status that he had held in the 1950s, although he continued to release number 1 records until his death in 1977. To this day, he is the best-selling recording artist of all time.",
+          "media": [
+            { "label": "Listen: Elvis's 'Hound Dog'", "href": "https://open.spotify.com/embed/track/64Ny7djQ6rNJspquof2KoX?utm_source=generator" },
+            { "label": "Listen: Big Mama Thornton's 'Hound Dog'", "href": "https://open.spotify.com/embed/track/2McHF33C9Tx4lfwKBefE4n?utm_source=generator" },
+            { "label": "Watch: Elvis's 'Hound Dog' TV Performance", "href": "https://youtu.be/aNYWl13IWhY?si=gKIs1SbwdVF71hpk" },
+            { "label": "Watch: Big Mama Thornton's 'Hound Dog' Live", "href": "https://youtu.be/BmpwvxW0gW0?si=d2V_oMsCgfZ1VvN" },
+            { "label": "Watch: Doja Cat's 'Vegas' (2022) with 'Hound Dog' sample", "href": "https://youtu.be/QZp2biJul1c?si=cOtslpObQYwNBi7-" }
+          ]
+        },
+        {
+          "title": "Colonel Tom Parker (1909-1997)",
+          "image": "https://s3.amazonaws.com/ompv2/images/artist_profile/ColonelTomParker.jpg",
+          "altText": "A photo of Colonel Tom Parker with a cigar.",
+          "bullets": [
+            "Born Andreas Cornelius van Kujik, he was an illegal immigrant from the Netherlands.",
+            "Worked in traveling carnivals before becoming a music promoter.",
+            "Became Elvis's manager in 1956 and brokered the lucrative RCA-Victor deal.",
+            "Known for his over-the-top promotional style and taking an unusually large cut of Elvis's profits."
+          ],
+          "fullText": "One of the most notorious managers in rock history, Colonel Tom Parker (whose real name was Andreas Cornelius van Kujik) was an illegal immigrant from the Netherlands. In the 1920s, he began his career in traveling carnivals hawking anything he could sell. An eccentric and crude huckster, Parker moved on to music promotion in the late 1930s. He garnered success as manager for country stars Eddy Arnold and Hank Snow with his over-the-top promotional style and shrewd business practices. In 1956 he began managing Elvis Presley and was pivotal in engineering the lucrative sale of Presley’s contract from Sun to RCA-Victor. Parker was able to secure national gigs, TV spots, merchandizing, Las Vegas performances, and Hollywood films for Presley, all the while taking a large cut of the profits (the usual cut for a business manager was 10%, but Parker made as much as 50%). Parker also shielded Elvis from the public, letting him appear only occasionally to perform, which contributed both to Presley’s increasingly legendary persona and his growing, isolation-induced drug problems. After Presley died in 1977, Parker went through a series of legal battles with Elvis’s estate over rights and royalties. The matter was settled out of court in 1983, and Parker spent the last years of his life gambling in Las Vegas."
+        }
+      ],
+      "poll": {
+        "q": "Elvis's first notorious hip-swiveling performance occurred on which television show?",
+        "choices": ["The Steve Allen Show", "The Rosemary Clooney Show", "The Milton Berle Show", "The Ed Sullivan Show"],
+        "answer": 2
+      }
+    },
+    {
+      "id": "10.05",
+      "title": "10.05: Sam Phillips and Sun Records",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "asideImage": "https://s3.amazonaws.com/ompv2/images/artist_profile/SamPhillips.jpg",
+      "bullets": [
+        "<b>Sam Phillips</b> founded the Memphis Recording Service in 1950, which became <b>Sun Records</b> in 1952.",
+        "Phillips was famous for his quote about finding 'a white man who had the Negro sound and the Negro feel.'",
+        "He discovered Elvis Presley, who recorded for Sun from 1953 to 1955.",
+        "Elvis's early recordings were a unique blend of country and R&B, leading to the term 'rockabilly'."
+      ],
+      "full": `In 1950, Sam Phillips started the Memphis Recording Studio, which was the only convenient recording studio for Memphis blues artists. Phillips recorded artists such as B.B. King, Little Walter, and Howlin’ Wolf simply because he offered one of the few available recording spaces. Although Phillips initially leased his masters to the Chess and Modern labels, he eventually launched his own label, Sun Records, in 1952. Presley recorded ten sides for Sun Records before his contract was sold to RCA-Victor. These recordings do not feature a drum set but instead, include only Presley with musicians Scotty Moore on electric guitar and Bill Black on string bass. None of these recordings include a drum set because drums were typically associated with rhythm and blues, and Moore and Black were country musicians. Presley’s first single for Sun Records included 'That's All Right' and 'Blue Moon of Kentucky.' Other Sun recordings such as 'Mystery Train' and 'Blue Moon' were covers of blues songs, country and western numbers, and Broadway songs. He was initially billed as 'The Hillbilly Cat' or 'The King of Country Bop,' both titles attempting to convey his simultaneous country and rhythm and blues sounds. Presley’s Sun recordings were marketed as country, although they combined country with rhythm and blues. According to Sam Phillips, 'I recall one [disc] jockey telling me that Presley was so country he shouldn’t be played after 5 AM. And others said he was too black for them.' Phillips knew that he had a star in the making, but he had to figure out how to market him. According to Phillips’s secretary, 'Over and over, I remember Sam saying, ‘If I could find a white man who had the Negro sound and the Negro feel, I could make a billion dollars.’' Regardless of the marketing dilemma, Presley’s music quickly became infectious. Sam Phillips sent a recording of Presley’s 'That's All Right' to the disc jockey Dewey Phillips, who ended up playing the record thirty times in a single night on his Red, Hot, and Blue radio show. Bill Randle, a Cleveland disc jockey, played one Presley recording every fifteen minutes all weekend long. According to Randle, 'I don’t know what those Presley records have, but I put them on yesterday, and the switchboard lit up like Glitter Gulch in Las Vegas. He hits them [the kids] like a bolt of electricity. My phone hasn’t stopped ringing and I haven’t been able to stop playing those records.' This hybridity of styles contributed to what is now known as the rockabilly style, which we will focus on in greater detail in later lessons. Although these early recordings at Sun Records were an important part of Presley’s career and output, he did not achieve his meteoric rise to superstardom and international celebrity until he began working with Colonel Tom Parker.`,
+      "keywords": {
+        "Sun Records": "Record company launched by Sam Phillips in 1952; located in Memphis."
+      },
+      "deep": [
+        {
+          "title": "Sam Phillips (1923-2003)",
+          "image": "https://s3.amazonaws.com/ompv2/images/artist_profile/SamPhillips.jpg",
+          "altText": "A black and white portrait of Sam Phillips.",
+          "bullets": [
+            "Started a recording studio in Memphis in 1949 and founded Sun Records in 1952.",
+            "Developed the signature 'slapback echo' sound for his recordings.",
+            "Discovered and recorded Elvis Presley, as well as other legendary artists like Johnny Cash and Jerry Lee Lewis."
+          ],
+          "fullText": "As a record producer, Sam Phillips left an indelible mark on the history of rock and roll. He began his career as a DJ, first in Muscle Shoals, Alabama, and later in Memphis, and he started a recording studio in 1949 with the slogan “We Record Anything—Anywhere—Anytime.” Rather than selling the recordings himself, he often leased his recordings to other record companies, most notably Chess and Modern, including Jackie Brenston’s “Rocket 88” (1951). In 1953, he founded his own label, Sun Records, where he served as an engineer, producer, and talent scout. During this time he developed a type of tape-delay echo known as “slapback echo” that became the signature sound of his recordings. His desire to discover an artist with crossover appeal was fulfilled when he met Elvis Presley in August of 1953. Together Phillips and Presley would record such hits as “That’s All Right” (1954), “Blue Moon of Kentucky” (1954), and “Mystery Train” (1955). When Presley left Sun for RCA near the end of 1955, Phillips continued to release important records with Johnny Cash, Carl Perkins, and Jerry Lee Lewis. Phillips was inducted in the Rock and Roll Hall of Fame in 1986 and the Country Music Hall of Fame in 2001."
+        },
+        {
+          "title": "Early Elvis: The 'Hillbilly Cat'",
+          "image": "https://omp.s3.amazonaws.com/img/img_omp10_06_HillbillyElvis.jpg",
+          "altText": "Elvis Presley wearing a hat and a striped shirt, billed as 'The Hillbilly Cat'.",
+          "bullets": [
+            "Before his superstardom with RCA, Elvis was a regional star on Sun Records.",
+            "His style was a unique blend of country and R&B, which some listeners found confusing.",
+            "He was billed as 'The Hillbilly Cat' to reflect his country-influenced sound."
+          ],
+          "fullText": "Before he became a global sensation, Elvis was known in the South as 'The Hillbilly Cat' for his unique fusion of country and rhythm and blues. This blend was a testament to his musical influences, which included both rural blues and country music. While his Sun recordings were revolutionary, their hybrid sound made them difficult to market, as they were 'too black' for country stations and 'too country' for R&B stations. This marketing dilemma highlights how Elvis, and the rockabilly genre, blurred the racial and musical lines of the time. The initial success of his songs on regional radio, despite the marketing challenges, showed that a wide audience was ready for this new, hybrid sound.",
+          "media": [
+            { "label": "Listen: 'That's All Right'", "href": "https://open.spotify.com/embed/track/4O958xeV2blAhD95Qo24nc?utm_source=generator" },
+            { "label": "Listen: 'Blue Moon of Kentucky'", "href": "https://open.spotify.com/embed/track/2Ips4yH0buWXoqISU4y2if?utm_source=generator" }
+          ]
+        }
+      ],
+      "poll": {
+        "q": "What was the name of the recording studio started by Sam Phillips?",
+        "choices": ["RCA", "Atlantic", "Sun Records", "The Nashville Recording Studio"],
+        "answer": 2
+      }
+    },
+    {
+      "id": "10.06",
+      "title": "10.06: Colonel Tom Parker and Presley at RCA-Victor",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "bullets": [
+        "Elvis's manager, <b>Colonel Tom Parker</b>, sold his contract to RCA-Victor in 1955 for a record $35,000.",
+        "This deal was a major turning point, as it signaled to the music industry that rock and roll was a legitimate and lucrative genre.",
+        "At RCA, Elvis's first single, 'Heartbreak Hotel,' became a #1 hit, and his double-sided hit 'Hound Dog' and 'Don't Be Cruel' topped the pop, country, and R&B charts simultaneously.",
+        "Parker secured major TV appearances for Elvis, leading to his iconic, and often censored, performances."
+      ],
+      "full": `The disc jockey Bob Neal had been serving as Presley’s manager until 1955, when Colonel Tom Parker stepped in and transformed Presley’s career. Parker brokered a deal and sold Presley’s contract to RCA-Victor for an astronomical $35,000, plus $5,000 in back royalties. To Parker, Presley could not achieve national success unless he left Sun Records. The importance of this transfer of Presley’s contract from Sun to RCA-Victor cannot be overstated. In the mid-1950s, major record labels were not interested in rock and roll because they thought it was a fad. By buying Presley’s contract for an unheard-of sum of money, RCA showed the recording industry that the times were changing. Soon after Presley began recording for RCA, the other major record labels began adding rock and roll musicians to their rosters. Soon, rock and roll was squarely in the center of mainstream popular music. RCA set about transforming the Hillbilly Cat into a mainstream pop star. The first recording Presley made for RCA, "Heartbreak Hotel" (1956), held the number one spot on the pop charts for eight weeks. Later in 1956, the double-sided hit "Hound Dog" and "Don't Be Cruel" went to number 1 on the pop charts, the country and western charts, and the rhythm and blues charts simultaneously. This was the first record to achieve this level of crossover success. It was not uncommon for artists such as Chuck Berry or Bill Haley and His Comets to occupy space on both the pop and rhythm and blues charts, or on the pop and country and western charts, but until Presley, it was unheard of for an artist to not only cross over to all three charts, but also to hold the number one spot on all of those charts. In 1956, Parker secured several important television appearances for Presley. He scandalized audiences on Milton Berle’s program when he swiveled his hips and quaked his entire body during the performance, exciting the studio audience and infuriating the national media. Steve Allen neutralized some of Presley’s sex appeal by asking him to sing "Hound Dog" to an actual basset hound during the singer’s appearance on his show. Perhaps the most famous attempt to tame Presley’s sexuality came when he appeared on the Ed Sullivan Show and was filmed only from the waist up. These limitations did nothing to staunch Presley’s popular appeal and the throngs of screaming fans.`,
+      "deep": [],
+      "poll": {
+        "q": "What was Elvis's first recording for RCA?",
+        "choices": ["'Blue Moon of Kentucky'", "'That's All Right'", "'Hound Dog'", "“Heartbreak Hotel”"],
+        "answer": 3
+      }
+    },
+    {
+      "id": "10.07",
+      "title": "10.07: Conclusion",
+      "headerImage": "https://i.imgur.com/UYkSNXp.png",
+      "bullets": [
+        "Early rock and roll was a rebranding of African American R&B music.",
+        "White artists like Pat Boone and Bill Haley recorded 'sanitized' cover versions of Black artists' songs, often with greater commercial success.",
+        "Elvis Presley, a white artist, achieved unprecedented crossover success, proving to major labels that rock and roll was here to stay."
+      ],
+      "full": "The earliest rock and roll music was simply a rebranding of rhythm and blues music by black artists. Disc jockey Alan Freed hoped that the term 'rock and roll' would be more appealing to his white listeners compared to 'rhythm and blues.' As the new rock and roll music caught on, white artists began covering rhythm and blues recordings, frequently achieving significantly more financial success than the black artists who had originally recorded the tune. These covers ranged from the safe and sanitary versions by Pat Boone to the renditions by Elvis Presley that had teenagers swooning and parents nervous.",
+      "deep": [],
+      "wordcloud": {
+        "title": "Final Thoughts?",
+        "prompt": "What one word describes the music from this chapter? Add it to our word cloud!"
+      }
     }
   ];
   
   const QUIZ = [
-    { "q": "This song is an adaptation of what other type of music?", "choices": ["Tin Pan Alley", "big band", "gospel", "doo-wop"], "answer": 2, "media": "https://open.spotify.com/track/5ZyhkgdOZ4fTAc1iwSfrHT?si=223ca7a127c14d20" },
-    { "q": "Which of the following songs was NOT by Louis Jordan?", "choices": ["\"We Will Understand It Better By and By\"", "\"Let the Good Times Roll\"", "\"Is You Is, Or Is You Ain't Ma Baby?\"", "\"Saturday Night Fish Fry\""], "answer": 0 },
-    { "q": "What vocal technique does the singer frequently use in this song?", "choices": ["syncopation", "blow harmony", "melisma", "vocable"], "answer": 2, "media": "https://open.spotify.com/track/2BPMz5V0g0uw9phgqjY7se?si=0937b9fa031a45bc" },
-    { "q": "How did Thomas Dorsey first promote his gospel music?", "choices": ["He and Mahalia Jackson would stand on a street corner and perform the music.", "He asked Louis Jordan’s band to perform it.", "He recorded it with Atlantic, who then distributed the recordings.", "He asked a university choir to sing it."], "answer": 0 },
-    { "q": "Which of the following was typical for a doo-wop group?", "choices": ["The use of orchestral instruments", "Religious subject matter", "Racially integrated membership", "Four male singers"], "answer": 3 },
-    { "q": "Chuck Berry performed his famous _________ during his guitar solos.", "choices": ["\"boogie woogie\"", "\"duck walk\"", "\"turkey trot\"", "\"jump blues\""], "answer": 1 },
-    { "q": "What musical style is heard in this excerpt?", "choices": ["gospel music", "12-bar blues", "jump blues", "arranged spiritual"], "answer": 2, "media": "https://open.spotify.com/track/0eRHaqF1lJDIJ0GTy5SGC6?si=2af3c7ba8b5b47bc" },
-    { "q": "All of the following were vocal harmony groups EXCEPT:", "choices": ["The Chords", "The Mills Brothers", "The Orioles", "The Fisk Jubilee Singers"], "answer": 3 },
-    { "q": "This song is an example of:", "choices": ["doo-wop", "rhythm and blues", "gospel music", "jump blues"], "answer": 0, "media": "https://open.spotify.com/track/3SQhmctWreNM0X6Zkm2K5R?si=9344abd5f23e403d" },
-    { "q": "In 1949, what term did the Billboard charts use to replace 'race records'?", "choices": ["sepia records", "rhythm and blues", "rock and roll", "blues"], "answer": 1 },
-    { "q": "Which of the following songs includes vocables?", "choices": ["\"Sh-Boom\"", "\"I Got a Woman\"", "“Is You Is, Or Is You Ain’t My Baby?”", "\"Precious Lord, Take My Hand\""], "answer": 0 },
-    { "q": "'Maybellene' is based on a country and western song.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "Gospel music was influenced by the Holiness-Pentecostal movement.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "New gospel songs during the 1940s and 1950s were often called 'Dorseys.'", "choices": ["True", "False"], "answer": 0 },
-    { "q": "The name 'doo-wop' comes from syllables of text that groups sang.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "After World War II, small combos like jump blues bands increased in popularity.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "Louis Jordan's music had crossover appeal with white audiences.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "Race records included gospel music, vocal harmony groups, and rhythm and blues music.", "choices": ["True", "False"], "answer": 0 },
-    { "q": "During a final chorus, it was common for doo-wop groups to sing intricate harmonies.", "choices": ["True", "False"], "answer": 0 }
+    { "q": "Who was the original performer of 'Hound Dog'?", "choices": ["Elvis Presley", "Big Mama Thornton", "Big Joe Turner", "Pat Boone"], "answer": 1 },
+    { "q": "Which of these artists performed covers almost exclusively?", "choices": ["Little Richard", "Fats Domino", "Bill Haley", "Chuck Berry"], "answer": 2 },
+    { "q": "What prompted the success of Bill Haley's version of 'Rock Around the Clock?'", "choices": ["They began a national tour to promote the song", "The group appeared in the film 'Blackboard Jungle'", "The group appeared on Alan Freed's show", "They were promoted by Chuck Berry"], "answer": 1 },
+    { "q": "What was Elvis's first recording for RCA?", "choices": ["'Blue Moon of Kentucky'", "'That's All Right'", "'Hound Dog'", "“Heartbreak Hotel”"], "answer": 3 },
+    { "q": "What was the name of the recording studio started by Sam Phillips?", "choices": ["RCA", "Atlantic", "Sun Records", "The Nashville Recording Studio"], "answer": 2 },
+    { "q": "Which of the following Elvis songs did Jerry Leiber and Mike Stoller write?", "choices": ["'Mystery Train'", "'Hound Dog'", "'Blue Moon'", "'Heartbreak Hotel'"], "answer": 1 },
+    { "q": "Which recording was the first to be number 1 on the pop, country, and rhythm and blues charts simultaneously?", "choices": ["'Hound Dog'", "'Rock Around the Clock'", "'That's All Right'", "'Maybellene'"], "answer": 0 },
+    { "q": "Alan Freed used the phrase 'rock and roll' to describe the African American popular music that he was playing.", "choices": ["True", "False"], "answer": 0 },
+    { "q": "Elvis's first notorious hip-swiveling performance occurred on which television show?", "choices": ["The Steve Allen Show", "The Rosemary Clooney Show", "The Milton Berle Show", "The Ed Sullivan Show"], "answer": 2 },
+    { "q": "The transistor radio was developed by:", "choices": ["General Electric", "Bell Laboratory", "Nikola Tesla", "Thomas Edison"], "answer": 1 }
   ];
   
   const EXTRA = {};
@@ -910,7 +879,7 @@ function startApp() {
   };
   
   // Quiz Battle
-  const BATTLE_QUIZ = QUIZ.filter(q => !q.media);
+  const BATTLE_QUIZ = QUIZ.filter(q => !q.media || !q.media.includes('spotify.com'));
   let localAnswers = {}; 
 
   async function setupQuizBattleListener() {
@@ -1086,7 +1055,7 @@ function startApp() {
           }
           return '';
       }).join('');
-      const mediaHTML = mediaContent ? `<h4>Media</h4><ul>${mediaContent}</ul>` : '';
+      const mediaHTML = mediaContent ? `<h4>Media</h4><ul style="list-style-type: none; padding-left: 0;">${mediaContent}</ul>` : '';
 
       const fullTextHTML = d.fullText ? `<p>${d.fullText}</p>`: '';
       const funFactsHTML = (d.funFacts && d.funFacts.length > 0) ? `<button class="read-btn" style="margin-top:1rem;" onclick="toggleFunFacts('${funFactsId}')">Fun Facts</button><div id="${funFactsId}" class="full" hidden><ul>${d.funFacts.map(f => `<li>${f}</li>`).join('')}</ul></div>` : '';
@@ -1152,8 +1121,8 @@ function startApp() {
       const containerId = `dnd-container-${slideId}`;
   
       if (data.customDropzones && data.itemMap) {
-          const items = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
-          const itemHTML = items.map(id => `<div class="instrument" draggable="true" id="dnd-item-${id}" data-instrument-id="${id}">${data.itemMap[id]}</div>`).join('');
+          const instruments = [...data.correct, ...data.distractors].sort(() => Math.random() - 0.5);
+          const instrumentHTML = instruments.map(id => `<div class="instrument" draggable="true" data-instrument-id="${id}">${data.itemMap[id]}</div>`).join('');
           
           const dropzoneHTML = data.customDropzones.map(zone => 
               `<div class="band-area" data-accepts='${JSON.stringify(zone.accepts)}'><h4>${zone.title}</h4></div>`
@@ -1164,7 +1133,7 @@ function startApp() {
                   <h3>${data.bandAreaTitle || 'Build a Band'}</h3>
                    <p>Drag each line from the pool on the left into the correct slot to build a blues verse.</p>
                   <div class="build-a-band">
-                      <div class="instrument-pool" style="flex: 2;"><h4>${data.poolTitle || 'Items'}</h4>${itemHTML}</div>
+                      <div class="instrument-pool" style="flex: 2;"><h4>${data.poolTitle || 'Items'}</h4>${instrumentHTML}</div>
                       <div style="flex: 3; display: flex; flex-direction: column; gap: 1rem;">${dropzoneHTML}</div>
                   </div>
               </div>
@@ -1197,22 +1166,27 @@ function startApp() {
     if (!host) return;
     host.innerHTML = ''; 
     
-    let slidesToRender = [...SLIDES];
+    let slidesToRender = SLIDES;
+    let quizSlideIndex = slidesToRender.length;
     let totalSlides = slidesToRender.length + 1; // +1 for Quiz
     
-    if (isPresenter) {
+    if(isPresenter) {
         const attendanceSlide = {
-            id: "9.99_attendance",
+            id: "10.99_attendance",
             title: "Session Attendance",
-            headerImage: "https://i.imgur.com/4uodWhO.png",
+            presenterOnly: true,
+            headerImage: "https://i.imgur.com/UYkSNXp.png",
             bullets: ["The following users have joined this session:"],
-            full: "<ul id='attendance-list' style='list-style-type: disc; padding-left: 2rem;'><li>Loading...</li></ul>",
+            full: "<ul id='attendance-list'><li>Loading...</li></ul>"
         };
-        slidesToRender.push(attendanceSlide); // Add to the end of content slides
-        totalSlides = slidesToRender.length + 1; // Recalculate total with attendance slide
+        slidesToRender = [...SLIDES, attendanceSlide];
+        quizSlideIndex = SLIDES.length; 
+        totalSlides = slidesToRender.length + 1;
     }
 
     slidesToRender.forEach((s,idx)=>{
+      if (s.presenterOnly && !isPresenter) return;
+      
       const bullets = s.bullets.map(b=>`<li>${b}</li>`).join('');
       const deep = deepListHTML(idx, s.deep);
       const poll = pollHTML(s.poll, s.id);
@@ -1222,6 +1196,8 @@ function startApp() {
       const keywordsHTML = s.keywords ? `<ul class="keywords-list">${Object.entries(s.keywords).map(([term, def]) => `<li><b>${term}:</b> ${def}</li>`).join('')}</ul>` : '';
       const asideImageHTML = s.asideImage ? `<div class="slide-body-aside"><img src="${s.asideImage}" alt=""></div>` : '';
       const mainContentClass = s.asideImage ? 'slide-body-main' : '';
+      const fullContentHtml = s.full;
+
 
       let footerHTML = '';
       if (isPresenter) {
@@ -1230,14 +1206,14 @@ function startApp() {
           footerHTML = `<footer class="slide-nav">${prevBtn}<button class="home-btn" onclick="go(0)">Home</button>${nextBtn}</footer>`;
       }
       
-      const mainBody = s.id === '9.99_attendance' ? `<div class="${mainContentClass}">${s.full}</div>` : `
+      const mainBody = s.id === '10.99_attendance' ? s.full : `
         <div class="${mainContentClass}">
             <ul class="bullets">${bullets}</ul>
             <div class="slide-actions">
-                    ${s.full ? `<button class="read-btn" onclick="toggleFull(${idx})">Read Full Text</button>` : ''}
+                    ${fullContentHtml ? `<button class="read-btn" onclick="toggleFull(${idx})">Read Full Text</button>` : ''}
                     ${s.keywords ? `<button class="read-btn" onclick="toggleKeywords(${idx})">Keywords</button>` : ''}
             </div>
-            <article id="full-${idx}" class="full" hidden>${s.full}</article>
+            <article id="full-${idx}" class="full" hidden>${fullContentHtml}</article>
             <article id="keywords-${idx}" class="full" hidden>${keywordsHTML}</article>
         </div>
         ${asideImageHTML}
@@ -1289,9 +1265,7 @@ function startApp() {
         ${quizFooterHTML}
       </section>
     `);
-    
-    // Call the new drag-and-drop setup function
-    initializeDragAndDrop();
+    setupDragAndDrop();
   }
 
   let lastFocused = null;
@@ -1379,62 +1353,54 @@ function startApp() {
     }
   }
   
-  function initializeDragAndDrop() {
-      document.addEventListener('dragstart', e => {
-          if (e.target.matches('.instrument')) {
-              e.dataTransfer.setData('text/plain', e.target.id);
-              e.target.classList.add('dragging');
-          }
-      });
+    function setupDragAndDrop() {
+        document.querySelectorAll('.build-a-band-container').forEach(container => {
+            const draggables = container.querySelectorAll('.instrument');
+            const dropzones = container.querySelectorAll('.band-area');
+            const pool = container.querySelector('.instrument-pool');
 
-      document.addEventListener('dragend', e => {
-          if (e.target.matches('.instrument')) {
-              e.target.classList.remove('dragging');
-          }
-      });
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', e => {
+                    e.dataTransfer.setData('text/plain', e.target.dataset.instrumentId);
+                    setTimeout(() => draggable.classList.add('dragging'), 0);
+                });
+                draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
+            });
+            
+            const allDropzones = [...dropzones, pool];
+            allDropzones.forEach(zone => {
+                if (!zone) return;
+                zone.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+                zone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    const id = e.dataTransfer.getData('text/plain');
+                    const draggable = container.querySelector(`[data-instrument-id="${id}"]`);
+                    if (!draggable) return;
 
-      document.addEventListener('dragover', e => {
-          const dropzone = e.target.closest('.band-area, .instrument-pool');
-          if (dropzone) {
-              e.preventDefault();
-              dropzone.classList.add('drag-over');
-          }
-      });
-      
-      document.addEventListener('dragleave', e => {
-           const dropzone = e.target.closest('.band-area, .instrument-pool');
-           if (dropzone) {
-              dropzone.classList.remove('drag-over');
-           }
-      });
+                    if (zone.classList.contains('instrument-pool')) {
+                        pool.appendChild(draggable);
+                        draggable.classList.remove('correct', 'incorrect');
+                        draggable.draggable = true;
+                        return;
+                    }
 
-      document.addEventListener('drop', e => {
-          const zone = e.target.closest('.band-area, .instrument-pool');
-          if (!zone) return;
-          
-          e.preventDefault();
-          zone.classList.remove('drag-over');
-          
-          const draggableId = e.dataTransfer.getData('text/plain');
-          const draggable = document.getElementById(draggableId);
-          if (!draggable) return;
-
-          const instrumentId = draggable.dataset.instrumentId;
-
-          if (zone.classList.contains('instrument-pool')) {
-              zone.appendChild(draggable);
-              draggable.classList.remove('correct', 'incorrect');
-              draggable.draggable = true;
-          } else if (zone.dataset.accepts) {
-              const acceptedTypes = JSON.parse(zone.dataset.accepts);
-              if (acceptedTypes.includes(instrumentId) && !zone.querySelector('.instrument')) {
-                  zone.appendChild(draggable);
-                  draggable.classList.add('correct');
-                  draggable.draggable = false;
-              }
-          }
-      });
-  }
+                    if (zone.dataset.accepts) {
+                        const acceptedTypes = JSON.parse(zone.dataset.accepts);
+                        if (acceptedTypes.includes(id) && zone.children.length < 2) { // Allow drop if zone is empty or only has a header
+                            zone.appendChild(draggable);
+                            draggable.classList.add('correct');
+                            draggable.draggable = false;
+                        }
+                    }
+                });
+            });
+        });
+    }
 
   
   function toggleQnaPanel() {
